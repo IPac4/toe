@@ -141,14 +141,11 @@ const PricingSection: React.FC = () => {
                 <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">{pkg.totalPrice.toFixed(2)}€</span></p>
                 <Button 
                   className={cn(
-                    "w-full cta-button",
-                    pkg.popular 
-                      ? "border-0" 
-                      : "bg-tarsal-accent hover:bg-tarsal-accent/90"
+                    "w-full cta-button bg-tarsal-accent hover:bg-tarsal-accent/90"
                   )}
                   size="lg"
                 >
-                  Naroči zdaj
+                  {pkg.key === 'double' ? 'Naroči zdaj' : 'Naroči zdaj'}
                 </Button>
               </div>
             </div>

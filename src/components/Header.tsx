@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center py-4 md:py-6">
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/b4fd3108-00e4-4e7d-9370-230efd839ff6.png" 
+              src="/lovable-uploads/4e1de179-2e39-4459-81ff-6790bc8f90c3.png" 
               alt="TARSAL" 
               className="h-7 md:h-8"
             />
