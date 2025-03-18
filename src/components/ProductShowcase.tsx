@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-
 const ProductShowcase: React.FC = () => {
-  return (
-    <section id="product" className="py-16 md:py-24 bg-white">
+  return <section id="product" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Predstavljamo</h2>
@@ -18,11 +15,7 @@ const ProductShowcase: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
           <div className="flex justify-center items-center">
             <div className="rounded-lg overflow-hidden shadow-xl transform transition-all duration-300 hover:scale-105">
-              <img 
-                src="/lovable-uploads/1fb29131-7f54-4ede-8669-e3f8e55672cd.png" 
-                alt="Vsakodnevna uporaba TOE" 
-                className="w-full h-auto max-h-[600px] object-cover"
-              />
+              <img src="/lovable-uploads/1fb29131-7f54-4ede-8669-e3f8e55672cd.png" alt="Vsakodnevna uporaba TOE" className="w-full h-auto max-h-[600px] object-cover" />
             </div>
           </div>
           
@@ -108,15 +101,14 @@ const ProductShowcase: React.FC = () => {
             </div>
             
             <div className="text-center">
-              <Button 
-                className="cta-button text-lg py-6 px-10 shadow-lg group"
-                onClick={() => {
-                  const element = document.getElementById('pricing');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
+              <Button onClick={() => {
+              const element = document.getElementById('pricing');
+              if (element) {
+                element.scrollIntoView({
+                  behavior: 'smooth'
+                });
+              }
+            }} className="cta-button text-lg py-6 px-10 shadow-lg group bg-green-600 hover:bg-green-500">
                 Naroči zdaj
                 <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -126,8 +118,6 @@ const ProductShowcase: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ProductShowcase;
