@@ -246,7 +246,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
               const variantId = variant.id as 'basic' | 'double' | 'family';
               const isSelected = selectedPackage === variantId;
               return <div key={variantId} className={cn("relative border rounded-xl transition-all duration-200 overflow-hidden cursor-pointer", isSelected ? "border-tarsal-accent ring-2 ring-tarsal-accent/30 shadow-lg" : "border-gray-200 hover:border-tarsal-accent/50", variant.popular ? "md:-translate-y-2" : "")}>
-                      {variant.popular && <div className="absolute top-0 left-0 right-0 bg-tarsal-accent text-white text-xs font-medium py-1 text-center">
+                      {variant.popular && <div className="absolute top-0 left-0 right-0 text-white text-xs font-medium py-1 text-center bg-red-500">
                           Najbolj priljubljeno
                         </div>}
                       
