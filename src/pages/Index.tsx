@@ -72,10 +72,10 @@ const Index: React.FC = () => {
         />
         
         <ExpertTestimonial 
-          name="Marko Macih"
+          name="Marko Macuh"
           title="Priznani fizioterapevt in specialist za ortopedske težave"
           quote="V svoji praksi sem opazil, da večina težav s stopali izvira iz nepravilne obremenitve. TOE razbremeni kritične točke in pomaga preprečiti deformacije. Svojim pacientom ga priporočam kot preventivno rešitev, ki je enostavna za uporabo in učinkovita."
-          imageSrc="/lovable-uploads/b4f65f49-e446-432e-8e90-dcad9fcd2c08.png"
+          imageSrc="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png"
           reverse={true}
           credentials={["Specialist za ortopedske težave", "Certificiran klinični fizioterapevt", "10+ let kliničnih izkušenj"]}
         />
