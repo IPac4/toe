@@ -86,7 +86,7 @@ const ReviewSection: React.FC = () => {
             <CarouselContent>
               {reviews.map((review, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="testimonial-card h-full">
+                  <div className="testimonial-card h-full bg-white p-6 rounded-lg shadow-md">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h4 className="font-semibold text-lg">{review.name}</h4>

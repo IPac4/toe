@@ -12,6 +12,7 @@ interface ExpertTestimonialProps {
   id?: string;
   credentials?: string[];
   featured?: boolean;
+  imageClassName?: string;
 }
 
 const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({ 
@@ -22,7 +23,8 @@ const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
   reverse = false,
   id,
   credentials = [],
-  featured = false
+  featured = false,
+  imageClassName = ""
 }) => {
   return (
     <section id={id} className="py-16 md:py-24 bg-white">
@@ -38,7 +40,8 @@ const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
                 alt={name} 
                 className={cn(
                   "w-full h-auto rounded-lg shadow-xl object-cover max-w-[300px] mx-auto",
-                  featured ? "aspect-auto" : "aspect-[3/4]"
+                  featured ? "aspect-auto" : "aspect-[3/4]",
+                  imageClassName
                 )}
               />
               {featured && (

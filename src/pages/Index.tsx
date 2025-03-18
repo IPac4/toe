@@ -94,9 +94,10 @@ const Index: React.FC = () => {
           name="Jure Pantar"
           title="Članski trener Taekwando reprezentance Slovenije"
           quote="Kot trener vrhunskih športnikov se zavedam, kako pomembna je pravilna opora stopala. TOE izdelek priporočam vsem svojim varovancem, saj omogoča hitrejše okrevanje po treningih in tekmah ter dolgoročno pomaga ohranjati zdravo držo in preprečuje poškodbe."
-          imageSrc="/lovable-uploads/0515823e-00d8-4f20-97e4-7c4e6e8dc5a9.png"
+          imageSrc="/lovable-uploads/03231ada-ca94-4b89-b1d9-fbc711450811.png"
           reverse={false}
           credentials={["Mednarodni trener", "Olimpijski trener", "15+ let izkušenj v vrhunskem športu"]}
+          imageClassName="max-w-[250px] max-h-[250px] object-cover object-top"
         />
         
         <PricingSection />
