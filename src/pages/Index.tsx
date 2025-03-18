@@ -11,10 +11,13 @@ import PricingSection from '../components/PricingSection';
 import ReviewSection from '../components/ReviewSection';
 import CheckoutModal from '../components/CheckoutModal';
 import Footer from '../components/Footer';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<'basic' | 'double' | 'family'>('double');
+  const [skipPackageSelection, setSkipPackageSelection] = useState(false);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     // Handle CTA button clicks
@@ -35,6 +38,13 @@ const Index: React.FC = () => {
           } else {
             setSelectedVariant('double');
           }
+          
+          // Skip package selection when clicking from pricing section
+          setSkipPackageSelection(true);
+        } else {
+          // Reset to show package selection for other CTA buttons
+          setSkipPackageSelection(false);
+          setSelectedVariant('double'); // Default to double package
         }
         
         // Prevent default if it's an anchor tag
@@ -109,6 +119,7 @@ const Index: React.FC = () => {
         open={isModalOpen} 
         onOpenChange={setIsModalOpen}
         productVariant={selectedVariant}
+        skipPackageSelection={skipPackageSelection}
       />
     </div>
   );

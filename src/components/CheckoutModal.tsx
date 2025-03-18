@@ -19,6 +19,7 @@ interface CheckoutModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   productVariant?: 'basic' | 'double' | 'family';
+  skipPackageSelection?: boolean;
 }
 
 // Define a common product variant interface with optional popular property
@@ -42,7 +43,8 @@ interface ColorSelection {
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ 
   open, 
   onOpenChange,
-  productVariant = 'double'
+  productVariant = 'double',
+  skipPackageSelection = false
 }) => {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'cod' | 'transfer' | 'applepay' | 'paypal'>('card');
   const [checkoutStep, setCheckoutStep] = useState<'package' | 'color' | 'payment' | 'address'>('package');
@@ -52,11 +54,16 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   // Reset checkout step when modal opens
   useEffect(() => {
     if (open) {
-      setCheckoutStep('package');
+      // Skip to color selection if coming from pricing section
+      if (skipPackageSelection) {
+        setCheckoutStep('color');
+      } else {
+        setCheckoutStep('package');
+      }
       setSelectedPackage(productVariant);
       initializeColorSelections(productVariant);
     }
-  }, [open, productVariant]);
+  }, [open, productVariant, skipPackageSelection]);
 
   // Initialize color selections based on the product variant
   const initializeColorSelections = (variant: 'basic' | 'double' | 'family') => {
@@ -78,10 +85,10 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       discount: 0,
       total: 17.90,
       features: [
-        "1x TOE",
+        "1x Tarsal TOE paket",
         "Testirano v Sloveniji", 
         "Priročna embalaža",
-        "Hitra dostava"
+        "Dostava v 48h"
       ]
     },
     double: {
@@ -92,11 +99,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       total: 28.64,
       popular: true,
       features: [
-        "2x TOE", 
+        "2x Tarsal TOE paket", 
         "GRATIS vaje za dnevno vadbo", 
         "Priročna embalaža", 
         "Testirano v Sloveniji",
-        "Hitra dostava"
+        "Dostava v 48h"
       ]
     },
     family: {
@@ -106,11 +113,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       discount: 25,
       total: 40.26,
       features: [
-        "3x TOE", 
+        "3x Tarsal TOE paket", 
         "GRATIS vaje za dnevno vadbo", 
         "Priročna embalaža", 
         "Testirano v Sloveniji",
-        "Brezplačna dostava"
+        "GRATIS dostava v 48h"
       ]
     }
   };
@@ -220,7 +227,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
               
               {savings > 0 && (
                 <div className="bg-green-100 p-3 rounded-md mb-3 border border-green-300">
-                  <p className="font-bold text-green-800 text-center">
+                  <p className="font-bold text-green-800 text-center text-lg">
                     Prihranili ste: {savings.toFixed(2)}€
                   </p>
                 </div>
