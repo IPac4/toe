@@ -107,7 +107,7 @@ const Index: React.FC = () => {
           imageSrc="/lovable-uploads/03231ada-ca94-4b89-b1d9-fbc711450811.png"
           reverse={false}
           credentials={["Mednarodni trener", "Olimpijski trener", "15+ let izkušenj v vrhunskem športu"]}
-          imageClassName="max-w-[250px] max-h-[250px] object-cover object-top"
+          // Removed imageClassName to match the default size like Marko Macuh's image
         />
         
         <PricingSection />

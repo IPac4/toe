@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -75,8 +74,7 @@ const PricingSection: React.FC = () => {
     <section id="pricing" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Paketi & Cene</h2>
-          <div className="w-20 h-1 bg-tarsal-accent mx-auto mb-6"></div>
+          {/* Removed the "Paketi & Cene" heading, keeping only the subtitle */}
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Izberite paket, ki najbolj ustreza vašim potrebam
           </p>
