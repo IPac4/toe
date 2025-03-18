@@ -74,8 +74,8 @@ const ConsequencesSection: React.FC = () => {
           <div className="order-1 lg:order-2">
             <div className="relative">
               <img 
-                src="/lovable-uploads/617e160d-6d89-4830-a28f-6686320fcfdd.png" 
-                alt="Deformirano stopalo" 
+                src="/lovable-uploads/98515799-1899-42ed-8c20-210878e81c5f.png" 
+                alt="Hallux valgus - krivi palec" 
                 className="rounded-xl shadow-xl w-full h-auto object-cover"
               />
               <div className="absolute -bottom-5 -right-5 bg-white p-4 rounded-lg shadow-lg">
