@@ -42,6 +42,9 @@ interface ColorSelection {
   color: ColorOption;
 }
 
+// Define proper type for checkout steps to avoid type comparison errors
+type CheckoutStep = 'package' | 'color_payment' | 'address';
+
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ 
   open, 
   onOpenChange,
@@ -49,7 +52,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   skipPackageSelection = false
 }) => {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'cod' | 'transfer' | 'applepay' | 'paypal'>('card');
-  const [checkoutStep, setCheckoutStep] = useState<'package' | 'color_payment' | 'address'>('package');
+  const [checkoutStep, setCheckoutStep] = useState<CheckoutStep>('package');
   const [selectedPackage, setSelectedPackage] = useState<'basic' | 'double' | 'family'>(productVariant);
   const [colorSelections, setColorSelections] = useState<ColorSelection[]>([]);
   const isMobile = useIsMobile();
