@@ -62,10 +62,12 @@ const Index: React.FC = () => {
         
         <ExpertTestimonial 
           name="Luka Mirnik"
-          title="Fizioterapevt Luke Dončića in slovenske reprezentance"
-          quote="TOE je idealna rešitev za vsakogar, ki si želi preventivne zaščite in olajšanja bolečin v stopalih. S pravilno uporabo lahko znatno zmanjšamo pritiske na prste in izboljšamo stabilnost stopala."
-          imageSrc="/lovable-uploads/c07b8711-6406-45f9-8e93-873ea65523ae.png"
+          title="Fizioterapevt Luke Dončića in slovenske košarkarske reprezentance"
+          quote="Kot fizioterapevt slovenske košarkarske reprezentance in profesionalnih športnikov vsakodnevno rešujem težave z bolečinami v stopalih. TOE je revolucionarna rešitev, ki jo priporočam tako športnikom kot vsakomur, ki želi preventivno zaščititi svoje noge pred bolečinami in deformacijami."
+          imageSrc="/lovable-uploads/fea16b3e-3afb-4acd-b956-418db3d5205d.png"
           id="experts"
+          credentials={["7+ let izkušenj s profesionalnimi športniki", "Ekspert za rehabilitacijo stopal", "Član strokovnega tima KZS"]}
+          featured={true}
         />
         
         <ProblemSection />
@@ -80,6 +82,7 @@ const Index: React.FC = () => {
           quote="Kot fizioterapevt pogosto svetujem uporabo TOE kot odlične preventivne rešitve. Pri redni uporabi se zmanjša tveganje za resne deformacije."
           imageSrc="/lovable-uploads/04013d32-0c56-4cff-8059-21d6f79bbd03.png"
           reverse={true}
+          credentials={["Specialist za ortopedsko fizioterapijo", "Predavatelj na FZV"]}
         />
         
         <section className="py-16 md:py-24 bg-tarsal-DEFAULT text-white">
@@ -156,6 +159,7 @@ const Index: React.FC = () => {
           title="Trener Taekwondo reprezentance Slovenije"
           quote="TOE je koristna rešitev tudi za preventivo. Pomaga izboljšati držo, zmanjša pritiske na sklepe in preprečuje resne težave v prihodnosti."
           imageSrc="/lovable-uploads/4e1de179-2e39-4459-81ff-6790bc8f90c3.png"
+          credentials={["Mednarodni Taekwondo trener", "Strokovnjak za biomehaniko gibanja"]}
         />
         
         <ReviewSection />
