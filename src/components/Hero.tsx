@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="flex-1 text-center lg:text-left">
             <h2 className="text-xl md:text-2xl font-medium text-tarsal-gray mb-3 animate-fade-in">
-              Za mame 28+, ki trpijo zaradi bolečin v stopalih
+              Rešitev za vse, ki trpijo zaradi bolečin v stopalih ali izbočenih palcev
             </h2>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in" style={{animationDelay: '0.1s'}}>
               Cele dneve v neudobnih čevljih, brez časa za vadbo, bolečina v stopalih postaja <span className="text-tarsal-accent">stalna</span>
