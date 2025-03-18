@@ -1,18 +1,11 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
-
 const Header: React.FC = () => {
-  return (
-    <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
+  return <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:py-6">
           <div className="flex items-center">
-            <img 
-              src="/lovable-uploads/4e1de179-2e39-4459-81ff-6790bc8f90c3.png" 
-              alt="TARSAL" 
-              className="h-7 md:h-8"
-            />
+            <img alt="TARSAL" className="h-7 md:h-8" src="/lovable-uploads/580c1b20-695e-4c98-8328-d5975963356f.png" />
           </div>
           <nav className="hidden md:flex space-x-8">
             <a href="#product" className="text-sm font-medium text-gray-700 hover:text-tarsal-accent transition-colors">
@@ -29,22 +22,12 @@ const Header: React.FC = () => {
             </a>
           </nav>
           <div>
-            <a 
-              href="#pricing" 
-              className={cn(
-                "hidden md:inline-flex",
-                "bg-tarsal-accent hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full",
-                "transition duration-300 ease-in-out",
-                "text-sm"
-              )}
-            >
+            <a href="#pricing" className={cn("hidden md:inline-flex", "bg-tarsal-accent hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full", "transition duration-300 ease-in-out", "text-sm")}>
               Naročite zdaj
             </a>
           </div>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Header;
