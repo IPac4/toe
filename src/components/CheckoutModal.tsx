@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -12,6 +12,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { cn } from '@/lib/utils';
+import { Check } from 'lucide-react';
 
 interface CheckoutModalProps {
   open: boolean;
@@ -25,7 +27,16 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   productVariant = 'double'
 }) => {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'cod' | 'transfer' | 'applepay' | 'paypal'>('card');
-  const [checkoutStep, setCheckoutStep] = useState<'payment' | 'address'>('payment');
+  const [checkoutStep, setCheckoutStep] = useState<'package' | 'payment' | 'address'>('package');
+  const [selectedPackage, setSelectedPackage] = useState<'basic' | 'double' | 'family'>(productVariant);
+  
+  // Reset checkout step when modal opens
+  useEffect(() => {
+    if (open) {
+      setCheckoutStep('package');
+      setSelectedPackage(productVariant);
+    }
+  }, [open, productVariant]);
   
   const variants = {
     basic: {
@@ -33,28 +44,50 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       quantity: 1,
       price: 17.90,
       discount: 0,
-      total: 17.90
+      total: 17.90,
+      features: [
+        "1x TOE",
+        "Izdelano v Sloveniji", 
+        "Priročna embalaža"
+      ]
     },
     double: {
       name: "Dvojni paket",
       quantity: 2,
       price: 17.90,
       discount: 20,
-      total: 28.64
+      total: 28.64,
+      popular: true,
+      features: [
+        "2x TOE", 
+        "GRATIS vaje za dnevno vadbo", 
+        "Priročna embalaža", 
+        "Izdelano v Sloveniji"
+      ]
     },
     family: {
       name: "Družinski paket",
       quantity: 3,
       price: 17.90,
       discount: 25,
-      total: 40.26
+      total: 40.26,
+      features: [
+        "3x TOE", 
+        "GRATIS vaje za dnevno vadbo", 
+        "Priročna embalaža", 
+        "Brezplačna dostava"
+      ]
     }
   };
 
-  const selectedVariant = variants[productVariant];
+  const selectedVariant = variants[selectedPackage];
   const shipping = selectedVariant.total >= 30 ? 0 : 3;
   const codFee = paymentMethod === 'cod' ? 0.99 : 0;
   const finalTotal = selectedVariant.total + shipping + codFee;
+
+  const handlePackageSelect = () => {
+    setCheckoutStep('payment');
+  };
 
   const handlePaymentSelect = () => {
     if (paymentMethod === 'applepay') {
@@ -84,6 +117,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (checkoutStep === 'package') {
+      handlePackageSelect();
+      return;
+    }
+    
     if (checkoutStep === 'payment') {
       handlePaymentSelect();
       return;
@@ -95,43 +133,132 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Zaključek naročila</DialogTitle>
+          <DialogTitle>
+            {checkoutStep === 'package' ? 'Izberite paket' : 
+             checkoutStep === 'payment' ? 'Način plačila' : 
+             'Zaključek naročila'}
+          </DialogTitle>
           <DialogDescription>
-            {checkoutStep === 'payment' 
-              ? 'Izberite način plačila za vaš nakup.' 
-              : 'Izpolnite svoje podatke za dostavo.'}
+            {checkoutStep === 'package' ? 'Izberite paket, ki ustreza vašim potrebam.' : 
+             checkoutStep === 'payment' ? 'Izberite način plačila za vaš nakup.' : 
+             'Izpolnite svoje podatke za dostavo.'}
           </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           {/* Order Summary - Always visible */}
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2">Povzetek naročila</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span>{selectedVariant.name} ({selectedVariant.quantity}x TOE)</span>
-                <span>{selectedVariant.total.toFixed(2)}€</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Dostava</span>
-                <span>{shipping > 0 ? `${shipping.toFixed(2)}€` : 'Brezplačno'}</span>
-              </div>
-              {paymentMethod === 'cod' && (
+          {checkoutStep !== 'package' && (
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2">Povzetek naročila</h3>
+              <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span>Plačilo po povzetju</span>
-                  <span>{codFee.toFixed(2)}€</span>
+                  <span>{selectedVariant.name} ({selectedVariant.quantity}x TOE)</span>
+                  <span>{selectedVariant.total.toFixed(2)}€</span>
                 </div>
-              )}
-              <div className="flex justify-between font-bold pt-2 border-t">
-                <span>Skupaj</span>
-                <span>{finalTotal.toFixed(2)}€</span>
+                <div className="flex justify-between">
+                  <span>Dostava</span>
+                  <span>{shipping > 0 ? `${shipping.toFixed(2)}€` : 'Brezplačno'}</span>
+                </div>
+                {paymentMethod === 'cod' && (
+                  <div className="flex justify-between">
+                    <span>Plačilo po povzetju</span>
+                    <span>{codFee.toFixed(2)}€</span>
+                  </div>
+                )}
+                <div className="flex justify-between font-bold pt-2 border-t">
+                  <span>Skupaj</span>
+                  <span>{finalTotal.toFixed(2)}€</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           
-          {/* Payment Method Selection - First step */}
+          {/* Package Selection - First step */}
+          {checkoutStep === 'package' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {Object.entries(variants).map(([key, variant]) => {
+                  const isSelected = selectedPackage === key;
+                  return (
+                    <div 
+                      key={key}
+                      className={cn(
+                        "relative border rounded-xl transition-all duration-200 overflow-hidden cursor-pointer",
+                        isSelected ? "border-tarsal-accent ring-2 ring-tarsal-accent/30 shadow-lg" : "border-gray-200 hover:border-tarsal-accent/50",
+                        variant.popular ? "md:-translate-y-2" : ""
+                      )}
+                      onClick={() => setSelectedPackage(key as 'basic' | 'double' | 'family')}
+                    >
+                      {variant.popular && (
+                        <div className="absolute top-0 left-0 right-0 bg-tarsal-accent text-white text-xs font-medium py-1 text-center">
+                          Najbolj priljubljeno
+                        </div>
+                      )}
+                      
+                      <div className={cn(
+                        "p-5", 
+                        variant.popular ? "pt-7" : "",
+                        isSelected ? "bg-tarsal-accent/5" : ""
+                      )}>
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h3 className="font-bold text-lg">{variant.name}</h3>
+                            <p className="text-sm text-gray-600">{variant.quantity}x TOE</p>
+                          </div>
+                          {isSelected && (
+                            <div className="bg-tarsal-accent text-white h-6 w-6 rounded-full flex items-center justify-center">
+                              <Check className="h-4 w-4" />
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="mb-4">
+                          <div className="flex items-baseline mb-2">
+                            <span className="text-2xl font-bold">
+                              {variant.discount > 0 
+                                ? ((variant.price * variant.quantity * (100 - variant.discount)) / 100 / variant.quantity).toFixed(2)
+                                : variant.price.toFixed(2)
+                              }€
+                            </span>
+                            <span className="text-sm text-gray-500 ml-1">/kos</span>
+                            {variant.discount > 0 && (
+                              <span className="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">
+                                -{variant.discount}%
+                              </span>
+                            )}
+                          </div>
+                          {variant.discount > 0 && (
+                            <div className="text-sm text-gray-500 line-through">
+                              {variant.price.toFixed(2)}€/kos
+                            </div>
+                          )}
+                        </div>
+                        
+                        <ul className="space-y-2 mb-6">
+                          {variant.features.map((feature, index) => (
+                            <li key={index} className="flex items-start text-sm">
+                              <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
+                              </svg>
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        
+                        <div className="text-sm font-semibold mb-2">
+                          Končna cena: <span className="text-lg">{variant.total.toFixed(2)}€</span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          {/* Payment Method Selection - Second step */}
           {checkoutStep === 'payment' && (
             <div className="space-y-4">
               <h3 className="font-semibold">Način plačila</h3>
@@ -139,8 +266,12 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 defaultValue="card" 
                 value={paymentMethod}
                 onValueChange={(value) => setPaymentMethod(value as any)}
+                className="space-y-3"
               >
-                <div className="flex items-center space-x-2 border p-3 rounded-md">
+                <div className={cn(
+                  "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all",
+                  paymentMethod === 'card' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                )}>
                   <RadioGroupItem value="card" id="card" />
                   <Label htmlFor="card" className="flex-1 cursor-pointer">Kreditna kartica</Label>
                   <div className="flex space-x-1">
@@ -149,19 +280,28 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2 border p-3 rounded-md">
+                <div className={cn(
+                  "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all",
+                  paymentMethod === 'cod' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                )}>
                   <RadioGroupItem value="cod" id="cod" />
                   <Label htmlFor="cod" className="flex-1 cursor-pointer">Po povzetju (+0,99€)</Label>
                   <div className="w-8 h-5 bg-gray-200 rounded flex items-center justify-center text-xs font-bold">COD</div>
                 </div>
                 
-                <div className="flex items-center space-x-2 border p-3 rounded-md">
+                <div className={cn(
+                  "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all",
+                  paymentMethod === 'transfer' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                )}>
                   <RadioGroupItem value="transfer" id="transfer" />
                   <Label htmlFor="transfer" className="flex-1 cursor-pointer">Bančno nakazilo</Label>
                   <div className="w-8 h-5 bg-gray-200 rounded flex items-center justify-center text-xs font-bold">€</div>
                 </div>
                 
-                <div className="flex items-center space-x-2 border p-3 rounded-md">
+                <div className={cn(
+                  "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all",
+                  paymentMethod === 'applepay' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                )}>
                   <RadioGroupItem value="applepay" id="applepay" />
                   <Label htmlFor="applepay" className="flex-1 cursor-pointer">Apple Pay</Label>
                   <div className="w-8 h-5 bg-black rounded flex items-center justify-center">
@@ -172,7 +312,10 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2 border p-3 rounded-md">
+                <div className={cn(
+                  "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all",
+                  paymentMethod === 'paypal' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                )}>
                   <RadioGroupItem value="paypal" id="paypal" />
                   <Label htmlFor="paypal" className="flex-1 cursor-pointer">PayPal</Label>
                   <div className="w-8 h-5 bg-blue-600 rounded flex items-center justify-center">
@@ -185,7 +328,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           )}
           
-          {/* Contact & Address Info - Second step (only for card, cod, transfer) */}
+          {/* Contact & Address Info - Third step (only for card, cod, transfer) */}
           {checkoutStep === 'address' && (
             <>
               <div className="space-y-4">
@@ -233,21 +376,26 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
           <div className="pt-4 border-t">
             <Button 
               type="submit" 
-              className="w-full cta-button border-0"
+              className={cn(
+                "w-full cta-button border-0",
+                checkoutStep === 'package' && selectedPackage === 'double' ? "bg-gradient-to-r from-tarsal-accent to-tarsal-accent/80" : ""
+              )}
             >
-              {checkoutStep === 'payment' 
+              {checkoutStep === 'package' 
+                ? 'Nadaljuj na plačilo' 
+                : checkoutStep === 'payment' 
                 ? 'Nadaljuj z naročilom' 
                 : 'Oddaj naročilo'}
             </Button>
             
-            {checkoutStep === 'address' && (
+            {checkoutStep !== 'package' && (
               <Button 
                 type="button"
                 variant="outline" 
                 className="w-full mt-2"
-                onClick={() => setCheckoutStep('payment')}
+                onClick={() => setCheckoutStep(checkoutStep === 'payment' ? 'package' : 'payment')}
               >
-                Nazaj na plačilne možnosti
+                Nazaj na {checkoutStep === 'payment' ? 'izbiro paketa' : 'plačilne možnosti'}
               </Button>
             )}
             
