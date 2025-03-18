@@ -321,7 +321,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         <div className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", colorSelections.find(s => s.index === index)?.color === 'črno' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} onClick={() => handleColorChange(index, 'črno')}>
                           <div className="flex items-center">
                             <div className="w-3 h-3 rounded-full bg-black mr-1"></div>
-                            <span className="text-xs">Črno</span>
+                            <span className="text-xs">Črna</span>
                           </div>
                           {colorSelections.find(s => s.index === index)?.color === 'črno' && <Check className="h-3 w-3 text-tarsal-accent" />}
                         </div>
