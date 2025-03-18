@@ -49,7 +49,7 @@ const PricingSection: React.FC = () => {
             <div className="p-8">
               <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">17,90€</span></p>
               <Button 
-                className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90"
+                className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90 cta-button"
                 size="lg"
               >
                 Naroči zdaj
@@ -148,7 +148,7 @@ const PricingSection: React.FC = () => {
             <div className="p-8">
               <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">40,26€</span></p>
               <Button 
-                className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90"
+                className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90 cta-button"
                 size="lg"
               >
                 Naroči zdaj
