@@ -119,7 +119,7 @@ const PricingSection: React.FC = () => {
                 className="w-full cta-button border-0"
                 size="lg"
               >
-                Naroči zdaj z 20% popustom
+                Naroči zdaj
               </Button>
             </div>
           </div>

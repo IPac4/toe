@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from '@/lib/utils';
-import { Check } from 'lucide-react';
+import { Check, Package, ShoppingCart } from 'lucide-react';
 
 interface CheckoutModalProps {
   open: boolean;
@@ -32,22 +32,43 @@ interface ProductVariant {
   features: string[];
 }
 
+type ColorOption = 'belo' | 'črno';
+
+interface ColorSelection {
+  index: number;
+  color: ColorOption;
+}
+
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ 
   open, 
   onOpenChange,
   productVariant = 'double'
 }) => {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'cod' | 'transfer' | 'applepay' | 'paypal'>('card');
-  const [checkoutStep, setCheckoutStep] = useState<'package' | 'payment' | 'address'>('package');
+  const [checkoutStep, setCheckoutStep] = useState<'package' | 'color' | 'payment' | 'address'>('package');
   const [selectedPackage, setSelectedPackage] = useState<'basic' | 'double' | 'family'>(productVariant);
+  const [colorSelections, setColorSelections] = useState<ColorSelection[]>([]);
   
   // Reset checkout step when modal opens
   useEffect(() => {
     if (open) {
       setCheckoutStep('package');
       setSelectedPackage(productVariant);
+      initializeColorSelections(productVariant);
     }
   }, [open, productVariant]);
+
+  // Initialize color selections based on the product variant
+  const initializeColorSelections = (variant: 'basic' | 'double' | 'family') => {
+    const initialSelections: ColorSelection[] = [];
+    const quantity = variant === 'basic' ? 1 : variant === 'double' ? 2 : 3;
+    
+    for (let i = 0; i < quantity; i++) {
+      initialSelections.push({ index: i, color: 'belo' });
+    }
+    
+    setColorSelections(initialSelections);
+  };
   
   const variants: Record<'basic' | 'double' | 'family', ProductVariant> = {
     basic: {
@@ -58,8 +79,9 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       total: 17.90,
       features: [
         "1x TOE",
-        "Izdelano v Sloveniji", 
-        "Priročna embalaža"
+        "Testirano v Sloveniji", 
+        "Priročna embalaža",
+        "Hitra dostava"
       ]
     },
     double: {
@@ -73,7 +95,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         "2x TOE", 
         "GRATIS vaje za dnevno vadbo", 
         "Priročna embalaža", 
-        "Izdelano v Sloveniji"
+        "Testirano v Sloveniji",
+        "Hitra dostava"
       ]
     },
     family: {
@@ -86,6 +109,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         "3x TOE", 
         "GRATIS vaje za dnevno vadbo", 
         "Priročna embalaža", 
+        "Testirano v Sloveniji",
         "Brezplačna dostava"
       ]
     }
@@ -95,8 +119,23 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const shipping = selectedVariant.total >= 30 ? 0 : 3;
   const codFee = paymentMethod === 'cod' ? 0.99 : 0;
   const finalTotal = selectedVariant.total + shipping + codFee;
+  
+  // Calculate savings
+  const originalPrice = selectedVariant.price * selectedVariant.quantity;
+  const savings = selectedVariant.discount > 0 ? originalPrice - selectedVariant.total : 0;
+
+  // Determine which features are free
+  const freeFeatures = selectedVariant.features.filter(feature => 
+    feature.toLowerCase().includes('gratis') || 
+    feature.toLowerCase().includes('brezplačna')
+  );
 
   const handlePackageSelect = () => {
+    initializeColorSelections(selectedPackage);
+    setCheckoutStep('color');
+  };
+  
+  const handleColorSelect = () => {
     setCheckoutStep('payment');
   };
 
@@ -125,11 +164,24 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setCheckoutStep('address');
   };
 
+  const handleColorChange = (index: number, color: ColorOption) => {
+    setColorSelections(prev => 
+      prev.map(item => 
+        item.index === index ? { ...item, color } : item
+      )
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (checkoutStep === 'package') {
       handlePackageSelect();
+      return;
+    }
+    
+    if (checkoutStep === 'color') {
+      handleColorSelect();
       return;
     }
     
@@ -148,26 +200,69 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         <DialogHeader>
           <DialogTitle>
             {checkoutStep === 'package' ? 'Izberite paket' : 
+             checkoutStep === 'color' ? 'Izberite barvo' :
              checkoutStep === 'payment' ? 'Način plačila' : 
              'Zaključek naročila'}
           </DialogTitle>
           <DialogDescription>
             {checkoutStep === 'package' ? 'Izberite paket, ki ustreza vašim potrebam.' : 
+             checkoutStep === 'color' ? 'Izberite barvo za vsak TOE v vašem paketu.' :
              checkoutStep === 'payment' ? 'Izberite način plačila za vaš nakup.' : 
              'Izpolnite svoje podatke za dostavo.'}
           </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-          {/* Order Summary - Always visible */}
+          {/* Order Summary - Always visible except on package selection */}
           {checkoutStep !== 'package' && (
             <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">Povzetek naročila</h3>
+              <h3 className="font-semibold mb-3">Povzetek naročila</h3>
+              
+              {savings > 0 && (
+                <div className="bg-green-100 p-3 rounded-md mb-3 border border-green-300">
+                  <p className="font-bold text-green-800 text-center">
+                    Prihranili ste: {savings.toFixed(2)}€
+                  </p>
+                </div>
+              )}
+              
+              {freeFeatures.length > 0 && (
+                <div className="bg-blue-50 p-3 rounded-md mb-3 border border-blue-200">
+                  <p className="font-semibold text-blue-800 mb-1">Brezplačne ugodnosti:</p>
+                  <ul className="space-y-1">
+                    {freeFeatures.map((feature, index) => (
+                      <li key={index} className="flex items-center text-blue-700">
+                        <Check size={16} className="mr-1 flex-shrink-0" />
+                        <span>{feature.replace('GRATIS ', '')}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span>{selectedVariant.name} ({selectedVariant.quantity}x TOE)</span>
+                  <span className="flex items-center">
+                    <Package size={16} className="mr-1" />
+                    {selectedVariant.name} ({selectedVariant.quantity}x TOE)
+                  </span>
                   <span>{selectedVariant.total.toFixed(2)}€</span>
                 </div>
+                
+                {colorSelections.length > 0 && (
+                  <div className="pt-1 pb-1 border-y border-dashed border-gray-200 my-1">
+                    <span className="text-xs text-gray-500">Izbrane barve:</span>
+                    <ul className="space-y-1 mt-1">
+                      {colorSelections.map((selection, idx) => (
+                        <li key={idx} className="flex justify-between text-xs">
+                          <span>TOE {idx + 1}</span>
+                          <span className="font-medium">{selection.color}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
                 <div className="flex justify-between">
                   <span>Dostava</span>
                   <span>{shipping > 0 ? `${shipping.toFixed(2)}€` : 'Brezplačno'}</span>
@@ -269,7 +364,58 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           )}
           
-          {/* Payment Method Selection - Second step */}
+          {/* Color Selection - Second step */}
+          {checkoutStep === 'color' && (
+            <div className="space-y-6">
+              <h3 className="font-semibold">Izberite barvo za vsak TOE izdelek</h3>
+              <div className="space-y-4">
+                {Array.from({ length: variants[selectedPackage].quantity }).map((_, index) => (
+                  <div key={index} className="border rounded-lg p-4">
+                    <h4 className="font-medium mb-3">TOE {index + 1}</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div
+                        className={cn(
+                          "border rounded-md p-3 flex items-center justify-between cursor-pointer transition-all",
+                          colorSelections.find(s => s.index === index)?.color === 'belo' 
+                            ? "border-tarsal-accent bg-tarsal-accent/5 ring-1 ring-tarsal-accent/30" 
+                            : "hover:border-gray-400"
+                        )}
+                        onClick={() => handleColorChange(index, 'belo')}
+                      >
+                        <div className="flex items-center">
+                          <div className="w-6 h-6 rounded-full bg-white border border-gray-300 mr-2"></div>
+                          <span>Belo</span>
+                        </div>
+                        {colorSelections.find(s => s.index === index)?.color === 'belo' && (
+                          <Check className="h-4 w-4 text-tarsal-accent" />
+                        )}
+                      </div>
+                      
+                      <div
+                        className={cn(
+                          "border rounded-md p-3 flex items-center justify-between cursor-pointer transition-all",
+                          colorSelections.find(s => s.index === index)?.color === 'črno' 
+                            ? "border-tarsal-accent bg-tarsal-accent/5 ring-1 ring-tarsal-accent/30" 
+                            : "hover:border-gray-400"
+                        )}
+                        onClick={() => handleColorChange(index, 'črno')}
+                      >
+                        <div className="flex items-center">
+                          <div className="w-6 h-6 rounded-full bg-black mr-2"></div>
+                          <span>Črno</span>
+                        </div>
+                        {colorSelections.find(s => s.index === index)?.color === 'črno' && (
+                          <Check className="h-4 w-4 text-tarsal-accent" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Payment Method Selection - Third step */}
           {checkoutStep === 'payment' && (
             <div className="space-y-4">
               <h3 className="font-semibold">Način plačila</h3>
@@ -339,7 +485,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           )}
           
-          {/* Contact & Address Info - Third step (only for card, cod, transfer) */}
+          {/* Contact & Address Info - Fourth step (only for card, cod, transfer) */}
           {checkoutStep === 'address' && (
             <>
               <div className="space-y-4">
@@ -393,7 +539,9 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
               )}
             >
               {checkoutStep === 'package' 
-                ? 'Nadaljuj na plačilo' 
+                ? 'Nadaljuj na izbiro barve' 
+                : checkoutStep === 'color'
+                ? 'Nadaljuj na plačilo'
                 : checkoutStep === 'payment' 
                 ? 'Nadaljuj z naročilom' 
                 : 'Oddaj naročilo'}
@@ -404,9 +552,17 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 type="button"
                 variant="outline" 
                 className="w-full mt-2"
-                onClick={() => setCheckoutStep(checkoutStep === 'payment' ? 'package' : 'payment')}
+                onClick={() => {
+                  if (checkoutStep === 'color') setCheckoutStep('package');
+                  else if (checkoutStep === 'payment') setCheckoutStep('color');
+                  else if (checkoutStep === 'address') setCheckoutStep('payment');
+                }}
               >
-                Nazaj na {checkoutStep === 'payment' ? 'izbiro paketa' : 'plačilne možnosti'}
+                Nazaj na {
+                  checkoutStep === 'color' ? 'izbiro paketa' : 
+                  checkoutStep === 'payment' ? 'izbiro barve' : 
+                  'plačilne možnosti'
+                }
               </Button>
             )}
             
