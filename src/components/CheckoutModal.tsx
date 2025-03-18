@@ -267,7 +267,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                               {variant.discount > 0 ? (variant.price * variant.quantity * (100 - variant.discount) / 100 / variant.quantity).toFixed(2) : variant.price.toFixed(2)}€
                             </span>
                             <span className="text-sm text-gray-500 ml-1">/kos</span>
-                            {variant.discount > 0 && <span className="ml-2 bg-green-100 text-green-800 text-xs font-semibold py-0.5 rounded px-0 mx-px">
+                            {variant.discount > 0 && <span className="ml-2 bg-green-100 text-xs font-semibold py-0.5 rounded px-0 mx-px text-red-500">
                                 -{variant.discount}%
                               </span>}
                           </div>
