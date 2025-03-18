@@ -81,27 +81,27 @@ const ProductShowcase: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border border-green-200 mb-8">
-              <h3 className="text-xl font-bold mb-4 text-green-600">Prednosti TOE</h3>
+            <div className="bg-gradient-to-r from-tarsal-accent/10 to-blue-100 p-6 rounded-lg border border-tarsal-accent/20 mb-8">
+              <h3 className="text-xl font-bold mb-4 text-tarsal-accent">Prednosti TOE</h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2 text-xl">✅</span>
+                  <span className="text-tarsal-accent mr-2 text-xl">✅</span>
                   <span><strong className="text-gray-800">Anatomsko oblikovan</strong> – Prilagaja se obliki prstov za optimalno udobje in podporo.</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2 text-xl">✅</span>
+                  <span className="text-tarsal-accent mr-2 text-xl">✅</span>
                   <span><strong className="text-gray-800">Visokokakovosten silikon</strong> – Mehak, trpežen in koži prijazen material zagotavlja dolgotrajno uporabo.</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2 text-xl">✅</span>
+                  <span className="text-tarsal-accent mr-2 text-xl">✅</span>
                   <span><strong className="text-gray-800">Ergonomski mostički</strong> – Nežno razmaknejo prste, zmanjšujejo trenje in preprečujejo otiščance.</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2 text-xl">✅</span>
+                  <span className="text-tarsal-accent mr-2 text-xl">✅</span>
                   <span><strong className="text-gray-800">Univerzalna velikost</strong> – Prilagaja se različnim tipom in velikostim stopal.</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-500 mr-2 text-xl">✅</span>
+                  <span className="text-tarsal-accent mr-2 text-xl">✅</span>
                   <span><strong className="text-gray-800">Primerno za vsakodnevno uporabo</strong> – Uporabljajte doma, v službi ali med športnimi aktivnostmi.</span>
                 </li>
               </ul>
@@ -109,7 +109,7 @@ const ProductShowcase: React.FC = () => {
             
             <div className="text-center">
               <Button 
-                className="cta-button text-lg py-6 px-10 shadow-lg group bg-green-600 hover:bg-green-700"
+                className="cta-button text-lg py-6 px-10 shadow-lg group"
                 onClick={() => {
                   const element = document.getElementById('pricing');
                   if (element) {
