@@ -21,6 +21,17 @@ interface CheckoutModalProps {
   productVariant?: 'basic' | 'double' | 'family';
 }
 
+// Define a common product variant interface with optional popular property
+interface ProductVariant {
+  name: string;
+  quantity: number;
+  price: number;
+  discount: number;
+  total: number;
+  popular?: boolean;
+  features: string[];
+}
+
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ 
   open, 
   onOpenChange,
@@ -38,7 +49,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
   }, [open, productVariant]);
   
-  const variants = {
+  const variants: Record<'basic' | 'double' | 'family', ProductVariant> = {
     basic: {
       name: "Osnovni paket",
       quantity: 1,
