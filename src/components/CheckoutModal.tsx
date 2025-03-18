@@ -25,6 +25,7 @@ interface CheckoutModalProps {
 
 // Define a common product variant interface with optional popular property
 interface ProductVariant {
+  id: string; // Changed from key to id
   name: string;
   quantity: number;
   price: number;
@@ -82,7 +83,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   // Define variants - always put double package first for mobile
   const variantsArray = [
     {
-      key: 'double',
+      id: 'double',  // Changed from key to id
       name: "Dvojni paket",
       quantity: 2,
       price: 17.90,
@@ -98,7 +99,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       ]
     },
     {
-      key: 'basic',
+      id: 'basic',  // Changed from key to id
       name: "Osnovni paket",
       quantity: 1,
       price: 17.90,
@@ -112,7 +113,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       ]
     },
     {
-      key: 'family',
+      id: 'family',  // Changed from key to id
       name: "Družinski paket",
       quantity: 3,
       price: 17.90,
@@ -130,9 +131,9 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   
   // Convert array to record for easier access
   const variants: Record<'basic' | 'double' | 'family', ProductVariant> = {
-    basic: variantsArray.find(v => v.key === 'basic') as ProductVariant,
-    double: variantsArray.find(v => v.key === 'double') as ProductVariant,
-    family: variantsArray.find(v => v.key === 'family') as ProductVariant
+    basic: variantsArray.find(v => v.id === 'basic') as ProductVariant,  // Changed from key to id
+    double: variantsArray.find(v => v.id === 'double') as ProductVariant,  // Changed from key to id
+    family: variantsArray.find(v => v.id === 'family') as ProductVariant  // Changed from key to id
   };
 
   const selectedVariant = variants[selectedPackage];
@@ -297,17 +298,17 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {(isMobile ? variantsArray : [variants.basic, variants.double, variants.family]).map((variant) => {
-                  const key = variant.key as 'basic' | 'double' | 'family';
-                  const isSelected = selectedPackage === key;
+                  const variantId = variant.id as 'basic' | 'double' | 'family'; // Changed from key to id
+                  const isSelected = selectedPackage === variantId;
                   return (
                     <div 
-                      key={key}
+                      key={variantId}
                       className={cn(
                         "relative border rounded-xl transition-all duration-200 overflow-hidden cursor-pointer",
                         isSelected ? "border-tarsal-accent ring-2 ring-tarsal-accent/30 shadow-lg" : "border-gray-200 hover:border-tarsal-accent/50",
                         variant.popular ? "md:-translate-y-2" : ""
                       )}
-                      onClick={() => setSelectedPackage(key)}
+                      onClick={() => setSelectedPackage(variantId)}
                     >
                       {variant.popular && (
                         <div className="absolute top-0 left-0 right-0 bg-tarsal-accent text-white text-xs font-medium py-1 text-center">
@@ -469,9 +470,9 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <Label htmlFor="cod" className="flex-1 cursor-pointer">Po povzetju (+0,99€)</Label>
                     <svg className="h-6 w-8" viewBox="0 0 32 24" fill="none">
                       <rect width="32" height="24" rx="4" fill="#F4F4F4"/>
-                      <path d="M8 8L16 12L24 8" stroke="#555555" stroke-width="1.5"/>
-                      <path d="M8 12L16 16L24 12" stroke="#555555" stroke-width="1.5"/>
-                      <path d="M8 16L16 20L24 16" stroke="#555555" stroke-width="1.5"/>
+                      <path d="M8 8L16 12L24 8" stroke="#555555" strokeWidth="1.5"/>
+                      <path d="M8 12L16 16L24 12" stroke="#555555" strokeWidth="1.5"/>
+                      <path d="M8 16L16 20L24 16" stroke="#555555" strokeWidth="1.5"/>
                     </svg>
                   </div>
                   
