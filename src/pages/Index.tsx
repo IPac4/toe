@@ -80,12 +80,12 @@ const Index: React.FC = () => {
           name="Marko Macuh"
           title="Priznan slovenski fizioterapevt"
           quote="Kot fizioterapevt pogosto svetujem uporabo TOE kot odlične preventivne rešitve. Pri redni uporabi se zmanjša tveganje za resne deformacije."
-          imageSrc="/lovable-uploads/04013d32-0c56-4cff-8059-21d6f79bbd03.png"
+          imageSrc="/lovable-uploads/4e1de179-2e39-4459-81ff-6790bc8f90c3.png"
           reverse={true}
           credentials={["Specialist za ortopedsko fizioterapijo", "Predavatelj na FZV"]}
         />
         
-        <section className="py-16 md:py-24 bg-tarsal-DEFAULT text-white">
+        <section className="py-16 md:py-24 bg-green-600 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Kaj se zgodi, če ne ukrepamo?</h2>
@@ -158,7 +158,7 @@ const Index: React.FC = () => {
           name="Jure Pantar"
           title="Trener Taekwondo reprezentance Slovenije"
           quote="TOE je koristna rešitev tudi za preventivo. Pomaga izboljšati držo, zmanjša pritiske na sklepe in preprečuje resne težave v prihodnosti."
-          imageSrc="/lovable-uploads/4e1de179-2e39-4459-81ff-6790bc8f90c3.png"
+          imageSrc="/lovable-uploads/04013d32-0c56-4cff-8059-21d6f79bbd03.png"
           credentials={["Mednarodni Taekwondo trener", "Strokovnjak za biomehaniko gibanja"]}
         />
         
