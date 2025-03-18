@@ -134,9 +134,9 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   
   // Convert array to record for easier access
   const variants: Record<'basic' | 'double' | 'family', ProductVariant> = {
-    basic: variantsArray.find(v => v.id === 'basic') as ProductVariant,  // Changed from key to id
-    double: variantsArray.find(v => v.id === 'double') as ProductVariant,  // Changed from key to id
-    family: variantsArray.find(v => v.id === 'family') as ProductVariant  // Changed from key to id
+    basic: variantsArray.find(v => v.id === 'basic') as ProductVariant,
+    double: variantsArray.find(v => v.id === 'double') as ProductVariant,
+    family: variantsArray.find(v => v.id === 'family') as ProductVariant
   };
 
   const selectedVariant = variants[selectedPackage];
@@ -301,7 +301,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {(isMobile ? variantsArray : [variants.basic, variants.double, variants.family]).map((variant) => {
-                  const variantId = variant.id as 'basic' | 'double' | 'family'; // Changed from key to id
+                  const variantId = variant.id as 'basic' | 'double' | 'family';
                   const isSelected = selectedPackage === variantId;
                   return (
                     <div 
