@@ -8,9 +8,11 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:py-6">
           <div className="flex items-center">
-            <h1 className="text-2xl md:text-3xl font-extrabold tracking-wider text-tarsal-DEFAULT">
-              TARSAL
-            </h1>
+            <img 
+              src="/lovable-uploads/b4fd3108-00e4-4e7d-9370-230efd839ff6.png" 
+              alt="TARSAL" 
+              className="h-7 md:h-8"
+            />
           </div>
           <nav className="hidden md:flex space-x-8">
             <a href="#product" className="text-sm font-medium text-gray-700 hover:text-tarsal-accent transition-colors">

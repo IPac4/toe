@@ -29,7 +29,7 @@ const Index: React.FC = () => {
         if (closestPricingCard) {
           const isPopular = closestPricingCard.classList.contains('popular');
           const isFamily = closestPricingCard.querySelector('h3')?.textContent?.includes('Družinski');
-          const isBasic = closestPricingCard.querySelector('h3')?.textContent?.includes('Osnovni');
+          const isBasic = closestPricingCard.querySelector('h3')?.textContent?.includes('Osnovn');
           
           if (isFamily) {
             setSelectedVariant('family');
