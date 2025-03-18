@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -71,6 +70,12 @@ const Index: React.FC = () => {
           featured={true}
         />
         
+        <ProblemSection />
+        
+        <ProductShowcase />
+        
+        <StatsSection />
+        
         <ExpertTestimonial 
           name="Marko Macuh"
           title="Priznani fizioterapevt in specialist za ortopedske težave"
@@ -79,12 +84,6 @@ const Index: React.FC = () => {
           reverse={true}
           credentials={["Specialist za ortopedske težave", "Certificiran klinični fizioterapevt", "10+ let kliničnih izkušenj"]}
         />
-        
-        <ProblemSection />
-        
-        <ProductShowcase />
-        
-        <StatsSection />
         
         <ConsequencesSection />
         

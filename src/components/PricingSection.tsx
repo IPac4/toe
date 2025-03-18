@@ -2,6 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 const PricingSection: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const PricingSection: React.FC = () => {
           {/* Basic Package */}
           <div className="price-card">
             <div className="p-8 border-b">
-              <h3 className="text-2xl font-bold mb-2">Osnovni paket</h3>
+              <h3 className="text-2xl font-bold mb-2">Osnovno pakiranje</h3>
               <p className="text-gray-600 mb-4">Popolna rešitev za začetek</p>
               <div className="flex items-end mb-4">
                 <span className="text-4xl font-bold">17,90€</span>
@@ -30,19 +31,25 @@ const PricingSection: React.FC = () => {
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>1x TOE</span>
+                  <span className="font-medium">1x Tarsal TOE paket</span>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>Izdelano v Sloveniji</span>
+                  <span>Testirano v Sloveniji</span>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
                   <span>Priročna embalaža</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Hitra dostava</span>
                 </li>
               </ul>
             </div>
@@ -63,7 +70,7 @@ const PricingSection: React.FC = () => {
               Najbolj priljubljeno
             </div>
             <div className="p-8 border-b">
-              <h3 className="text-2xl font-bold mb-2">Dvojni paket</h3>
+              <h3 className="text-2xl font-bold mb-2">Dvojno pakiranje</h3>
               <p className="text-gray-600 mb-4">Popolna vrednost</p>
               <div className="flex items-end mb-4">
                 <span className="text-4xl font-bold">14,32€</span>
@@ -75,13 +82,16 @@ const PricingSection: React.FC = () => {
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>2x TOE</span>
+                  <span className="font-medium">2x Tarsal TOE paket</span>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>GRATIS vaje za dnevno vadbo</span>
+                  <div className="flex items-center">
+                    <span>Vaje za dnevno vadbo</span>
+                    <Badge className="ml-2 bg-green-500 text-white">GRATIS</Badge>
+                  </div>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +103,13 @@ const PricingSection: React.FC = () => {
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>Izdelano v Sloveniji</span>
+                  <span>Testirano v Sloveniji</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span>Hitra dostava</span>
                 </li>
               </ul>
             </div>
@@ -111,7 +127,7 @@ const PricingSection: React.FC = () => {
           {/* Premium Package */}
           <div className="price-card">
             <div className="p-8 border-b">
-              <h3 className="text-2xl font-bold mb-2">Družinski paket</h3>
+              <h3 className="text-2xl font-bold mb-2">Družinsko pakiranje</h3>
               <p className="text-gray-600 mb-4">Največ prihranite</p>
               <div className="flex items-end mb-4">
                 <span className="text-4xl font-bold">13,42€</span>
@@ -123,13 +139,16 @@ const PricingSection: React.FC = () => {
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>3x TOE</span>
+                  <span className="font-medium">3x Tarsal TOE paket</span>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>GRATIS vaje za dnevno vadbo</span>
+                  <div className="flex items-center">
+                    <span>Vaje za dnevno vadbo</span>
+                    <Badge className="ml-2 bg-green-500 text-white">GRATIS</Badge>
+                  </div>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -141,7 +160,16 @@ const PricingSection: React.FC = () => {
                   <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                   </svg>
-                  <span>Brezplačna dostava</span>
+                  <span>Testirano v Sloveniji</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <div className="flex items-center">
+                    <span>Brezplačna dostava</span>
+                    <Badge className="ml-2 bg-green-500 text-white">GRATIS</Badge>
+                  </div>
                 </li>
               </ul>
             </div>
