@@ -84,15 +84,15 @@ const ConsequencesSection: React.FC = () => {
                   />
                 </AspectRatio>
               </div>
-              
-              {/* Adjusted position for mobile and tablet */}
-              <div className="absolute bottom-0 right-0 transform translate-y-1/4 lg:-bottom-5 lg:-right-5 lg:translate-y-0 bg-white p-4 rounded-lg shadow-lg max-w-[80%] sm:max-w-[60%] lg:max-w-[250px]">
-                <h4 className="text-xl font-bold text-red-600 mb-2">Posledice so lahko trajne!</h4>
-                <p className="text-gray-700 mb-4">Preprečite hujše težave s pravočasnim ukrepanjem.</p>
-                <Button className="w-full bg-green-600 hover:bg-green-700 text-white border-none cta-button">
-                  Preprečite težave zdaj
-                </Button>
-              </div>
+            </div>
+            
+            {/* Consequences box moved below the image, centered */}
+            <div className="mt-8 mx-auto bg-white p-4 rounded-lg shadow-lg max-w-[90%] sm:max-w-[80%] md:max-w-[70%]">
+              <h4 className="text-xl font-bold text-red-600 mb-2 text-center">Posledice so lahko trajne!</h4>
+              <p className="text-gray-700 mb-4 text-center">Preprečite hujše težave s pravočasnim ukrepanjem.</p>
+              <Button className="w-full bg-green-600 hover:bg-green-700 text-white border-none cta-button">
+                Preprečite težave zdaj
+              </Button>
             </div>
           </div>
         </div>
