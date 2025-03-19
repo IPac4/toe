@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 const Hero: React.FC = () => {
@@ -8,7 +9,8 @@ const Hero: React.FC = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in" style={{
           animationDelay: '0.1s'
         }}>
-            Cele dneve v neudobnih čevljih, brez časa za vadbo, bolečina v stopalih postaja <span className="text-tarsal-accent">stalna</span>
+            Cele dneve v <span className="text-orange-500">neudobnih čevljih</span>, brez časa za <span className="text-green-600">vadbo</span>, 
+            <span className="text-red-600 font-extrabold"> bolečina v stopalih</span> postaje <span className="text-tarsal-accent">stalna</span>
           </h1>
           
           
