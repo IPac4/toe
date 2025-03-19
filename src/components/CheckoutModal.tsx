@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from '@/lib/utils';
-import { Check, Package, ShoppingCart, CreditCard, Truck, Gift, ShieldCheck } from 'lucide-react';
+import { Check, Package, ShoppingCart, CreditCard, Truck, Gift, ShieldCheck, Timer, BadgeCheck, Users } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 interface CheckoutModalProps {
   open: boolean;
@@ -47,6 +47,30 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [selectedPackage, setSelectedPackage] = useState<'basic' | 'double' | 'family'>(productVariant);
   const [colorSelections, setColorSelections] = useState<ColorSelection[]>([]);
   const isMobile = useIsMobile();
+  
+  // Countdown timer state
+  const [countdown, setCountdown] = useState({ minutes: 15, seconds: 0 });
+  
+  // Initialize countdown timer when modal opens
+  useEffect(() => {
+    if (open) {
+      setCountdown({ minutes: 15, seconds: 0 });
+      const timer = setInterval(() => {
+        setCountdown(prev => {
+          if (prev.seconds > 0) {
+            return { ...prev, seconds: prev.seconds - 1 };
+          } else if (prev.minutes > 0) {
+            return { minutes: prev.minutes - 1, seconds: 59 };
+          } else {
+            clearInterval(timer);
+            return prev;
+          }
+        });
+      }, 1000);
+      
+      return () => clearInterval(timer);
+    }
+  }, [open]);
 
   // Reset checkout step when modal opens
   useEffect(() => {
@@ -170,7 +194,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const allColorsSelected = colorSelections.length === selectedVariant.quantity;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {checkoutStep === 'package' ? 'Izberite paket' : checkoutStep === 'color_payment' ? 'Izberite barvo in način plačila' : 'Zaključek naročila'}
@@ -181,6 +205,19 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+          {/* Limited time offer countdown */}
+          <div className="bg-red-50 border border-red-100 rounded-lg p-4 flex items-center gap-3 animate-pulse">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
+                <Timer className="h-5 w-5 text-red-500" />
+              </div>
+            </div>
+            <div>
+              <h3 className="font-semibold text-sm text-red-700">Časovno omejena ponudba!</h3>
+              <p className="text-xs text-gray-600">Ta ponudba poteče čez: <span className="font-bold">{countdown.minutes.toString().padStart(2, '0')}:{countdown.seconds.toString().padStart(2, '0')}</span></p>
+            </div>
+          </div>
+          
           {/* 30-day guarantee - New section added at the top */}
           <div className="bg-green-50 border border-green-100 rounded-lg p-4 flex items-center gap-3">
             <div className="flex-shrink-0">
@@ -191,6 +228,19 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div>
               <h3 className="font-semibold text-sm">30-dnevna garancija zadovoljstva</h3>
               <p className="text-xs text-gray-600">Če z izdelkom niste zadovoljni, vam v 30 dneh vrnemo denar. Brez vprašanj!</p>
+            </div>
+          </div>
+          
+          {/* Social proof section - New addition */}
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-center gap-3">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                <Users className="h-5 w-5 text-blue-500" />
+              </div>
+            </div>
+            <div>
+              <h3 className="font-semibold text-sm">Priljubljeno med kupci</h3>
+              <p className="text-xs text-gray-600">V zadnjih 24 urah je izdelek kupilo <span className="font-bold">28 oseb</span>.</p>
             </div>
           </div>
           
@@ -278,51 +328,40 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   const variantId = variant.id as 'basic' | 'double' | 'family';
                   const isSelected = selectedPackage === variantId;
                   return (
-                    <div key={variantId} className={cn("relative border rounded-xl transition-all duration-200 overflow-hidden cursor-pointer", isSelected ? "border-tarsal-accent ring-2 ring-tarsal-accent/30 shadow-lg" : "border-gray-200 hover:border-tarsal-accent/50", variant.popular ? "md:-translate-y-2" : "")}>
+                    <div 
+                      key={variantId} 
+                      className={cn(
+                        "price-card",
+                        pkg.popular ? "popular transform scale-105" : ""
+                      )}
+                    >
                       {variant.popular && (
-                        <div className="absolute top-0 left-0 right-0 text-white text-xs font-medium py-1 text-center bg-red-500">
+                        <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
                           Najbolj priljubljeno
                         </div>
                       )}
-                      
-                      <div className={cn("p-5", variant.popular ? "pt-7" : "", isSelected ? "bg-tarsal-accent/5" : "")}>
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="font-bold text-lg">{variant.name}</h3>
-                            <p className="text-sm text-gray-600">{variant.quantity}x TOE</p>
-                          </div>
-                          {isSelected && (
-                            <div className="bg-tarsal-accent text-white h-6 w-6 rounded-full flex items-center justify-center">
-                              <Check className="h-4 w-4" />
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="mb-4">
-                          <div className="flex items-baseline mb-2">
-                            <span className="text-2xl font-bold">
-                              {variant.discount > 0 ? (variant.price * variant.quantity * (100 - variant.discount) / 100 / variant.quantity).toFixed(2) : variant.price.toFixed(2)}€
-                            </span>
-                            <span className="text-sm text-gray-500 ml-1">/kos</span>
-                            {variant.discount > 0 && (
-                              <span className="ml-2 bg-green-100 text-xs font-semibold py-0.5 rounded px-0 text-slate-950 mx-[3px]">
-                                -{variant.discount}%
-                              </span>
-                            )}
-                          </div>
+                      <div className="p-8 border-b">
+                        <h3 className="text-2xl font-bold mb-2">{variant.name}</h3>
+                        <p className="text-gray-600 mb-4">{variant.description}</p>
+                        <div className="flex items-end mb-4">
+                          <span className="text-4xl font-bold">{variant.pricePerItem.toFixed(2)}€</span>
+                          <span className="text-gray-500 ml-2">/kos</span>
                           {variant.discount > 0 && (
-                            <div className="text-sm text-gray-500 line-through">
-                              {variant.price.toFixed(2)}€/kos
-                            </div>
+                            <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+                              -{variant.discount}%
+                            </span>
                           )}
                         </div>
+                        {variant.discount > 0 && (
+                          <div className="text-sm text-gray-500 line-through">
+                            {variant.price.toFixed(2)}€/kos
+                          </div>
+                        )}
                         
-                        <ul className="space-y-2 mb-6">
+                        <ul className="space-y-3 mb-6">
                           {variant.features.map((feature, index) => (
-                            <li key={index} className="flex items-start text-sm">
-                              <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
-                              </svg>
+                            <li key={index} className="flex items-start">
+                              <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
                               <span>{feature}</span>
                             </li>
                           ))}
@@ -354,31 +393,31 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   {Array.from({
                     length: variants[selectedPackage].quantity
                   }).map((_, index) => (
-                    <div key={index} className="border rounded-lg p-2">
-                      <div className="text-xs font-medium mb-1">TOE {index + 1}</div>
+                    <div key={index} className="border rounded-lg p-3">
+                      <div className="text-sm font-medium mb-2">TOE {index + 1}</div>
                       <div className="flex space-x-2">
                         <div 
-                          className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", 
+                          className={cn("flex-1 border rounded-md p-2 flex items-center justify-between cursor-pointer transition-all", 
                             colorSelections.find(s => s.index === index)?.color === 'belo' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} 
                           onClick={() => handleColorChange(index, 'belo')}
                         >
                           <div className="flex items-center">
-                            <div className="w-3 h-3 rounded-full bg-white border border-gray-300 mr-1"></div>
-                            <span className="text-xs">Bela</span>
+                            <div className="w-4 h-4 rounded-full bg-white border border-gray-300 mr-1"></div>
+                            <span className="text-sm">Bela</span>
                           </div>
-                          {colorSelections.find(s => s.index === index)?.color === 'belo' && <Check className="h-3 w-3 text-tarsal-accent" />}
+                          {colorSelections.find(s => s.index === index)?.color === 'belo' && <Check className="h-4 w-4 text-tarsal-accent" />}
                         </div>
                         
                         <div 
-                          className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", 
+                          className={cn("flex-1 border rounded-md p-2 flex items-center justify-between cursor-pointer transition-all", 
                             colorSelections.find(s => s.index === index)?.color === 'črno' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} 
                           onClick={() => handleColorChange(index, 'črno')}
                         >
                           <div className="flex items-center">
-                            <div className="w-3 h-3 rounded-full bg-black mr-1"></div>
-                            <span className="text-xs">Črna</span>
+                            <div className="w-4 h-4 rounded-full bg-black mr-1"></div>
+                            <span className="text-sm">Črna</span>
                           </div>
-                          {colorSelections.find(s => s.index === index)?.color === 'črno' && <Check className="h-3 w-3 text-tarsal-accent" />}
+                          {colorSelections.find(s => s.index === index)?.color === 'črno' && <Check className="h-4 w-4 text-tarsal-accent" />}
                         </div>
                       </div>
                     </div>
@@ -452,6 +491,22 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     </svg>
                   </div>
                 </RadioGroup>
+              </div>
+              
+              {/* Trust badges */}
+              <div className="flex flex-wrap justify-center gap-3 pt-4">
+                <div className="bg-gray-50 p-2 rounded-md flex items-center border">
+                  <BadgeCheck className="h-4 w-4 text-green-500 mr-1" />
+                  <span className="text-xs font-medium">Varna plačila</span>
+                </div>
+                <div className="bg-gray-50 p-2 rounded-md flex items-center border">
+                  <Truck className="h-4 w-4 text-tarsal-accent mr-1" />
+                  <span className="text-xs font-medium">Hitra dostava</span>
+                </div>
+                <div className="bg-gray-50 p-2 rounded-md flex items-center border">
+                  <ShieldCheck className="h-4 w-4 text-blue-500 mr-1" />
+                  <span className="text-xs font-medium">30-dnevna garancija</span>
+                </div>
               </div>
             </div>
           )}
