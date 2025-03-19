@@ -107,6 +107,8 @@
     right: 0;
     z-index: 100;
     transition: all 0.3s ease;
+    /* Initially hidden by default, will be shown by JavaScript */
+    transform: translateY(0);
   }
   
   .sticky-cta.hidden {
