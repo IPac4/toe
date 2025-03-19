@@ -13,11 +13,7 @@ const Hero: React.FC = () => {
           
           
           {/* First button - new button added above */}
-          <a href="#product" className={cn("inline-flex items-center justify-center", "bg-white text-tarsal-accent border-2 border-tarsal-accent rounded-full px-6 py-2 mb-4", "hover:bg-tarsal-accent/10 transition-colors", "text-lg animate-fade-in")} style={{
-          animationDelay: '0.25s'
-        }}>
-            Več o izdelku
-          </a>
+          
           
           <div className="mt-8"></div> {/* Increased spacing here from mt-2 to mt-8 */}
           
