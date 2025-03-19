@@ -4,7 +4,7 @@ import { ShieldCheck } from 'lucide-react';
 
 const GuaranteeSection: React.FC = () => {
   return (
-    <section className="py-12 bg-gradient-to-r from-blue-50 to-green-50">
+    <section className="py-12 bg-gradient-to-r from-green-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 p-6 rounded-xl bg-white shadow-lg border border-gray-100">
           <div className="flex-shrink-0">
