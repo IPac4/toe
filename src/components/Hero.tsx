@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
                   alt="Marko Macuh" 
                   className="w-full h-auto rounded-lg shadow-md object-cover max-w-[400px] mx-auto" // Increased from 300px to 400px
                 />
-                <div className="absolute top-4 left-4">
+                <div className="absolute top-4 right-4">
                   <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno od stroke</Badge>
                 </div>
                 <div className="absolute -bottom-3 -right-3 bg-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
