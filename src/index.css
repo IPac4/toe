@@ -138,4 +138,17 @@
   .price-card.popular {
     @apply ring-2 ring-green-500;
   }
+  
+  /* New styling for FAQ section */
+  .faq-item {
+    @apply transition-all duration-300;
+  }
+  
+  .faq-trigger {
+    @apply cursor-pointer;
+  }
+  
+  .faq-content {
+    @apply transition-all duration-300;
+  }
 }

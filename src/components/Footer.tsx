@@ -1,8 +1,12 @@
+
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Footer: React.FC = () => {
   const [showStickyCta, setShowStickyCta] = useState(false);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
   
   useEffect(() => {
     // Handle showing sticky CTA after 20 seconds
@@ -22,19 +26,111 @@ const Footer: React.FC = () => {
       }
     };
     
+    // Check if checkout modal is open, hide sticky CTA if it is
+    const checkCheckoutModal = () => {
+      const checkoutModalElement = document.querySelector('[data-state="open"].checkout-modal');
+      if (checkoutModalElement) {
+        setShowStickyCta(false);
+      } else if (window.scrollY > window.innerHeight / 2) {
+        // Re-enable sticky CTA when modal closes if we're past 50% scroll
+        setShowStickyCta(true);
+      }
+    };
+    
     window.addEventListener('scroll', handleScroll);
+    
+    // Run the modal check every second
+    const modalCheckInterval = setInterval(checkCheckoutModal, 1000);
     
     // Cleanup function
     return () => {
       clearTimeout(timeoutId);
+      clearInterval(modalCheckInterval);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
   
-  // Rest of the component remains the same
+  const toggleFaq = (id: string) => {
+    if (openFaq === id) {
+      setOpenFaq(null);
+    } else {
+      setOpenFaq(id);
+    }
+  };
+  
+  const faqItems = [
+    {
+      id: "faq1",
+      question: "Kako deluje TAR TOE?",
+      answer: "TAR TOE deluje kot razbremenitveni pripomoček za prste na nogi. Z ergonomsko zasnovo razbremeni pritisk na prste, poravna deformirane prste in prepreči nadaljnje deformacije. Izdelan je iz medicinskega silikona, ki je udoben za nošenje in trpežen."
+    },
+    {
+      id: "faq2",
+      question: "Ali je TAR TOE primeren za vse starosti?",
+      answer: "Da, TAR TOE je primeren za uporabnike vseh starosti. Tako starejši kot mlajši lahko uporabljajo ta pripomoček za preprečevanje in lajšanje težav s prsti na nogah."
+    },
+    {
+      id: "faq3",
+      question: "Kako dolgo naj nosim TAR TOE dnevno?",
+      answer: "Priporočamo, da TAR TOE nosite vsaj 3-4 ure dnevno za optimalne rezultate. Lahko ga nosite med hojo, med sedenjem ali celo med spanjem, odvisno od vaših potreb in udobja."
+    },
+    {
+      id: "faq4",
+      question: "Ali lahko TAR TOE nosim v čevljih?",
+      answer: "Da, TAR TOE je zasnovan tako, da ga lahko udobno nosite v večini čevljev. Priporočamo čevlje z nekoliko širšim sprednjim delom za maksimalno udobje."
+    },
+    {
+      id: "faq5",
+      question: "Kako čistim in vzdržujem TAR TOE?",
+      answer: "TAR TOE lahko enostavno očistite z blagim milom in toplo vodo. Pustite ga, da se popolnoma posuši na zraku, preden ga ponovno uporabite. Ne uporabljajte agresivnih kemikalij ali belil."
+    },
+    {
+      id: "faq6",
+      question: "Koliko časa traja, da opazim rezultate?",
+      answer: "Večina uporabnikov začne opažati izboljšanje in olajšanje v 1-2 tednih redne uporabe. Za optimalne rezultate priporočamo dosledno uporabo vsaj 30 dni."
+    },
+    {
+      id: "faq7",
+      question: "Ali imate garancijo vračila denarja?",
+      answer: "Da, ponujamo 30-dnevno garancijo zadovoljstva. Če z izdelkom niste zadovoljni, ga lahko vrnete za polno povračilo v roku 30 dni od nakupa."
+    },
+    {
+      id: "faq8",
+      question: "Je TAR TOE na voljo v različnih velikostih?",
+      answer: "Da, TAR TOE je na voljo v več velikostih, da ustreza različnim velikostim stopala. Pri naročilu lahko izberete primerno velikost glede na vaše potrebe."
+    }
+  ];
+  
   return (
     <footer className="bg-tarsal-DEFAULT text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* FAQ Section */}
+        <div className="mb-16" id="faq">
+          <h2 className="text-3xl font-bold mb-8 text-center">Pogosta vprašanja</h2>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {faqItems.map((item) => (
+              <Collapsible 
+                key={item.id} 
+                open={openFaq === item.id}
+                onOpenChange={() => toggleFaq(item.id)}
+                className="bg-white/10 rounded-lg overflow-hidden"
+              >
+                <CollapsibleTrigger className="w-full px-6 py-4 flex justify-between items-center text-left font-medium hover:bg-white/5">
+                  {item.question}
+                  {openFaq === item.id ? (
+                    <ChevronUp className="h-5 w-5" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5" />
+                  )}
+                </CollapsibleTrigger>
+                <CollapsibleContent className="px-6 py-4 text-gray-300 bg-black/20">
+                  <p>{item.answer}</p>
+                </CollapsibleContent>
+              </Collapsible>
+            ))}
+          </div>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <h2 className="text-2xl font-bold mb-4">TARSAL</h2>
@@ -60,7 +156,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-300 hover:text-white">O nas</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white">Kontakt</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white">Pogosta vprašanja</a></li>
+              <li><a href="#faq" className="text-gray-300 hover:text-white">Pogosta vprašanja</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white">Blog</a></li>
             </ul>
           </div>
