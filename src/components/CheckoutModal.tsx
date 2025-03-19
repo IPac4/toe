@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -167,7 +168,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   // Check if all colors are selected
   const allColorsSelected = colorSelections.length === selectedVariant.quantity;
-  return <Dialog open={open} onOpenChange={onOpenChange}>
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
@@ -193,27 +195,36 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
           </div>
           
           {/* Order Summary - Always visible except on package selection */}
-          {checkoutStep !== 'package' && <div className="bg-gray-50 p-4 rounded-lg">
+          {checkoutStep !== 'package' && (
+            <div className="bg-gray-50 p-4 rounded-lg">
               <h3 className="font-semibold mb-3">Povzetek naročila</h3>
               
-              {savings > 0 && <div className="bg-green-100 p-3 rounded-md mb-3 border border-green-300">
+              {savings > 0 && (
+                <div className="bg-green-100 p-3 rounded-md mb-3 border border-green-300">
                   <p className="font-bold text-green-800 text-center text-lg">
                     Prihranili ste: {savings.toFixed(2)}€
-                    {selectedVariant.hasExercises && <span className="block text-sm mt-1">
+                    {selectedVariant.hasExercises && (
+                      <span className="block text-sm mt-1">
                         (vključno s 5,00€ za vaje za dnevno vadbo)
-                      </span>}
+                      </span>
+                    )}
                   </p>
-                </div>}
+                </div>
+              )}
               
-              {freeFeatures.length > 0 && <div className="bg-blue-50 p-3 rounded-md mb-3 border border-blue-200">
+              {freeFeatures.length > 0 && (
+                <div className="bg-blue-50 p-3 rounded-md mb-3 border border-blue-200">
                   <p className="font-semibold text-blue-800 mb-1">Brezplačne ugodnosti:</p>
                   <ul className="space-y-1">
-                    {freeFeatures.map((feature, index) => <li key={index} className="flex items-center text-blue-700">
+                    {freeFeatures.map((feature, index) => (
+                      <li key={index} className="flex items-center text-blue-700">
                         <Gift size={16} className="mr-1 flex-shrink-0" />
                         <span>{feature.replace('GRATIS ', '')}</span>
-                      </li>)}
+                      </li>
+                    ))}
                   </ul>
-                </div>}
+                </div>
+              )}
               
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -224,15 +235,19 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <span>{selectedVariant.total.toFixed(2)}€</span>
                 </div>
                 
-                {colorSelections.length > 0 && <div className="pt-1 pb-1 border-y border-dashed border-gray-200 my-1">
+                {colorSelections.length > 0 && (
+                  <div className="pt-1 pb-1 border-y border-dashed border-gray-200 my-1">
                     <span className="text-xs text-gray-500">Izbrane barve:</span>
                     <ul className="space-y-1 mt-1">
-                      {colorSelections.map((selection, idx) => <li key={idx} className="flex justify-between text-xs">
+                      {colorSelections.map((selection, idx) => (
+                        <li key={idx} className="flex justify-between text-xs">
                           <span>TOE {idx + 1}</span>
                           <span className="font-medium">{selection.color}</span>
-                        </li>)}
+                        </li>
+                      ))}
                     </ul>
-                  </div>}
+                  </div>
+                )}
                 
                 <div className="flex justify-between">
                   <span className="flex items-center">
@@ -241,27 +256,34 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </span>
                   <span>{shipping > 0 ? `${shipping.toFixed(2)}€` : 'Brezplačno'}</span>
                 </div>
-                {paymentMethod === 'cod' && <div className="flex justify-between">
+                {paymentMethod === 'cod' && (
+                  <div className="flex justify-between">
                     <span>Plačilo po povzetju</span>
                     <span>{codFee.toFixed(2)}€</span>
-                  </div>}
+                  </div>
+                )}
                 <div className="flex justify-between font-bold pt-2 border-t">
                   <span>Skupaj</span>
                   <span>{finalTotal.toFixed(2)}€</span>
                 </div>
               </div>
-            </div>}
+            </div>
+          )}
           
           {/* Package Selection - First step */}
-          {checkoutStep === 'package' && <div className="space-y-6">
+          {checkoutStep === 'package' && (
+            <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {(isMobile ? variantsArray : [variants.basic, variants.double, variants.family]).map(variant => {
-              const variantId = variant.id as 'basic' | 'double' | 'family';
-              const isSelected = selectedPackage === variantId;
-              return <div key={variantId} className={cn("relative border rounded-xl transition-all duration-200 overflow-hidden cursor-pointer", isSelected ? "border-tarsal-accent ring-2 ring-tarsal-accent/30 shadow-lg" : "border-gray-200 hover:border-tarsal-accent/50", variant.popular ? "md:-translate-y-2" : "")}>
-                      {variant.popular && <div className="absolute top-0 left-0 right-0 text-white text-xs font-medium py-1 text-center bg-red-500">
+                  const variantId = variant.id as 'basic' | 'double' | 'family';
+                  const isSelected = selectedPackage === variantId;
+                  return (
+                    <div key={variantId} className={cn("relative border rounded-xl transition-all duration-200 overflow-hidden cursor-pointer", isSelected ? "border-tarsal-accent ring-2 ring-tarsal-accent/30 shadow-lg" : "border-gray-200 hover:border-tarsal-accent/50", variant.popular ? "md:-translate-y-2" : "")}>
+                      {variant.popular && (
+                        <div className="absolute top-0 left-0 right-0 text-white text-xs font-medium py-1 text-center bg-red-500">
                           Najbolj priljubljeno
-                        </div>}
+                        </div>
+                      )}
                       
                       <div className={cn("p-5", variant.popular ? "pt-7" : "", isSelected ? "bg-tarsal-accent/5" : "")}>
                         <div className="flex justify-between items-start mb-4">
@@ -269,9 +291,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                             <h3 className="font-bold text-lg">{variant.name}</h3>
                             <p className="text-sm text-gray-600">{variant.quantity}x TOE</p>
                           </div>
-                          {isSelected && <div className="bg-tarsal-accent text-white h-6 w-6 rounded-full flex items-center justify-center">
+                          {isSelected && (
+                            <div className="bg-tarsal-accent text-white h-6 w-6 rounded-full flex items-center justify-center">
                               <Check className="h-4 w-4" />
-                            </div>}
+                            </div>
+                          )}
                         </div>
                         
                         <div className="mb-4">
@@ -280,22 +304,28 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                               {variant.discount > 0 ? (variant.price * variant.quantity * (100 - variant.discount) / 100 / variant.quantity).toFixed(2) : variant.price.toFixed(2)}€
                             </span>
                             <span className="text-sm text-gray-500 ml-1">/kos</span>
-                            {variant.discount > 0 && <span className="ml-2 bg-green-100 text-xs font-semibold py-0.5 rounded px-0 text-slate-950 mx-[3px]">
+                            {variant.discount > 0 && (
+                              <span className="ml-2 bg-green-100 text-xs font-semibold py-0.5 rounded px-0 text-slate-950 mx-[3px]">
                                 -{variant.discount}%
-                              </span>}
+                              </span>
+                            )}
                           </div>
-                          {variant.discount > 0 && <div className="text-sm text-gray-500 line-through">
+                          {variant.discount > 0 && (
+                            <div className="text-sm text-gray-500 line-through">
                               {variant.price.toFixed(2)}€/kos
-                            </div>}
+                            </div>
+                          )}
                         </div>
                         
                         <ul className="space-y-2 mb-6">
-                          {variant.features.map((feature, index) => <li key={index} className="flex items-start text-sm">
+                          {variant.features.map((feature, index) => (
+                            <li key={index} className="flex items-start text-sm">
                               <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                               </svg>
                               <span>{feature}</span>
-                            </li>)}
+                            </li>
+                          ))}
                         </ul>
                         
                         <div className="text-sm font-semibold mb-2">
@@ -307,23 +337,31 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           Kupi zdaj
                         </Button>
                       </div>
-                    </div>;
-            })}
+                    </div>
+                  );
+                })}
               </div>
-            </div>}
+            </div>
+          )}
           
           {/* Combined Color Selection and Payment - Second step */}
-          {checkoutStep === 'color_payment' && <div className="space-y-6">
+          {checkoutStep === 'color_payment' && (
+            <div className="space-y-6">
               {/* Compact Color Selection */}
               <div>
                 <h3 className="font-semibold mb-3">Izberite barvo za vsak TOE izdelek</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {Array.from({
-                length: variants[selectedPackage].quantity
-              }).map((_, index) => <div key={index} className="border rounded-lg p-2">
+                    length: variants[selectedPackage].quantity
+                  }).map((_, index) => (
+                    <div key={index} className="border rounded-lg p-2">
                       <div className="text-xs font-medium mb-1">TOE {index + 1}</div>
                       <div className="flex space-x-2">
-                        <div className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", colorSelections.find(s => s.index === index)?.color === 'belo' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} onClick={() => handleColorChange(index, 'belo')}>
+                        <div 
+                          className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", 
+                            colorSelections.find(s => s.index === index)?.color === 'belo' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} 
+                          onClick={() => handleColorChange(index, 'belo')}
+                        >
                           <div className="flex items-center">
                             <div className="w-3 h-3 rounded-full bg-white border border-gray-300 mr-1"></div>
                             <span className="text-xs">Bela</span>
@@ -331,7 +369,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           {colorSelections.find(s => s.index === index)?.color === 'belo' && <Check className="h-3 w-3 text-tarsal-accent" />}
                         </div>
                         
-                        <div className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", colorSelections.find(s => s.index === index)?.color === 'črno' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} onClick={() => handleColorChange(index, 'črno')}>
+                        <div 
+                          className={cn("flex-1 border rounded-md p-1 flex items-center justify-between cursor-pointer transition-all", 
+                            colorSelections.find(s => s.index === index)?.color === 'črno' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-gray-400")} 
+                          onClick={() => handleColorChange(index, 'črno')}
+                        >
                           <div className="flex items-center">
                             <div className="w-3 h-3 rounded-full bg-black mr-1"></div>
                             <span className="text-xs">Črna</span>
@@ -339,7 +381,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           {colorSelections.find(s => s.index === index)?.color === 'črno' && <Check className="h-3 w-3 text-tarsal-accent" />}
                         </div>
                       </div>
-                    </div>)}
+                    </div>
+                  ))}
                 </div>
               </div>
               
@@ -394,4 +437,80 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <Label htmlFor="applepay" className="flex-1 cursor-pointer">Apple Pay</Label>
                     <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
                       <rect width="40" height="24" rx="4" fill="#000000" />
-                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C15.5 12.7 14.6 12.3 14.6 11.3C14.6 10.5 15.3 10.1 15.3 10.1C15 9.6 14.3 9.7 13.6 9.7ZM19.5 8.4V14.5H20.4V12.4H22C23.2 12.4 24.1 11.5 24.1 10.4C24.1 9.3 23.3 8.4 22.1 8.4H19.5ZM20.4 9.2H21.7C22.5 9.2 23.1 9.7 23.1 10.4C23.1 11.1 22.5 11.6 21.7 11.6H20.4V9.2ZM26.2 14.6C27 14.6 27.7 14.2 28 13.6H28.1V14.5H29V11.2C29 10.2 28.2 9.6 27 9.6C25.9 9.6 25.1 10.2 25 11H25.9C26 10.6 26.4 10.3 27 10.3C27.7 10.3 28.1 10.7 28.1 11.2V11.7L26.7 11.8C25.5 11.9 24.8 12.4 24.8 13.2C24.8 14.1 25.4 14.6 26.2
+                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C15.5 12.7 14.6 12.3 14.6 11.3C14.6 10.5 15.3 10.1 15.3 10.1C15 9.6 14.3 9.7 13.6 9.7ZM19.5 8.4V14.5H20.4V12.4H22C23.2 12.4 24.1 11.5 24.1 10.4C24.1 9.3 23.3 8.4 22.1 8.4H19.5ZM20.4 9.2H21.7C22.5 9.2 23.1 9.7 23.1 10.4C23.1 11.1 22.5 11.6 21.7 11.6H20.4V9.2ZM26.2 14.6C27 14.6 27.7 14.2 28 13.6H28.1V14.5H29V11.2C29 10.2 28.2 9.6 27 9.6C25.9 9.6 25.1 10.2 25 11H25.9C26 10.6 26.4 10.3 27 10.3C27.7 10.3 28.1 10.7 28.1 11.2V11.7L26.7 11.8C25.5 11.9 24.8 12.4 24.8 13.2C24.8 14.1 25.4 14.6 26.2 14.6Z" fill="white" />
+                    </svg>
+                  </div>
+                  
+                  <div className={cn("flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all", paymentMethod === 'paypal' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50")}>
+                    <RadioGroupItem value="paypal" id="paypal" />
+                    <Label htmlFor="paypal" className="flex-1 cursor-pointer">PayPal</Label>
+                    <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
+                      <rect width="40" height="24" rx="4" fill="#FFFFFF" />
+                      <path d="M29.25 8.18H24.59a.41.41 0 0 0-.41.35L23 16.87a.25.25 0 0 0 .24.29h2.31a.41.41 0 0 0 .41-.35l.3-1.93a.41.41 0 0 1 .41-.35h1.47c1.96 0 3.09-1.03 3.38-3.07.13-.9 0-1.6-.36-2.1-.4-.55-1.11-.79-2.06-.79z" fill="#253B80" />
+                      <path d="M29.25 8.18H24.59a.41.41 0 0 0-.41.35L23 16.87a.25.25 0 0 0 .24.29h2.31a.41.41 0 0 0 .41-.35l.3-1.93a.41.41 0 0 1 .41-.35h1.47c1.96 0 3.09-1.03 3.38-3.07.13-.9 0-1.6-.36-2.1-.4-.55-1.11-.79-2.06-.79z" fill="#253B80" />
+                      <path d="M17.53 8.18h-4.66a.41.41 0 0 0-.41.35l-1.2 8.34a.25.25 0 0 0 .25.29h2.23a.3.3 0 0 0 .3-.25l.34-2.19a.41.41 0 0 1 .4-.35h1.47c1.96 0 3.09-1.03 3.38-3.07.13-.9 0-1.6-.36-2.1-.4-.55-1.11-.79-2.06-.79z" fill="#179BD7" />
+                    </svg>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+          )}
+          
+          {checkoutStep === 'address' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <Label htmlFor="fullName">Ime in priimek</Label>
+                  <Input id="fullName" placeholder="Vnesite vaše ime in priimek" required />
+                </div>
+                <div>
+                  <Label htmlFor="email">E-mail</Label>
+                  <Input id="email" type="email" placeholder="Vnesite vaš e-mail" required />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Telefon</Label>
+                  <Input id="phone" placeholder="Vnesite vašo telefonsko številko" required />
+                </div>
+                <div>
+                  <Label htmlFor="address">Naslov</Label>
+                  <Input id="address" placeholder="Vnesite vaš naslov" required />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <Label htmlFor="postalCode">Poštna številka</Label>
+                    <Input id="postalCode" placeholder="npr. 1000" required />
+                  </div>
+                  <div>
+                    <Label htmlFor="city">Mesto</Label>
+                    <Input id="city" placeholder="npr. Ljubljana" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {/* Action Buttons */}
+          <div className={cn("pt-4", checkoutStep === 'package' ? "hidden" : "flex justify-between")}>
+            {checkoutStep !== 'package' && (
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setCheckoutStep(checkoutStep === 'address' ? 'color_payment' : 'package')}
+              >
+                Nazaj
+              </Button>
+            )}
+            <Button 
+              type="submit" 
+              className={cn("bg-tarsal-accent hover:bg-tarsal-accent/90 text-white", checkoutStep === 'package' ? "hidden" : "")}
+            >
+              {checkoutStep === 'address' ? 'Zaključi naročilo' : 'Nadaljuj na dostavo'}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CheckoutModal;
