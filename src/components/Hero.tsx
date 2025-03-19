@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
         <div className="mt-auto pt-12"></div> {/* This pushes the button to the bottom third */}
         
         {/* Second button - positioned at the bottom third */}
-        <div className="text-center pb-8">
+        <div className="text-center pb-8 my-[82px]">
           <a href="#pricing" className={cn("inline-flex items-center justify-center", "cta-button text-lg", "animate-fade-in")} style={{
           animationDelay: '0.3s'
         }}>
