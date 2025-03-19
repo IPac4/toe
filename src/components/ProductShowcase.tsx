@@ -1,8 +1,11 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
+
 const ProductShowcase: React.FC = () => {
-  return <section id="product" className="py-16 md:py-24 bg-white">
+  return (
+    <section id="product" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Predstavljamo</h2>
@@ -100,24 +103,44 @@ const ProductShowcase: React.FC = () => {
               </ul>
             </div>
             
-            <div className="text-center">
-              <Button onClick={() => {
-              const element = document.getElementById('pricing');
-              if (element) {
-                element.scrollIntoView({
-                  behavior: 'smooth'
-                });
-              }
-            }} className="cta-button text-lg py-6 px-10 shadow-lg group bg-green-600 hover:bg-green-500">
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => {
+                  const element = document.getElementById('pricing');
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: 'smooth'
+                    });
+                  }
+                }} 
+                className="cta-button text-lg py-6 px-10 shadow-lg group bg-green-600 hover:bg-green-500"
+              >
                 Naroči zdaj
                 <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Button>
+              
+              <Button 
+                onClick={() => {
+                  const element = document.getElementById('faq');
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: 'smooth'
+                    });
+                  }
+                }} 
+                variant="outline" 
+                className="border-green-600 text-green-600 hover:bg-green-50 text-lg py-6 px-10"
+              >
+                Pogosta vprašanja
+              </Button>
             </div>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default ProductShowcase;

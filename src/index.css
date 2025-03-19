@@ -107,7 +107,6 @@
     right: 0;
     z-index: 100;
     transition: all 0.3s ease;
-    /* Initially hidden by default, will be shown by JavaScript */
     transform: translateY(0);
   }
   
@@ -139,7 +138,7 @@
     @apply ring-2 ring-green-500;
   }
   
-  /* New styling for FAQ section */
+  /* FAQ section styling */
   .faq-item {
     @apply transition-all duration-300;
   }
@@ -150,5 +149,9 @@
   
   .faq-content {
     @apply transition-all duration-300;
+  }
+  
+  #faq {
+    scroll-margin-top: 100px;
   }
 }

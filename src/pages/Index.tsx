@@ -55,6 +55,9 @@ const Index: React.FC = () => {
         
         // Open the modal
         setIsModalOpen(true);
+        
+        // Dispatch a custom event to notify other components that the checkout is open
+        document.dispatchEvent(new CustomEvent('checkoutOpen'));
       }
     };
     
@@ -64,6 +67,13 @@ const Index: React.FC = () => {
       document.removeEventListener('click', handleCtaClick);
     };
   }, []);
+
+  // Effect to dispatch event when modal closes
+  useEffect(() => {
+    if (!isModalOpen) {
+      document.dispatchEvent(new CustomEvent('checkoutClosed'));
+    }
+  }, [isModalOpen]);
 
   return (
     <div className="min-h-screen bg-white">
