@@ -3,6 +3,7 @@ import React from 'react';
 import { AlertCircle, X } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const ConsequencesSection: React.FC = () => {
   return (
@@ -71,14 +72,21 @@ const ConsequencesSection: React.FC = () => {
             </Alert>
           </div>
           
-          <div className="order-1 lg:order-2">
+          <div className="order-1 lg:order-2 relative">
             <div className="relative">
-              <img 
-                src="/lovable-uploads/98515799-1899-42ed-8c20-210878e81c5f.png" 
-                alt="Hallux valgus - krivi palec" 
-                className="rounded-xl shadow-xl w-full h-auto object-cover"
-              />
-              <div className="absolute -bottom-5 -right-5 bg-white p-4 rounded-lg shadow-lg">
+              {/* Using AspectRatio to maintain proper image proportion on all devices */}
+              <div className="rounded-xl overflow-hidden">
+                <AspectRatio ratio={4/3} className="w-full">
+                  <img 
+                    src="/lovable-uploads/98515799-1899-42ed-8c20-210878e81c5f.png" 
+                    alt="Hallux valgus - krivi palec" 
+                    className="w-full h-full object-cover"
+                  />
+                </AspectRatio>
+              </div>
+              
+              {/* Adjusted position for mobile and tablet */}
+              <div className="absolute bottom-0 right-0 transform translate-y-1/4 lg:-bottom-5 lg:-right-5 lg:translate-y-0 bg-white p-4 rounded-lg shadow-lg max-w-[80%] sm:max-w-[60%] lg:max-w-[250px]">
                 <h4 className="text-xl font-bold text-red-600 mb-2">Posledice so lahko trajne!</h4>
                 <p className="text-gray-700 mb-4">Preprečite hujše težave s pravočasnim ukrepanjem.</p>
                 <Button className="w-full bg-green-600 hover:bg-green-700 text-white border-none cta-button">
