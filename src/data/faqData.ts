@@ -4,42 +4,62 @@ import { FAQItem } from '../components/FooterFAQ';
 export const faqItems: FAQItem[] = [
   {
     id: "faq1",
-    question: "Kako deluje TAR TOE?",
-    answer: "TAR TOE deluje kot razbremenitveni pripomoček za prste na nogi. Z ergonomsko zasnovo razbremeni pritisk na prste, poravna deformirane prste in prepreči nadaljnje deformacije. Izdelan je iz medicinskega silikona, ki je udoben za nošenje in trpežen."
+    question: "Kako pogosto naj uporabljam TOE?",
+    answer: "Priporočljivo je, da ga uporabljate vsak dan vsaj 30 minut, lahko pa ga nosite tudi dlje, če vam je udobno."
   },
   {
     id: "faq2",
-    question: "Ali je TAR TOE primeren za vse starosti?",
-    answer: "Da, TAR TOE je primeren za uporabnike vseh starosti. Tako starejši kot mlajši lahko uporabljajo ta pripomoček za preprečevanje in lajšanje težav s prsti na nogah."
+    question: "Ali lahko TOE uporabljam v čevljih?",
+    answer: "TOE je najbolje uporabljati bosi ali v širokih copatih, vendar ga lahko nosite tudi v nekaterih vrstah športne obutve."
   },
   {
     id: "faq3",
-    question: "Kako dolgo naj nosim TAR TOE dnevno?",
-    answer: "Priporočamo, da TAR TOE nosite vsaj 3-4 ure dnevno za optimalne rezultate. Lahko ga nosite med hojo, med sedenjem ali celo med spanjem, odvisno od vaših potreb in udobja."
+    question: "Kako dolgo traja, da opazim rezultate?",
+    answer: "Prve izboljšave lahko občutite že po nekaj tednih redne uporabe, dolgoročne spremembe pa se pokažejo po nekaj mesecih."
   },
   {
     id: "faq4",
-    question: "Ali lahko TAR TOE nosim v čevljih?",
-    answer: "Da, TAR TOE je zasnovan tako, da ga lahko udobno nosite v večini čevljev. Priporočamo čevlje z nekoliko širšim sprednjim delom za maksimalno udobje."
+    question: "Ali TOE pomaga pri Hallux valgus?",
+    answer: "Da, redna uporaba lahko zmanjša nelagodje in upočasni napredovanje deformacije."
   },
   {
     id: "faq5",
-    question: "Kako čistim in vzdržujem TAR TOE?",
-    answer: "TAR TOE lahko enostavno očistite z blagim milom in toplo vodo. Pustite ga, da se popolnoma posuši na zraku, preden ga ponovno uporabite. Ne uporabljajte agresivnih kemikalij ali belil."
+    question: "Ali lahko TOE uporabljajo otroci?",
+    answer: "Da, če imajo težave s poravnavo prstov, vendar je priporočljivo posvetovanje s strokovnjakom."
   },
   {
     id: "faq6",
-    question: "Koliko časa traja, da opazim rezultate?",
-    answer: "Večina uporabnikov začne opažati izboljšanje in olajšanje v 1-2 tednih redne uporabe. Za optimalne rezultate priporočamo dosledno uporabo vsaj 30 dni."
+    question: "Je TOE primeren za diabetike?",
+    answer: "Da, vendar je pomembno, da spremljajo stanje kože in poskrbijo, da ne pride do draženja."
   },
   {
     id: "faq7",
-    question: "Ali imate garancijo vračila denarja?",
-    answer: "Da, ponujamo 30-dnevno garancijo zadovoljstva. Če z izdelkom niste zadovoljni, ga lahko vrnete za polno povračilo v roku 30 dni od nakupa."
+    question: "Kako očistim TOE?",
+    answer: "Enostavno ga sperite z mlačno vodo in blagim milom, nato ga dobro osušite."
   },
   {
     id: "faq8",
-    question: "Je TAR TOE na voljo v različnih velikostih?",
-    answer: "Da, TAR TOE je na voljo v več velikostih, da ustreza različnim velikostim stopala. Pri naročilu lahko izberete primerno velikost glede na vaše potrebe."
+    question: "Ali bo TOE ustrezal mojim stopalom?",
+    answer: "Da, saj je zasnovan tako, da se prilagodi različnim velikostim in oblikam stopal."
+  },
+  {
+    id: "faq9",
+    question: "Ali lahko TOE uporabljam med spanjem?",
+    answer: "Lahko, vendar je priporočljivo, da začnete s krajšimi obdobji uporabe in preverite, kako se vaše stopalo odziva."
+  },
+  {
+    id: "faq10",
+    question: "Ali TOE pomaga pri športnih poškodbah?",
+    answer: "Da, lahko izboljša stabilnost in zmanjša obremenitve, ki vodijo do poškodb."
+  },
+  {
+    id: "faq11",
+    question: "Je TOE primeren za ljudi, ki veliko stojijo?",
+    answer: "Seveda, saj pomaga enakomerno razporediti obremenitev in zmanjša utrujenost stopal."
+  },
+  {
+    id: "faq12",
+    question: "Ali je uporaba TOE boleča?",
+    answer: "Ne, če se pravilno uporablja. Ob začetni uporabi lahko občutite rahel pritisk, vendar se stopala postopoma prilagodijo."
   }
 ];
