@@ -83,14 +83,12 @@ const Index: React.FC = () => {
         <Hero />
         
         <ExpertTestimonial 
-          name="Luka Mirnik"
-          title="Fizioterapevt Luke Dončića in slovenske košarkarske reprezentance"
-          quote="Kot fizioterapevt slovenske košarkarske reprezentance in profesionalnih športnikov vsakodnevno rešujem težave z bolečinami v stopalih. TOE je revolucionarna rešitev, ki jo priporočam tako športnikom kot vsakomur, ki želi preventivno zaščititi svoje noge pred bolečinami in deformacijami."
-          imageSrc="/lovable-uploads/fea16b3e-3afb-4acd-b956-418db3d5205d.png"
+          name="Marko Macuh"
+          title="Priznani fizioterapevt in specialist za ortopedske težave"
+          quote="V svoji praksi sem opazil, da večina težav s stopali izvira iz nepravilne obremenitve. TOE razbremeni kritične točke in pomaga preprečiti deformacije. Svojim pacientom ga priporočam kot preventivno rešitev, ki je enostavna za uporabo in učinkovita."
+          imageSrc="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png"
           id="experts"
-          credentials={["7+ let izkušenj s profesionalnimi športniki", "Ekspert za rehabilitacijo stopal", "Član strokovnega tima KZS"]}
-          featured={true}
-          instagramHandle="lukamirnik"
+          credentials={["Specialist za ortopedske težave", "Certificiran klinični fizioterapevt", "10+ let kliničnih izkušenj"]}
         />
         
         <ProblemSection />
@@ -100,12 +98,14 @@ const Index: React.FC = () => {
         <StatsSection />
         
         <ExpertTestimonial 
-          name="Marko Macuh"
-          title="Priznani fizioterapevt in specialist za ortopedske težave"
-          quote="V svoji praksi sem opazil, da večina težav s stopali izvira iz nepravilne obremenitve. TOE razbremeni kritične točke in pomaga preprečiti deformacije. Svojim pacientom ga priporočam kot preventivno rešitev, ki je enostavna za uporabo in učinkovita."
-          imageSrc="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png"
+          name="Luka Mirnik"
+          title="Fizioterapevt Luke Dončića in slovenske košarkarske reprezentance"
+          quote="Kot fizioterapevt slovenske košarkarske reprezentance in profesionalnih športnikov vsakodnevno rešujem težave z bolečinami v stopalih. TOE je revolucionarna rešitev, ki jo priporočam tako športnikom kot vsakomur, ki želi preventivno zaščititi svoje noge pred bolečinami in deformacijami."
+          imageSrc="/lovable-uploads/fea16b3e-3afb-4acd-b956-418db3d5205d.png"
           reverse={true}
-          credentials={["Specialist za ortopedske težave", "Certificiran klinični fizioterapevt", "10+ let kliničnih izkušenj"]}
+          credentials={["7+ let izkušenj s profesionalnimi športniki", "Ekspert za rehabilitacijo stopal", "Član strokovnega tima KZS"]}
+          featured={true}
+          instagramHandle="lukamirnik"
         />
         
         <ConsequencesSection />

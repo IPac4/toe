@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
           animationDelay: '0.1s'
         }}>
             Cele dneve v neudobnih čevljih, brez časa za vadbo, 
-            <span className="text-red-600 font-extrabold"> bolečina v stopalih</span> postaje <span className="text-tarsal-accent">stalna</span>
+            <span className="text-red-600 font-extrabold"> bolečina v stopalih</span> postaja <span className="text-tarsal-accent">stalna</span>
           </h1>
           
           
@@ -19,9 +19,9 @@ const Hero: React.FC = () => {
           
         </div>
         
-        <div className="mt-auto pt-20"></div> {/* This pushes the button to the bottom quarter */}
+        <div className="mt-auto pt-12"></div> {/* This pushes the button to the bottom third */}
         
-        {/* Second button - positioned at the bottom quarter */}
+        {/* Second button - positioned at the bottom third */}
         <div className="text-center pb-8">
           <a href="#pricing" className={cn("inline-flex items-center justify-center", "cta-button text-lg", "animate-fade-in")} style={{
           animationDelay: '0.3s'
