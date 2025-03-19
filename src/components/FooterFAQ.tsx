@@ -12,7 +12,7 @@ const FooterFAQ: React.FC<FooterFAQProps> = ({
   faqItems
 }) => {
   return <section className="mb-12 pt-8" id="faq">
-      <h2 className="text-3xl font-bold mb-8 text-center">Pogosta vprašanja</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-tarsal-accent">Pogosta vprašanja</h2>
       <div className="max-w-3xl mx-auto">
         <Accordion type="single" collapsible className="space-y-4">
           {faqItems.map(item => <AccordionItem key={item.id} value={item.id} className="bg-white/10 rounded-lg overflow-hidden border-none mb-4">
