@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
                 <img 
                   src="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png" 
                   alt="Marko Macuh" 
-                  className="w-full h-auto rounded-lg shadow-md object-cover max-w-[300px] mx-auto"
+                  className="w-full h-auto rounded-lg shadow-md object-cover max-w-[400px] mx-auto" // Increased from 300px to 400px
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno od stroke</Badge>

@@ -41,7 +41,7 @@ const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
                 src={imageSrc} 
                 alt={name} 
                 className={cn(
-                  "w-full h-auto rounded-lg shadow-xl object-cover max-w-[300px] mx-auto",
+                  "w-full h-auto rounded-lg shadow-xl object-cover max-w-[400px] mx-auto", // Increased from 300px to 400px
                   featured ? "aspect-auto" : "aspect-[3/4]",
                   imageClassName
                 )}
