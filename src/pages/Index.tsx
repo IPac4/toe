@@ -90,6 +90,7 @@ const Index: React.FC = () => {
           id="experts"
           credentials={["7+ let izkušenj s profesionalnimi športniki", "Ekspert za rehabilitacijo stopal", "Član strokovnega tima KZS"]}
           featured={true}
+          instagramHandle="lukamirnik"
         />
         
         <ProblemSection />
