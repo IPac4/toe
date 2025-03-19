@@ -1,9 +1,7 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
-
 const Hero: React.FC = () => {
-  return <section className="pt-36 md:pt-48 pb-32 md:pb-48 bg-gradient-to-b from-white to-tarsal-muted flex flex-col items-center justify-between min-h-[90vh]">
+  return <section className="pt-36 md:pt-48 pb-32 md:pb-48 bg-gradient-to-b from-white to-tarsal-muted flex flex-col items-center justify-between min-h-[90vh] py-[240px] my-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col h-full justify-between">
         <div className="text-center flex-1 flex flex-col items-center justify-center">
           
@@ -35,5 +33,4 @@ const Hero: React.FC = () => {
       </div>
     </section>;
 };
-
 export default Hero;
