@@ -7,6 +7,7 @@ import ProblemSection from '../components/ProblemSection';
 import ProductShowcase from '../components/ProductShowcase';
 import StatsSection from '../components/StatsSection';
 import ConsequencesSection from '../components/ConsequencesSection';
+import GuaranteeSection from '../components/GuaranteeSection';
 import PricingSection from '../components/PricingSection';
 import ReviewSection from '../components/ReviewSection';
 import CheckoutModal from '../components/CheckoutModal';
@@ -107,8 +108,9 @@ const Index: React.FC = () => {
           imageSrc="/lovable-uploads/03231ada-ca94-4b89-b1d9-fbc711450811.png"
           reverse={false}
           credentials={["Mednarodni trener", "Olimpijski trener", "15+ let izkušenj v vrhunskem športu"]}
-          // Removed imageClassName to match the default size like Marko Macuh's image
         />
+        
+        <GuaranteeSection />
         
         <PricingSection />
       </main>
