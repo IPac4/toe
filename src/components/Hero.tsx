@@ -1,15 +1,16 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+
 const Hero: React.FC = () => {
   return <section className="pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-b from-white to-tarsal-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in" style={{
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in text-black" style={{
           animationDelay: '0.1s'
         }}>
-            Cele dneve v <span className="text-orange-500">neudobnih čevljih</span>, brez časa za <span className="text-green-600">vadbo</span>, 
+            Cele dneve v neudobnih čevljih, brez časa za vadbo, 
             <span className="text-red-600 font-extrabold"> bolečina v stopalih</span> postaje <span className="text-tarsal-accent">stalna</span>
           </h1>
           
@@ -32,4 +33,5 @@ const Hero: React.FC = () => {
       </div>
     </section>;
 };
+
 export default Hero;
