@@ -1,12 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const Footer: React.FC = () => {
   const [showStickyCta, setShowStickyCta] = useState(false);
-  const [openFaq, setOpenFaq] = useState<string | null>(null);
   
   useEffect(() => {
     // Handle showing sticky CTA after 20 seconds
@@ -26,37 +24,35 @@ const Footer: React.FC = () => {
       }
     };
     
-    // Check if checkout modal is open, hide sticky CTA if it is
-    const checkCheckoutModal = () => {
-      const checkoutModalElement = document.querySelector('[data-state="open"].checkout-modal');
-      if (checkoutModalElement) {
-        setShowStickyCta(false);
-      } else if (window.scrollY > window.innerHeight / 2) {
-        // Re-enable sticky CTA when modal closes if we're past 50% scroll
+    // Listen for checkout open/close events
+    const handleCheckoutOpen = () => {
+      setShowStickyCta(false);
+    };
+    
+    const handleCheckoutClosed = () => {
+      // Only show CTA again if we're past 50% scroll
+      const scrollPosition = window.scrollY;
+      const pageHeight = document.body.scrollHeight;
+      const windowHeight = window.innerHeight;
+      const scrollPercentage = (scrollPosition / (pageHeight - windowHeight)) * 100;
+      
+      if (scrollPercentage >= 50) {
         setShowStickyCta(true);
       }
     };
     
     window.addEventListener('scroll', handleScroll);
-    
-    // Run the modal check every second
-    const modalCheckInterval = setInterval(checkCheckoutModal, 1000);
+    document.addEventListener('checkoutOpen', handleCheckoutOpen);
+    document.addEventListener('checkoutClosed', handleCheckoutClosed);
     
     // Cleanup function
     return () => {
       clearTimeout(timeoutId);
-      clearInterval(modalCheckInterval);
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('checkoutOpen', handleCheckoutOpen);
+      document.removeEventListener('checkoutClosed', handleCheckoutClosed);
     };
   }, []);
-  
-  const toggleFaq = (id: string) => {
-    if (openFaq === id) {
-      setOpenFaq(null);
-    } else {
-      setOpenFaq(id);
-    }
-  };
   
   const faqItems = [
     {
@@ -104,32 +100,28 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-tarsal-DEFAULT text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* FAQ Section */}
-        <div className="mb-16" id="faq">
+        {/* FAQ Section - Now using Accordion component */}
+        <section className="mb-16 pt-12 pb-8" id="faq">
           <h2 className="text-3xl font-bold mb-8 text-center">Pogosta vprašanja</h2>
-          <div className="max-w-3xl mx-auto space-y-4">
-            {faqItems.map((item) => (
-              <Collapsible 
-                key={item.id} 
-                open={openFaq === item.id}
-                onOpenChange={() => toggleFaq(item.id)}
-                className="bg-white/10 rounded-lg overflow-hidden"
-              >
-                <CollapsibleTrigger className="w-full px-6 py-4 flex justify-between items-center text-left font-medium hover:bg-white/5">
-                  {item.question}
-                  {openFaq === item.id ? (
-                    <ChevronUp className="h-5 w-5" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5" />
-                  )}
-                </CollapsibleTrigger>
-                <CollapsibleContent className="px-6 py-4 text-gray-300 bg-black/20">
-                  <p>{item.answer}</p>
-                </CollapsibleContent>
-              </Collapsible>
-            ))}
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqItems.map((item) => (
+                <AccordionItem 
+                  key={item.id} 
+                  value={item.id}
+                  className="bg-white/10 rounded-lg overflow-hidden border-none mb-4"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-left font-medium hover:bg-white/5 no-underline">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 py-4 text-gray-300 bg-black/20">
+                    <p>{item.answer}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
-        </div>
+        </section>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
