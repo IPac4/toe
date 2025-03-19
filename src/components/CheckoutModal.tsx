@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -27,6 +26,8 @@ interface ProductVariant {
   popular?: boolean;
   features: string[];
   hasExercises?: boolean; // Added for exercises value calculation
+  description?: string; // Added missing property
+  pricePerItem?: number; // Added missing property
 }
 type ColorOption = 'belo' | 'črno';
 interface ColorSelection {
@@ -109,6 +110,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     total: 28.64,
     popular: true,
     hasExercises: true,
+    description: "Popolna vrednost",
+    pricePerItem: 14.32,
     // Added for exercises value calculation
     features: ["2x Tarsal TOE paket", "GRATIS vaje za dnevno vadbo", "Priročna embalaža", "Testirano v Sloveniji", "Dostava v 48h"]
   }, {
@@ -118,6 +121,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     price: 17.90,
     discount: 0,
     total: 17.90,
+    description: "Popolna rešitev za začetek",
+    pricePerItem: 17.90,
     features: ["1x Tarsal TOE paket", "Testirano v Sloveniji", "Priročna embalaža", "Dostava v 48h"]
   }, {
     id: 'family',
@@ -127,6 +132,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     discount: 25,
     total: 40.26,
     hasExercises: true,
+    description: "Največ prihranite",
+    pricePerItem: 13.42,
     // Added for exercises value calculation
     features: ["3x Tarsal TOE paket", "GRATIS vaje za dnevno vadbo", "Priročna embalaža", "Testirano v Sloveniji", "GRATIS dostava v 48h"]
   }];
@@ -320,7 +327,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           )}
           
-          {/* Package Selection - First step */}
           {checkoutStep === 'package' && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -332,7 +338,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       key={variantId} 
                       className={cn(
                         "price-card",
-                        pkg.popular ? "popular transform scale-105" : ""
+                        variant.popular ? "popular transform scale-105" : ""
                       )}
                     >
                       {variant.popular && (
@@ -344,7 +350,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         <h3 className="text-2xl font-bold mb-2">{variant.name}</h3>
                         <p className="text-gray-600 mb-4">{variant.description}</p>
                         <div className="flex items-end mb-4">
-                          <span className="text-4xl font-bold">{variant.pricePerItem.toFixed(2)}€</span>
+                          <span className="text-4xl font-bold">{variant.pricePerItem?.toFixed(2)}€</span>
                           <span className="text-gray-500 ml-2">/kos</span>
                           {variant.discount > 0 && (
                             <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
@@ -383,7 +389,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           )}
           
-          {/* Combined Color Selection and Payment - Second step */}
           {checkoutStep === 'color_payment' && (
             <div className="space-y-6">
               {/* Compact Color Selection */}
@@ -476,96 +481,4 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <Label htmlFor="applepay" className="flex-1 cursor-pointer">Apple Pay</Label>
                     <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
                       <rect width="40" height="24" rx="4" fill="#000000" />
-                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C15.5 12.7 14.6 12.3 14.6 11.3C14.6 10.5 15.3 10.1 15.3 10.1C15 9.6 14.3 9.7 13.6 9.7ZM19.5 8.4V14.5H20.4V12.4H22C23.2 12.4 24.1 11.5 24.1 10.4C24.1 9.3 23.3 8.4 22.1 8.4H19.5ZM20.4 9.2H21.7C22.5 9.2 23.1 9.7 23.1 10.4C23.1 11.1 22.5 11.6 21.7 11.6H20.4V9.2ZM26.2 14.6C27 14.6 27.7 14.2 28 13.6H28.1V14.5H29V11.2C29 10.2 28.2 9.6 27 9.6C25.9 9.6 25.1 10.2 25 11H25.9C26 10.6 26.4 10.3 27 10.3C27.7 10.3 28.1 10.7 28.1 11.2V11.7L26.7 11.8C25.5 11.9 24.8 12.4 24.8 13.2C24.8 14.1 25.4 14.6 26.2 14.6Z" fill="white" />
-                    </svg>
-                  </div>
-                  
-                  <div className={cn("flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all", paymentMethod === 'paypal' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50")}>
-                    <RadioGroupItem value="paypal" id="paypal" />
-                    <Label htmlFor="paypal" className="flex-1 cursor-pointer">PayPal</Label>
-                    <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
-                      <rect width="40" height="24" rx="4" fill="#FFFFFF" />
-                      <path d="M29.25 8.18H24.59a.41.41 0 0 0-.41.35L23 16.87a.25.25 0 0 0 .24.29h2.31a.41.41 0 0 0 .41-.35l.3-1.93a.41.41 0 0 1 .41-.35h1.47c1.96 0 3.09-1.03 3.38-3.07.13-.9 0-1.6-.36-2.1-.4-.55-1.11-.79-2.06-.79z" fill="#253B80" />
-                      <path d="M29.25 8.18H24.59a.41.41 0 0 0-.41.35L23 16.87a.25.25 0 0 0 .24.29h2.31a.41.41 0 0 0 .41-.35l.3-1.93a.41.41 0 0 1 .41-.35h1.47c1.96 0 3.09-1.03 3.38-3.07.13-.9 0-1.6-.36-2.1-.4-.55-1.11-.79-2.06-.79z" fill="#253B80" />
-                      <path d="M17.53 8.18h-4.66a.41.41 0 0 0-.41.35l-1.2 8.34a.25.25 0 0 0 .25.29h2.23a.3.3 0 0 0 .3-.25l.34-2.19a.41.41 0 0 1 .4-.35h1.47c1.96 0 3.09-1.03 3.38-3.07.13-.9 0-1.6-.36-2.1-.4-.55-1.11-.79-2.06-.79z" fill="#179BD7" />
-                    </svg>
-                  </div>
-                </RadioGroup>
-              </div>
-              
-              {/* Trust badges */}
-              <div className="flex flex-wrap justify-center gap-3 pt-4">
-                <div className="bg-gray-50 p-2 rounded-md flex items-center border">
-                  <BadgeCheck className="h-4 w-4 text-green-500 mr-1" />
-                  <span className="text-xs font-medium">Varna plačila</span>
-                </div>
-                <div className="bg-gray-50 p-2 rounded-md flex items-center border">
-                  <Truck className="h-4 w-4 text-tarsal-accent mr-1" />
-                  <span className="text-xs font-medium">Hitra dostava</span>
-                </div>
-                <div className="bg-gray-50 p-2 rounded-md flex items-center border">
-                  <ShieldCheck className="h-4 w-4 text-blue-500 mr-1" />
-                  <span className="text-xs font-medium">30-dnevna garancija</span>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {checkoutStep === 'address' && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 gap-4">
-                <div>
-                  <Label htmlFor="fullName">Ime in priimek</Label>
-                  <Input id="fullName" placeholder="Vnesite vaše ime in priimek" required />
-                </div>
-                <div>
-                  <Label htmlFor="email">E-mail</Label>
-                  <Input id="email" type="email" placeholder="Vnesite vaš e-mail" required />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Telefon</Label>
-                  <Input id="phone" placeholder="Vnesite vašo telefonsko številko" required />
-                </div>
-                <div>
-                  <Label htmlFor="address">Naslov</Label>
-                  <Input id="address" placeholder="Vnesite vaš naslov" required />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label htmlFor="postalCode">Poštna številka</Label>
-                    <Input id="postalCode" placeholder="npr. 1000" required />
-                  </div>
-                  <div>
-                    <Label htmlFor="city">Mesto</Label>
-                    <Input id="city" placeholder="npr. Ljubljana" required />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {/* Action Buttons */}
-          <div className={cn("pt-4", checkoutStep === 'package' ? "hidden" : "flex justify-between")}>
-            {checkoutStep !== 'package' && (
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={() => setCheckoutStep(checkoutStep === 'address' ? 'color_payment' : 'package')}
-              >
-                Nazaj
-              </Button>
-            )}
-            <Button 
-              type="submit" 
-              className={cn("bg-tarsal-accent hover:bg-tarsal-accent/90 text-white", checkoutStep === 'package' ? "hidden" : "")}
-            >
-              {checkoutStep === 'address' ? 'Zaključi naročilo' : 'Nadaljuj na dostavo'}
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-export default CheckoutModal;
+                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C
