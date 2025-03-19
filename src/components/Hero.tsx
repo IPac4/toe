@@ -3,9 +3,9 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 const Hero: React.FC = () => {
-  return <section className="pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-b from-white to-tarsal-muted">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
+  return <section className="pt-36 md:pt-48 pb-32 md:pb-48 bg-gradient-to-b from-white to-tarsal-muted flex flex-col items-center justify-between min-h-[90vh]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col h-full justify-between">
+        <div className="text-center flex-1 flex flex-col items-center justify-center">
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in text-black" style={{
           animationDelay: '0.1s'
@@ -17,10 +17,12 @@ const Hero: React.FC = () => {
           
           {/* First button - new button added above */}
           
-          
-          <div className="mt-8"></div> {/* Increased spacing here from mt-2 to mt-8 */}
-          
-          {/* Second button - moved down */}
+        </div>
+        
+        <div className="mt-auto pt-20"></div> {/* This pushes the button to the bottom quarter */}
+        
+        {/* Second button - positioned at the bottom quarter */}
+        <div className="text-center pb-8">
           <a href="#pricing" className={cn("inline-flex items-center justify-center", "cta-button text-lg", "animate-fade-in")} style={{
           animationDelay: '0.3s'
         }}>
