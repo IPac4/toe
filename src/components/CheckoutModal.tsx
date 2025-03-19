@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { toast } from "sonner";
 import { cn } from '@/lib/utils';
 import { Check, Package, ShoppingCart, CreditCard, Truck, Gift, ShieldCheck, Timer, BadgeCheck, Users } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+
 interface CheckoutModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -26,9 +28,10 @@ interface ProductVariant {
   popular?: boolean;
   features: string[];
   hasExercises?: boolean; // Added for exercises value calculation
-  description?: string; // Added missing property
-  pricePerItem?: number; // Added missing property
+  description?: string; // Added for product description
+  pricePerItem?: number; // Added for price per item calculation
 }
+
 type ColorOption = 'belo' | 'črno';
 interface ColorSelection {
   index: number;
@@ -37,6 +40,7 @@ interface ColorSelection {
 
 // Define proper type for checkout steps to avoid type comparison errors
 type CheckoutStep = 'package' | 'color_payment' | 'address';
+
 const CheckoutModal: React.FC<CheckoutModalProps> = ({
   open,
   onOpenChange,
@@ -156,11 +160,13 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   // Determine which features are free
   const freeFeatures = selectedVariant.features.filter(feature => feature.toLowerCase().includes('gratis') || feature.toLowerCase().includes('brezplačna'));
+  
   const handlePackageSelect = (packageId: 'basic' | 'double' | 'family') => {
     setSelectedPackage(packageId);
     initializeColorSelections(packageId);
     setCheckoutStep('color_payment');
   };
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (checkoutStep === 'color_payment') {
@@ -190,6 +196,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     toast.success("Naročilo uspešno oddano! Prejeli boste potrditveni e-mail.");
     onOpenChange(false);
   };
+  
   const handleColorChange = (index: number, color: ColorOption) => {
     setColorSelections(prev => prev.map(item => item.index === index ? {
       ...item,
@@ -199,6 +206,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   // Check if all colors are selected
   const allColorsSelected = colorSelections.length === selectedVariant.quantity;
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
@@ -481,4 +489,97 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <Label htmlFor="applepay" className="flex-1 cursor-pointer">Apple Pay</Label>
                     <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
                       <rect width="40" height="24" rx="4" fill="#000000" />
-                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C
+                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C15.5 12.7 14.5 12.3 14.5 11.2C14.5 10.2 15.3 9.8 15.3 9.8C14.9 9.2 14.2 9.2 13.9 9.2C13.5 9.2 13 9.6 13.6 9.7ZM18.8 8.2V14.6H19.7V12.4H21.1C22.3 12.4 23.2 11.5 23.2 10.3C23.2 9.1 22.3 8.2 21.1 8.2H18.8ZM19.7 9H20.9C21.6 9 22.2 9.5 22.2 10.3C22.2 11.1 21.6 11.6 20.9 11.6H19.7V9ZM25.9 14.7C26.5 14.7 27.1 14.4 27.4 14H27.4V14.6H28.3V11.5C28.3 10.6 27.7 9.9 26.6 9.9C25.7 9.9 24.9 10.5 24.9 11.2H25.7C25.8 10.9 26.1 10.6 26.6 10.6C27.2 10.6 27.5 10.9 27.5 11.5V11.9L26.2 12C25.1 12.1 24.5 12.5 24.5 13.3C24.5 14.1 25.1 14.7 25.9 14.7ZM26.1 14C25.6 14 25.3 13.7 25.3 13.3C25.3 12.9 25.6 12.6 26.2 12.6L27.4 12.5V12.8C27.4 13.5 26.9 14 26.1 14ZM29.6 16.6C30.5 16.6 30.9 16.3 31.3 15.2L33 10H32.1L30.8 14.1H30.8L29.4 10H28.5L30.4 15L30.3 15.3C30.1 15.8 29.9 15.9 29.5 15.9C29.4 15.9 29.2 15.9 29.1 15.9V16.6C29.2 16.6 29.5 16.6 29.6 16.6Z" fill="white"/>
+                    </svg>
+                  </div>
+                  
+                  <div className={cn("flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all", paymentMethod === 'paypal' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50")}>
+                    <RadioGroupItem value="paypal" id="paypal" />
+                    <Label htmlFor="paypal" className="flex-1 cursor-pointer">PayPal</Label>
+                    <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
+                      <rect width="40" height="24" rx="4" fill="#F9F9F9" />
+                      <path d="M15.9 10.58C15.9 11.25 15.36 11.79 14.68 11.79H13.2C13.04 11.79 12.91 11.67 12.9 11.51L12.2 6.94C12.19 6.86 12.22 6.77 12.28 6.7C12.33 6.64 12.42 6.6 12.5 6.6H14.36C15.21 6.6 15.9 7.29 15.9 8.13V10.58Z" fill="#253B80"/>
+                      <path d="M24.99 10.55C24.99 11.22 24.44 11.76 23.77 11.76H22.28C22.13 11.76 22 11.64 21.99 11.49L21.29 6.92C21.28 6.83 21.31 6.75 21.37 6.68C21.42 6.61 21.51 6.58 21.59 6.58H23.45C24.3 6.58 24.99 7.27 24.99 8.11V10.55Z" fill="#179BD7"/>
+                      <path d="M23.77 7.35H21.59L20.74 12.59C20.73 12.68 20.76 12.76 20.82 12.83C20.87 12.9 20.96 12.93 21.04 12.93H22.51C22.66 12.93 22.79 12.82 22.8 12.67L22.97 11.57C22.98 11.42 23.11 11.3 23.26 11.3H23.78C25.29 11.3 26.51 10.13 26.51 8.68C26.51 7.92 26.02 7.35 23.77 7.35Z" fill="#253B80"/>
+                      <path d="M14.68 7.37H12.5L11.65 12.61C11.64 12.7 11.67 12.78 11.73 12.85C11.78 12.92 11.87 12.95 11.95 12.95H13.43C13.58 12.95 13.71 12.84 13.72 12.69L13.89 11.59C13.9 11.44 14.03 11.32 14.18 11.32H14.7C16.21 11.32 17.43 10.15 17.43 8.7C17.42 7.94 16.93 7.37 14.68 7.37Z" fill="#179BD7"/>
+                      <path d="M19.4 7.36C18.22 7.36 17.27 8.23 17.27 9.31C17.27 10.17 17.85 10.69 18.87 10.69H19.69C19.79 10.69 19.88 10.77 19.88 10.88C19.88 11.32 19.51 11.72 19.06 11.72H17.82C17.73 11.72 17.65 11.8 17.65 11.89V12.72C17.65 12.81 17.73 12.89 17.82 12.89H19.06C20.42 12.89 21.52 11.86 21.52 10.61C21.52 9.75 20.94 9.23 19.93 9.23H19.11C19.01 9.23 18.92 9.15 18.92 9.04C18.92 8.6 19.29 8.2 19.74 8.2H20.9C20.99 8.2 21.07 8.12 21.07 8.03V7.53C21.07 7.44 20.99 7.36 20.9 7.36H19.4Z" fill="#253B80"/>
+                      <path d="M28.12 7.36C26.94 7.36 25.99 8.23 25.99 9.31C25.99 10.17 26.57 10.69 27.59 10.69H28.41C28.51 10.69 28.6 10.77 28.6 10.88C28.6 11.32 28.23 11.72 27.78 11.72H26.54C26.45 11.72 26.37 11.8 26.37 11.89V12.72C26.37 12.81 26.45 12.89 26.54 12.89H27.78C29.14 12.89 30.24 11.86 30.24 10.61C30.24 9.75 29.66 9.23 28.65 9.23H27.83C27.73 9.23 27.64 9.15 27.64 9.04C27.64 8.6 28.01 8.2 28.46 8.2H29.62C29.71 8.2 29.79 8.12 29.79 8.03V7.53C29.79 7.44 29.71 7.36 29.62 7.36H28.12Z" fill="#179BD7"/>
+                    </svg>
+                  </div>
+                </RadioGroup>
+              </div>
+              
+              {/* Next button for color_payment step */}
+              <Button 
+                type={paymentMethod === 'applepay' || paymentMethod === 'paypal' ? 'submit' : 'button'} 
+                onClick={() => {
+                  if (paymentMethod !== 'applepay' && paymentMethod !== 'paypal') {
+                    setCheckoutStep('address');
+                  }
+                }}
+                className="w-full mt-4 bg-tarsal-accent hover:bg-tarsal-accent/90">
+                {paymentMethod === 'applepay' ? 'Plačilo z Apple Pay' : 
+                 paymentMethod === 'paypal' ? 'Plačilo s PayPal' : 'Naprej na vnos naslova'}
+              </Button>
+            </div>
+          )}
+          
+          {checkoutStep === 'address' && (
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h3 className="font-semibold">Podatki za dostavo</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-2 sm:col-span-1">
+                    <Label htmlFor="firstname">Ime</Label>
+                    <Input id="firstname" placeholder="Vaše ime" required />
+                  </div>
+                  <div className="col-span-2 sm:col-span-1">
+                    <Label htmlFor="lastname">Priimek</Label>
+                    <Input id="lastname" placeholder="Vaš priimek" required />
+                  </div>
+                </div>
+                
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" placeholder="vas@email.com" required />
+                </div>
+                
+                <div>
+                  <Label htmlFor="phone">Telefon</Label>
+                  <Input id="phone" type="tel" placeholder="040 123 456" required />
+                </div>
+                
+                <div>
+                  <Label htmlFor="address">Naslov</Label>
+                  <Input id="address" placeholder="Ulica in hišna številka" required />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-2 sm:col-span-1">
+                    <Label htmlFor="postcode">Poštna številka</Label>
+                    <Input id="postcode" placeholder="1000" required />
+                  </div>
+                  <div className="col-span-2 sm:col-span-1">
+                    <Label htmlFor="city">Mesto</Label>
+                    <Input id="city" placeholder="Ljubljana" required />
+                  </div>
+                </div>
+                
+                <div>
+                  <Label htmlFor="notes">Opombe</Label>
+                  <Input id="notes" placeholder="Morebitne opombe za dostavo" />
+                </div>
+              </div>
+              
+              <Button type="submit" className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90">
+                Oddaj naročilo
+              </Button>
+            </div>
+          )}
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CheckoutModal;
