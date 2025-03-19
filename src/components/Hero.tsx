@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 
 const Hero: React.FC = () => {
   return (
-    <section className="pt-36 md:pt-48 pb-32 md:pb-48 bg-gradient-to-b from-white to-tarsal-muted flex flex-col items-center justify-between min-h-[90vh] my-0 py-[40px]">
+    <section className="pt-36 md:pt-48 pb-16 md:pb-24 bg-gradient-to-b from-white to-tarsal-muted flex flex-col items-center justify-between min-h-[90vh] my-0 py-[40px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col h-full justify-between my-0 py-0">
         <div className="text-center flex-1 flex flex-col items-center justify-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in text-black" style={{
@@ -18,10 +18,10 @@ const Hero: React.FC = () => {
           {/* First button - new button added above */}
         </div>
         
-        <div className="mt-auto pt-12"></div> {/* This pushes the button to the bottom third */}
+        <div className="mt-auto pt-6"></div> {/* Reduced padding from pt-12 to pt-6 */}
         
         {/* Second button - positioned at the bottom third */}
-        <div className="text-center pb-8 my-[82px]">
+        <div className="text-center pb-4 my-[40px]"> {/* Reduced padding from pb-8 to pb-4 and my-[82px] to my-[40px] */}
           <a href="#pricing" className={cn("inline-flex items-center justify-center", "cta-button text-lg", "animate-fade-in")} style={{
             animationDelay: '0.3s'
           }}>
@@ -32,8 +32,8 @@ const Hero: React.FC = () => {
           </a>
         </div>
         
-        {/* Expert testimonial section - updated layout with larger image on the left */}
-        <div className="pt-8 pb-4">
+        {/* Expert testimonial section - using the same layout as before */}
+        <div className="pt-4 pb-2"> {/* Reduced padding from pt-8 pb-4 to pt-4 pb-2 */}
           <div className="flex flex-col lg:flex-row items-center gap-8 bg-white rounded-xl shadow-lg p-6">
             <div className="flex-shrink-0 lg:w-1/3">
               <div className="relative">
