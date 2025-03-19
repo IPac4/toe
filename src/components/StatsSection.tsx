@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle } from "lucide-react";
-
 const StatsSection: React.FC = () => {
-  return (
-    <section id="benefits" className="py-16 md:py-24 bg-gray-50">
+  return <section id="benefits" className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Podprto s številkami</h2>
@@ -20,10 +17,7 @@ const StatsSection: React.FC = () => {
             <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-tarsal-accent to-blue-600 -translate-y-1/2 translate-x-1/2 rotate-45"></div>
             <div className="text-5xl font-bold text-tarsal-accent mb-2">85%</div>
             <p className="text-xl font-semibold mb-4">Manj bolečin</p>
-            <Progress 
-              value={85} 
-              className="h-3 bg-gray-200 rounded-full" 
-            />
+            <Progress value={85} className="h-3 bg-gray-200 rounded-full" />
             <div className="mt-6 text-gray-700 flex items-start">
               <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
               <p className="text-left">85% uporabnikov poroča o bistveno manjši bolečini že po 2 tednih redne uporabe.</p>
@@ -33,10 +27,7 @@ const StatsSection: React.FC = () => {
           <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100 text-center transform md:scale-110 md:-translate-y-2 z-10">
             <div className="text-5xl font-bold text-tarsal-accent mb-2">90%</div>
             <p className="text-xl font-semibold mb-4">Boljša stabilnost</p>
-            <Progress 
-              value={90} 
-              className="h-3 bg-gray-200 rounded-full" 
-            />
+            <Progress value={90} className="h-3 bg-gray-200 rounded-full" />
             <div className="mt-6 text-gray-700 flex items-start">
               <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
               <p className="text-left">9 od 10 uporabnikov doživlja občutno povečano stabilnost in ravnotežje pri hoji.</p>
@@ -50,10 +41,7 @@ const StatsSection: React.FC = () => {
             <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-bl from-tarsal-accent to-blue-600 -translate-y-1/2 -translate-x-1/2 rotate-45"></div>
             <div className="text-5xl font-bold text-tarsal-accent mb-2">83%</div>
             <p className="text-xl font-semibold mb-4">Izboljšana drža</p>
-            <Progress 
-              value={83} 
-              className="h-3 bg-gray-200 rounded-full" 
-            />
+            <Progress value={83} className="h-3 bg-gray-200 rounded-full" />
             <div className="mt-6 text-gray-700 flex items-start">
               <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
               <p className="text-left">83% uporabnikov poroča o izboljšani drži in zmanjšanju pritiska na sklepe.</p>
@@ -69,14 +57,12 @@ const StatsSection: React.FC = () => {
               </svg>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-2">Preverjeno in potrjeno s strani strokovnjakov</h3>
+              <h3 className="text-lg font-semibold mb-2 text-green-600">Preverjeno in potrjeno s strani strokovnjakov</h3>
               <p className="text-gray-600">Vsi podatki so pridobljeni iz kliničnih opazovanj in povratnih informacij uporabnikov pod nadzorom strokovnjakov s področja fizioterapije in športne medicine.</p>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default StatsSection;
