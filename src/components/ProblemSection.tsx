@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from './ui/badge';
 import { Alert, AlertTitle, AlertDescription } from './ui/alert';
+
 const ProblemSection: React.FC = () => {
   return <section id="problem" className="py-16 bg-tarsal-muted md:py-[56px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,15 +22,16 @@ const ProblemSection: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
+            {/* Modified this div to ensure images are always side by side */}
             <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-100">
-              <div className="flex flex-col sm:flex-row">
-                <div className="w-full sm:w-1/2 relative">
+              <div className="flex flex-row">
+                <div className="w-1/2 relative">
                   <img src="/lovable-uploads/cf640606-4895-4a95-8a59-9d9075dcf29e.png" alt="Zdravo stopalo" className="w-full h-auto object-cover aspect-square" />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent py-3 px-4">
                     <p className="text-white text-sm font-medium">Zdravo stopalo</p>
                   </div>
                 </div>
-                <div className="w-full sm:w-1/2 relative">
+                <div className="w-1/2 relative">
                   <img src="/lovable-uploads/5cb1d0f9-4448-4934-affd-7d3b50d05807.png" alt="Hallux valgus" className="w-full h-auto object-cover aspect-square" />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-red-900/70 to-transparent py-3 px-4">
                     <Badge variant="destructive" className="mb-1">Boleče</Badge>
@@ -109,4 +112,5 @@ const ProblemSection: React.FC = () => {
       </div>
     </section>;
 };
+
 export default ProblemSection;
