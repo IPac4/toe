@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
             Več o izdelku
           </a>
           
-          <div className="mt-2"></div>
+          <div className="mt-8"></div> {/* Increased spacing here from mt-2 to mt-8 */}
           
           {/* Second button - moved down */}
           <a href="#pricing" className={cn(
