@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -116,8 +117,8 @@ const PricingSection: React.FC = () => {
             });
             ShopifyBuy.UI.onReady(client).then(function (ui) {
               ui.createComponent('product', {
-                id: '9827355230547',
-                node: document.getElementById('product-component-basic'),
+                id: '9827355296083',
+                node: document.getElementById('product-component-1742853129195'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
                 options: {
                   "product": {
@@ -144,8 +145,7 @@ const PricingSection: React.FC = () => {
                     "contents": {
                       "img": false,
                       "title": false,
-                      "price": false,
-                      "options": false
+                      "price": false
                     },
                     "text": {
                       "button": "Naroči zdaj"
@@ -618,7 +618,7 @@ const PricingSection: React.FC = () => {
                 
                 {pkg.key === 'basic' && (
                   <div className="shopify-button-container">
-                    <div id="product-component-basic" ref={basicPackageButtonRef}></div>
+                    <div id="product-component-1742853129195" ref={basicPackageButtonRef}></div>
                   </div>
                 )}
 
