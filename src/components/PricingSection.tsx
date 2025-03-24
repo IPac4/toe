@@ -1,7 +1,5 @@
-
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Check } from 'lucide-react';
@@ -555,7 +553,6 @@ const PricingSection: React.FC = () => {
     <section id="pricing" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          {/* Removed the "Paketi & Cene" heading, keeping only the subtitle */}
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Izberite paket, ki najbolj ustreza vašim potrebam
           </p>
