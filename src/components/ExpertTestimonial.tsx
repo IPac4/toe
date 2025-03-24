@@ -27,10 +27,6 @@ const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
 }) => {
   // Generate an ID from name if not provided
   const expertId = id || `expert-${name.toLowerCase().split(' ')[0]}`;
-  return <section id={expertId} className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-      </div>
-    </section>;
+  return;
 };
 export default ExpertTestimonial;
