@@ -8,6 +8,24 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const Hero: React.FC = () => {
+  // Function to handle smooth scroll with header offset
+  const handleSmoothScroll = (e: React.MouseEvent, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId.replace('#', ''));
+    
+    if (targetElement) {
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const offset = headerHeight + 20; // Add extra padding
+      
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <section className="pt-36 md:pt-48 pb-16 md:pb-24 bg-gradient-to-b from-white to-tarsal-muted flex flex-col items-center justify-between min-h-[90vh] my-0 py-[40px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col h-full justify-between my-0 py-0">
@@ -26,9 +44,14 @@ const Hero: React.FC = () => {
         
         {/* Second button - positioned at the bottom third */}
         <div className="text-center pb-4 my-[40px]"> {/* Reduced padding from pb-8 to pb-4 and my-[82px] to my-[40px] */}
-          <a href="#pricing" className={cn("inline-flex items-center justify-center", "cta-button text-lg", "animate-fade-in")} style={{
-            animationDelay: '0.3s'
-          }}>
+          <a 
+            href="#pricing" 
+            className={cn("inline-flex items-center justify-center", "cta-button text-lg", "animate-fade-in")} 
+            onClick={(e) => handleSmoothScroll(e, "#pricing")}
+            style={{
+              animationDelay: '0.3s'
+            }}
+          >
             Rešite svoje težave zdaj
             <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"></path>

@@ -25,39 +25,24 @@ const Index: React.FC = () => {
     const handleCtaClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.closest('.cta-button')) {
-        // Check if this is a pricing section CTA
-        const closestPricingCard = target.closest('.price-card');
-        if (closestPricingCard) {
-          const isPopular = closestPricingCard.classList.contains('popular');
-          const isFamily = closestPricingCard.querySelector('h3')?.textContent?.includes('Družinski');
-          const isBasic = closestPricingCard.querySelector('h3')?.textContent?.includes('Osnovn');
-          
-          if (isFamily) {
-            setSelectedVariant('family');
-          } else if (isBasic) {
-            setSelectedVariant('basic');
-          } else {
-            setSelectedVariant('double');
-          }
-          
-          // Skip package selection when clicking from pricing section
-          setSkipPackageSelection(true);
-        } else {
-          // Reset to show package selection for other CTA buttons
-          setSkipPackageSelection(false);
-          setSelectedVariant('double'); // Default to double package
-        }
-        
         // Prevent default if it's an anchor tag
         if (target.tagName === 'A' || target.closest('a')) {
           e.preventDefault();
         }
         
-        // Open the modal
-        setIsModalOpen(true);
-        
-        // Dispatch a custom event to notify other components that the checkout is open
-        document.dispatchEvent(new CustomEvent('checkoutOpen'));
+        // Scroll to pricing section instead of opening modal
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
+          const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+          const offset = headerHeight + 20; // Add extra padding
+          
+          const pricingSectionPosition = pricingSection.getBoundingClientRect().top + window.pageYOffset - offset;
+          
+          window.scrollTo({
+            top: pricingSectionPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     };
     

@@ -30,6 +30,29 @@ const Header: React.FC = () => {
     { href: "#faq", label: "FAQ" }
   ];
 
+  // Function to handle smooth scroll with header offset
+  const handleSmoothScroll = (e: React.MouseEvent, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId.replace('#', ''));
+    
+    if (targetElement) {
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const offset = headerHeight + 20; // Add extra padding
+      
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Close mobile menu if open
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    }
+  };
+
   return <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:py-6">
@@ -51,6 +74,7 @@ const Header: React.FC = () => {
                         <a 
                           href={item.href} 
                           className="text-sm font-medium text-gray-700 hover:text-tarsal-accent cursor-pointer w-full"
+                          onClick={(e) => handleSmoothScroll(e, item.href)}
                         >
                           {item.label}
                         </a>
@@ -63,6 +87,7 @@ const Header: React.FC = () => {
                   key={link.href}
                   href={link.href} 
                   className="text-sm font-medium text-gray-700 hover:text-tarsal-accent transition-colors"
+                  onClick={(e) => handleSmoothScroll(e, link.href)}
                 >
                   {link.label}
                 </a>
@@ -72,7 +97,11 @@ const Header: React.FC = () => {
           
           {/* Mobile navigation */}
           <div className="flex items-center gap-4">
-            <a href="#pricing" className={cn("hidden md:inline-flex", "bg-tarsal-accent hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full", "transition duration-300 ease-in-out", "text-sm")}>
+            <a 
+              href="#pricing" 
+              className={cn("hidden md:inline-flex", "bg-tarsal-accent hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full", "transition duration-300 ease-in-out", "text-sm")}
+              onClick={(e) => handleSmoothScroll(e, "#pricing")}
+            >
               Naročite zdaj
             </a>
             
@@ -102,7 +131,7 @@ const Header: React.FC = () => {
                               <a 
                                 key={item.href}
                                 href={item.href} 
-                                onClick={() => setIsOpen(false)}
+                                onClick={(e) => handleSmoothScroll(e, item.href)}
                                 className="block text-sm font-medium text-gray-600 hover:text-tarsal-accent transition-colors py-1"
                               >
                                 {item.label}
@@ -114,7 +143,7 @@ const Header: React.FC = () => {
                         <a 
                           key={link.href}
                           href={link.href} 
-                          onClick={() => setIsOpen(false)}
+                          onClick={(e) => handleSmoothScroll(e, link.href)}
                           className="text-base font-medium text-gray-700 hover:text-tarsal-accent transition-colors py-2"
                         >
                           {link.label}
@@ -123,7 +152,7 @@ const Header: React.FC = () => {
                     ))}
                     <a 
                       href="#pricing" 
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => handleSmoothScroll(e, "#pricing")}
                       className={cn(
                         "bg-tarsal-accent hover:bg-blue-600 text-white font-semibold py-3 px-5 rounded-full text-center",
                         "transition duration-300 ease-in-out mt-4",

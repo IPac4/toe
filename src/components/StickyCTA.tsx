@@ -53,6 +53,23 @@ const StickyCTA: React.FC = () => {
     };
   }, []);
 
+  // Function to handle button click for scrolling to pricing
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const offset = headerHeight + 20; // Add extra padding
+      
+      const pricingSectionPosition = pricingSection.getBoundingClientRect().top + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: pricingSectionPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className={cn("sticky-cta bg-white shadow-lg py-3 border-t border-gray-200", {
       "hidden": !showStickyCta
@@ -65,6 +82,7 @@ const StickyCTA: React.FC = () => {
           <a 
             href="#pricing" 
             className="cta-button w-full md:w-auto text-center"
+            onClick={handleCtaClick}
           >
             Naroči Tarsal Toe 20% popusta in gratis vajami za vadbo doma
           </a>
