@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -77,14 +78,19 @@ const PricingSection: React.FC = () => {
     ? [packages[1], packages[0], packages[2]] 
     : packages;
 
-  // Initialize Shopify Buy Button
+  // Initialize Shopify Buy Button only for family package
   useEffect(() => {
-    // Create a new script element for the Shopify Buy Button SDK
-    const loadShopifyScript = () => {
-      const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+    if (!familyButtonRef.current) return;
+
+    // Create the script element
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.innerHTML = `
+    (function () {
+      var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
       if (window.ShopifyBuy) {
         if (window.ShopifyBuy.UI) {
-          initShopifyBuyButton();
+          ShopifyBuyInit();
         } else {
           loadScript();
         }
@@ -93,342 +99,84 @@ const PricingSection: React.FC = () => {
       }
 
       function loadScript() {
-        const script = document.createElement('script');
+        var script = document.createElement('script');
         script.async = true;
         script.src = scriptURL;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
-        script.onload = initShopifyBuyButton;
+        (document.head || document.body).appendChild(script);
+        script.onload = ShopifyBuyInit;
       }
-    };
 
-    // Initialize the Shopify Buy Button
-    const initShopifyBuyButton = () => {
-      if (!window.ShopifyBuy) return;
-      
-      const client = window.ShopifyBuy.buildClient({
-        domain: 'c4504b.myshopify.com',
-        storefrontAccessToken: 'e1d80871c8dfa43917436258128ba4ab',
-      });
+      function ShopifyBuyInit() {
+        var client = ShopifyBuy.buildClient({
+          domain: 'c4504b.myshopify.com',
+          storefrontAccessToken: 'e1d80871c8dfa43917436258128ba4ab',
+        });
 
-      if (client && window.ShopifyBuy.UI) {
-        // Initialize for basic package
-        const basicComponent = document.getElementById('product-component-1742847771376');
-        if (basicComponent) {
-          window.ShopifyBuy.UI.onReady(client).then(function (ui) {
-            ui.createComponent('product', {
-              id: '8579490578771',
-              node: basicComponent,
-              moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-              options: {
-                "product": {
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "calc(25% - 20px)",
-                        "margin-left": "20px",
-                        "margin-bottom": "50px"
-                      }
-                    },
-                    "button": {
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      "background-color": "#e9451c",
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      },
-                      "border-radius": "13px"
+        ShopifyBuy.UI.onReady(client).then(function (ui) {
+          ui.createComponent('product', {
+            id: '8579490578771',
+            node: document.getElementById('product-component-1742849087442'),
+            moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px"
                     }
                   },
-                  "buttonDestination": "checkout",
-                  "contents": {
-                    "img": false,
-                    "button": false,
-                    "buttonWithQuantity": true,
-                    "title": false,
-                    "price": false
-                  },
-                  "text": {
-                    "button": "Naroči zdaj"
+                  "button": {
+                    ":hover": { "background-color": "#0b95d2" },
+                    "background-color": "#0ca6e9",
+                    ":focus": { "background-color": "#0b95d2" },
+                    "border-radius": "13px"
                   }
                 },
-                "productSet": {
-                  "styles": {
-                    "products": {
-                      "@media (min-width: 601px)": {
-                        "margin-left": "-20px"
-                      }
-                    }
-                  }
+                "buttonDestination": "checkout",
+                "contents": {
+                  "img": false,
+                  "title": false,
+                  "price": false
                 },
-                "modalProduct": {
-                  "contents": {
-                    "img": false,
-                    "imgWithCarousel": true,
-                    "button": false,
-                    "buttonWithQuantity": true
-                  },
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "100%",
-                        "margin-left": "0px",
-                        "margin-bottom": "0px"
-                      }
-                    },
-                    "button": {
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      "background-color": "#e9451c",
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "text": {
-                    "button": "Add to cart"
-                  }
-                },
-                "option": {},
-                "cart": {
-                  "styles": {
-                    "button": {
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      "background-color": "#e9451c",
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "text": {
-                    "total": "Subtotal",
-                    "button": "Checkout"
-                  },
-                  "popup": false
-                },
-                "toggle": {
-                  "styles": {
-                    "toggle": {
-                      "background-color": "#e9451c",
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      }
-                    }
-                  }
+                "text": {
+                  "button": "Naroči zdaj"
                 }
               },
-            });
-          });
-        }
-
-        // Initialize for double package with quantity=2 preset
-        const doubleComponent = document.getElementById('product-component-1742847969801');
-        if (doubleComponent) {
-          window.ShopifyBuy.UI.onReady(client).then(function (ui) {
-            ui.createComponent('product', {
-              id: '8579490578771',
-              node: doubleComponent,
-              moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-              options: {
-                "product": {
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "calc(25% - 20px)",
-                        "margin-left": "20px",
-                        "margin-bottom": "50px"
-                      }
-                    },
-                    "button": {
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      "background-color": "#e9451c",
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "buttonDestination": "checkout",
-                  "contents": {
-                    "img": false,
-                    "button": false,
-                    "buttonWithQuantity": true,
-                    "title": false,
-                    "price": false
-                  },
-                  "text": {
-                    "button": "Naroči zdaj",
-                    "outOfStock": "Razprodano",
-                    "unavailable": "Nedosegljivo"
-                  },
-                  "quantity": {
-                    "initial": 2,
-                  }
-                },
-                "productSet": {
-                  "styles": {
-                    "products": {
-                      "@media (min-width: 601px)": {
-                        "margin-left": "-20px"
-                      }
-                    }
-                  }
-                },
-                "modalProduct": {
-                  "contents": {
-                    "img": false,
-                    "imgWithCarousel": true,
-                    "button": false,
-                    "buttonWithQuantity": true
-                  },
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "100%",
-                        "margin-left": "0px",
-                        "margin-bottom": "0px"
-                      }
-                    },
-                    "button": {
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      "background-color": "#e9451c",
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "text": {
-                    "button": "Add to cart"
-                  }
-                },
-                "option": {},
-                "cart": {
-                  "styles": {
-                    "button": {
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      "background-color": "#e9451c",
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "text": {
-                    "total": "Subtotal",
-                    "button": "Checkout"
-                  },
-                  "popup": false
-                },
-                "toggle": {
-                  "styles": {
-                    "toggle": {
-                      "background-color": "#e9451c",
-                      ":hover": {
-                        "background-color": "#d23e19"
-                      },
-                      ":focus": {
-                        "background-color": "#d23e19"
-                      }
-                    }
-                  }
-                }
-              },
-            });
-          });
-        }
-        
-        // Initialize custom family package button
-        const familyButtonScript = () => {
-          if (!window.ShopifyBuy || !familyButtonRef.current) return;
-
-          const client = window.ShopifyBuy.buildClient({
-            domain: 'c4504b.myshopify.com',
-            storefrontAccessToken: 'e1d80871c8dfa43917436258128ba4ab',
+              "cart": {
+                "popup": false
+              }
+            }
           });
 
-          window.ShopifyBuy.UI.onReady(client).then(function (ui) {
-            ui.createComponent('product', {
-              id: '8579490578771',
-              node: document.getElementById('product-component-1742849087442'),
-              moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-              options: {
-                "product": {
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "calc(25% - 20px)",
-                        "margin-left": "20px",
-                        "margin-bottom": "50px"
-                      }
-                    },
-                    "button": {
-                      ":hover": { "background-color": "#0b95d2" },
-                      "background-color": "#0ca6e9",
-                      ":focus": { "background-color": "#0b95d2" },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "buttonDestination": "checkout",
-                  "contents": {
-                    "img": false,
-                    "title": false,
-                    "price": false
-                  },
-                  "text": {
-                    "button": "Naroči zdaj"
-                  }
-                },
-                "cart": {
-                  "popup": false
-                }
+          // Počakamo, da se gumb naloži, nato spremenimo funkcionalnost
+          setTimeout(function () {
+            const buttons = document.querySelectorAll('button.shopify-buy__btn');
+            buttons.forEach(button => {
+              if (button instanceof HTMLButtonElement) {
+                button.addEventListener('click', function (e) {
+                  e.preventDefault();
+                  const variantId = '47247133802835'; // ✅ pravi variant ID
+                  const checkoutUrl = \`https://c4504b.myshopify.com/cart/\${variantId}:3\`;
+                  window.location.href = checkoutUrl;
+                });
               }
             });
-
-            // Wait for the button to load, then modify its functionality
-            setTimeout(function () {
-              const buttons = document.querySelectorAll('button.shopify-buy__btn');
-              buttons.forEach(button => {
-                // Fix: use proper TypeScript handling for event listeners
-                if (button instanceof HTMLButtonElement) {
-                  button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const variantId = '47247133802835'; // ✅ correct variant ID
-                    const checkoutUrl = `https://c4504b.myshopify.com/cart/${variantId}:3`;
-                    window.location.href = checkoutUrl;
-                  });
-                }
-              });
-            }, 1500); // wait for everything to load
-          });
-        };
-
-        // Run family button script when component is ready
-        if (familyButtonRef.current) {
-          familyButtonScript();
-        }
+          }, 1500); // počakamo, da se vse naloži
+        });
       }
-    };
-
-    loadShopifyScript();
-
-    // Clean up the script on component unmount
+    })();
+    `;
+    
+    // Append the script to the reference element
+    familyButtonRef.current.appendChild(script);
+    
+    // Clean up the script when component unmounts
     return () => {
-      // Cleanup if needed
+      if (familyButtonRef.current && familyButtonRef.current.contains(script)) {
+        familyButtonRef.current.removeChild(script);
+      }
     };
   }, [familyButtonRef.current]);
 
@@ -436,7 +184,6 @@ const PricingSection: React.FC = () => {
     <section id="pricing" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          {/* Removed the "Paketi & Cene" heading, keeping only the subtitle */}
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Izberite paket, ki najbolj ustreza vašim potrebam
           </p>
@@ -500,12 +247,12 @@ const PricingSection: React.FC = () => {
               <div className="p-8">
                 <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">{pkg.totalPrice.toFixed(2)}€</span></p>
                 
-                {pkg.key === 'basic' ? (
-                  <div id="product-component-1742847771376" className="mt-4"></div>
-                ) : pkg.key === 'double' ? (
-                  <div id="product-component-1742847969801" className="mt-4"></div>
+                {pkg.key === 'basic' || pkg.key === 'double' ? (
+                  <a href="#" className="cta-button w-full text-center">Naroči zdaj</a>
                 ) : (
-                  <div id="product-component-1742849087442" className="mt-4" ref={familyButtonRef}></div>
+                  <div>
+                    <div id="product-component-1742849087442" ref={familyButtonRef}></div>
+                  </div>
                 )}
               </div>
             </div>

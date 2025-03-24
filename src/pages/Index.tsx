@@ -13,6 +13,7 @@ import CheckoutModal from '../components/CheckoutModal';
 import Footer from '../components/Footer';
 import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
+import StickyCTA from '../components/StickyCTA';
 
 // Add script to load Shopify Buy Button SDK
 const loadShopifyScript = () => {
@@ -142,6 +143,8 @@ const Index: React.FC = () => {
       </main>
 
       <Footer />
+      
+      <StickyCTA />
       
       <CheckoutModal 
         open={isModalOpen} 
