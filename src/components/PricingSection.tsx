@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,7 @@ const PricingSection: React.FC = () => {
   const doublePackageButtonRef = useRef<HTMLDivElement>(null);
   const familyPackageButtonRef = useRef<HTMLDivElement>(null);
   const basicPackageButtonRef = useRef<HTMLDivElement>(null);
+  const newShopifyButtonRef = useRef<HTMLDivElement>(null);
   
   // Define packages in a way that can be reordered for mobile
   const packages = [
@@ -419,8 +419,8 @@ const PricingSection: React.FC = () => {
             });
             ShopifyBuy.UI.onReady(client).then(function (ui) {
               ui.createComponent('product', {
-                id: '9827356246355',
-                node: document.getElementById('product-component-1742851845591'),
+                id: '8579490578771',
+                node: document.getElementById('product-component-1742853667355'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
                 options: {
                   "product": {
@@ -533,8 +533,8 @@ const PricingSection: React.FC = () => {
         /*]]>*/
       `;
       setTimeout(() => {
-        if (familyPackageButtonRef.current) {
-          familyPackageButtonRef.current.appendChild(familyPackageScript);
+        if (newShopifyButtonRef.current) {
+          newShopifyButtonRef.current.appendChild(familyPackageScript);
         }
       }, 100);
     }
@@ -630,7 +630,7 @@ const PricingSection: React.FC = () => {
 
                 {pkg.key === 'family' && (
                   <div className="shopify-button-container">
-                    <div id="product-component-1742851845591" ref={familyPackageButtonRef}></div>
+                    <div id="product-component-1742853667355" ref={newShopifyButtonRef}></div>
                   </div>
                 )}
               </div>
