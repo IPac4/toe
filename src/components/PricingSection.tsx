@@ -117,8 +117,8 @@ const PricingSection: React.FC = () => {
             });
             ShopifyBuy.UI.onReady(client).then(function (ui) {
               ui.createComponent('product', {
-                id: '9827355296083',
-                node: document.getElementById('product-component-1742853129195'),
+                id: '8579490578771',
+                node: document.getElementById('product-component-1742853667355'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
                 options: {
                   "product": {
@@ -618,7 +618,7 @@ const PricingSection: React.FC = () => {
                 
                 {pkg.key === 'basic' && (
                   <div className="shopify-button-container">
-                    <div id="product-component-1742853129195" ref={basicPackageButtonRef}></div>
+                    <div id="product-component-1742853667355" ref={basicPackageButtonRef}></div>
                   </div>
                 )}
 
