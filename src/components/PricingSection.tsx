@@ -28,7 +28,8 @@ const PricingSection: React.FC = () => {
         { text: '1x Tarsal TOE paket', important: true },
         { text: 'Testirano v Sloveniji', important: false },
         { text: 'Priročna embalaža', important: false },
-        { text: 'Dostava v 48h', important: false }
+        { text: 'Dostava v 48h', important: false },
+        { text: '30-dnevna garancija zadovoljstva', important: true, new: true }
       ]
     },
     {
@@ -46,7 +47,8 @@ const PricingSection: React.FC = () => {
         { text: 'Vaje za dnevno vadbo', important: true, free: true },
         { text: 'Priročna embalaža', important: false },
         { text: 'Testirano v Sloveniji', important: false },
-        { text: 'Dostava v 48h', important: false }
+        { text: 'Dostava v 48h', important: false },
+        { text: '30-dnevna garancija zadovoljstva', important: true, new: true }
       ]
     },
     {
@@ -64,7 +66,8 @@ const PricingSection: React.FC = () => {
         { text: 'Vaje za dnevno vadbo', important: true, free: true },
         { text: 'Priročna embalaža', important: false },
         { text: 'Testirano v Sloveniji', important: false },
-        { text: 'Dostava v 48h', important: true, free: true }
+        { text: 'Brezplačna dostava', important: true, free: true, new: true },
+        { text: '30-dnevna garancija zadovoljstva', important: true, new: true }
       ]
     }
   ];
@@ -602,6 +605,11 @@ const PricingSection: React.FC = () => {
                         {feature.free && (
                           <Badge className="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold">
                             GRATIS
+                          </Badge>
+                        )}
+                        {feature.new && (
+                          <Badge className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold">
+                            NOVO
                           </Badge>
                         )}
                       </div>
