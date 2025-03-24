@@ -1,13 +1,17 @@
+
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Check } from 'lucide-react';
+import { Check, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
 const PricingSection: React.FC = () => {
   const isMobile = useIsMobile();
   const doublePackageButtonRef = useRef<HTMLDivElement>(null);
   const familyPackageButtonRef = useRef<HTMLDivElement>(null);
   const basicPackageButtonRef = useRef<HTMLDivElement>(null);
+  const pricingSectionRef = useRef<HTMLElement>(null);
 
   // Define packages in a way that can be reordered for mobile
   const packages = [{
@@ -40,7 +44,7 @@ const PricingSection: React.FC = () => {
   }, {
     key: 'double',
     name: 'Dvojno pakiranje',
-    description: 'Popolna vrednost',
+    description: 'Najpopularnejša izbira',
     price: 17.90,
     pricePerItem: 14.32,
     discount: 20,
@@ -579,24 +583,50 @@ const PricingSection: React.FC = () => {
       }
     };
   }, []);
-  return <section id="pricing" className="py-16 bg-white md:py-0">
+  
+  return <section id="pricing" ref={pricingSectionRef} className="py-16 bg-white md:py-16 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          
+          <h2 className="text-3xl font-bold mb-4">Izberite svoje pakiranje</h2>
+          <p className="text-lg text-gray-600">Poiščite rešitev, ki ustreza vašim potrebam</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {orderedPackages.map(pkg => <div key={pkg.key} className={cn("price-card", pkg.popular ? "popular transform scale-105" : "")}>
-              {pkg.popular && <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
-                  Najbolj priljubljeno
+          {orderedPackages.map(pkg => <div 
+              key={pkg.key} 
+              className={cn(
+                "price-card relative border rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl",
+                pkg.popular 
+                  ? "popular scale-105 border-purple-400 bg-gradient-to-b from-white to-purple-50"
+                  : "border-gray-200"
+              )}
+            >
+              {pkg.popular && <div className="bg-purple-600 text-white py-2 text-center font-semibold flex items-center justify-center gap-2">
+                  <Star className="w-4 h-4 fill-white" />
+                  <span>Najbolj priljubljeno</span>
+                  <Star className="w-4 h-4 fill-white" />
                 </div>}
-              <div className="p-8 border-b">
-                <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
+              <div className={cn(
+                "p-8 border-b", 
+                pkg.popular ? "border-purple-200" : "border-gray-200"
+              )}>
+                <h3 className={cn(
+                  "text-2xl font-bold mb-2",
+                  pkg.popular ? "text-purple-700" : ""
+                )}>{pkg.name}</h3>
                 <p className="text-gray-600 mb-4">{pkg.description}</p>
                 <div className="flex items-end mb-4">
-                  <span className="text-4xl font-bold">{pkg.pricePerItem.toFixed(2)}€</span>
+                  <span className={cn(
+                    "text-4xl font-bold",
+                    pkg.popular ? "text-purple-800" : ""
+                  )}>{pkg.pricePerItem.toFixed(2)}€</span>
                   <span className="text-gray-500 ml-2">/kos</span>
-                  {pkg.discount > 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+                  {pkg.discount > 0 && <span className={cn(
+                    "ml-3 text-xs font-semibold px-2 py-1 rounded",
+                    pkg.popular
+                      ? "bg-purple-100 text-purple-800" 
+                      : "bg-green-100 text-green-800"
+                  )}>
                       -{pkg.discount}%
                     </span>}
                 </div>
@@ -605,11 +635,25 @@ const PricingSection: React.FC = () => {
                   </div>}
                 
                 <ul className="space-y-3 mb-6">
-                  {pkg.features.map((feature, index) => <li key={index} className={cn("flex items-start", feature.important ? "font-medium" : "")}>
-                      <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
+                  {pkg.features.map((feature, index) => <li 
+                    key={index} 
+                    className={cn(
+                      "flex items-start", 
+                      feature.important ? "font-medium" : ""
+                    )}
+                  >
+                      <Check className={cn(
+                        "w-5 h-5 mr-2 flex-shrink-0",
+                        pkg.popular ? "text-purple-500" : "text-green-500"
+                      )} />
                       <div className="flex items-center">
                         <span>{feature.text}</span>
-                        {feature.free && <Badge className="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold">
+                        {feature.free && <Badge className={cn(
+                          "ml-2 text-white font-bold",
+                          pkg.popular 
+                            ? "bg-purple-500 hover:bg-purple-600" 
+                            : "bg-green-500 hover:bg-green-600"
+                        )}>
                             GRATIS
                           </Badge>}
                         {feature.new && <Badge className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold">
@@ -620,24 +664,66 @@ const PricingSection: React.FC = () => {
                 </ul>
                 
                 <div className="text-sm font-semibold mb-2">
-                  Končna cena: <span className="text-lg">{pkg.totalPrice.toFixed(2)}€</span>
+                  Končna cena: <span className={cn(
+                    "text-lg",
+                    pkg.popular ? "text-purple-700" : ""
+                  )}>{pkg.totalPrice.toFixed(2)}€</span>
                 </div>
               </div>
-              <div className="p-8">
-                <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">{pkg.totalPrice.toFixed(2)}€</span></p>
+              <div className="p-8 bg-white">
+                <p className="font-semibold mb-3">Končna cena: <span className={cn(
+                  "text-xl font-bold",
+                  pkg.popular ? "text-purple-700" : ""
+                )}>{pkg.totalPrice.toFixed(2)}€</span></p>
                 
-                {pkg.key === 'basic' && <div className="shopify-button-container">
-                    <div id="product-component-1742853667355" ref={basicPackageButtonRef}></div>
-                  </div>}
-
-                {pkg.key === 'double' && <div className="shopify-button-container">
-                    <div id="product-component-1742851650294" ref={doublePackageButtonRef}></div>
-                  </div>}
-
-                {pkg.key === 'family' && <div className="shopify-button-container">
-                    <div id="product-component-1742851845591" ref={familyPackageButtonRef}></div>
-                  </div>}
+                <div className="relative">
+                  {/* Hidden Shopify buttons */}
+                  <div className="hidden">
+                    {pkg.key === 'basic' && <div id="product-component-1742853667355" ref={basicPackageButtonRef}></div>}
+                    {pkg.key === 'double' && <div id="product-component-1742851650294" ref={doublePackageButtonRef}></div>}
+                    {pkg.key === 'family' && <div id="product-component-1742851845591" ref={familyPackageButtonRef}></div>}
+                  </div>
+                  
+                  {/* Custom Button that will trigger the Shopify button */}
+                  <Button 
+                    className={cn(
+                      "w-full cta-button font-semibold py-3 text-white",
+                      pkg.popular 
+                        ? "bg-purple-600 hover:bg-purple-700" 
+                        : "bg-tarsal-accent hover:bg-tarsal-accent/90"
+                    )}
+                    onClick={() => {
+                      // Find the Shopify button in the hidden div and click it
+                      const buttonId = pkg.key === 'basic' 
+                        ? 'product-component-1742853667355' 
+                        : pkg.key === 'double' 
+                          ? 'product-component-1742851650294' 
+                          : 'product-component-1742851845591';
+                      
+                      const shopifyButton = document.querySelector(`#${buttonId} button`);
+                      if (shopifyButton) {
+                        (shopifyButton as HTMLButtonElement).click();
+                      }
+                    }}
+                  >
+                    {pkg.popular ? 'Naroči najbolj priljubljeno' : 'Naroči zdaj'}
+                  </Button>
+                  
+                  {pkg.popular && (
+                    <div className="text-center mt-2 text-sm text-purple-600 font-medium">
+                      Več kot 500 zadovoljnih strank
+                    </div>
+                  )}
+                </div>
               </div>
+              
+              {pkg.popular && (
+                <div className="absolute -top-4 -right-4 transform rotate-12">
+                  <div className="bg-yellow-400 text-xs px-8 py-1 font-bold text-gray-800 transform -rotate-45">
+                    PRIPOROČAMO
+                  </div>
+                </div>
+              )}
             </div>)}
         </div>
       </div>
