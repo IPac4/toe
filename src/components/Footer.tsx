@@ -10,7 +10,9 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-tarsal-DEFAULT text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <FooterFAQ faqItems={faqItems} />
+        <div id="faq">
+          <FooterFAQ faqItems={faqItems} />
+        </div>
         <FooterLinks />
         <FooterBottom />
       </div>

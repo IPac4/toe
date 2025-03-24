@@ -22,10 +22,12 @@ const Header: React.FC = () => {
       dropdownItems: [
         { href: "#expert-luka", label: "Luka Mirnik" },
         { href: "#expert-jure", label: "Jure Pantar" },
+        { href: "#expert-macuha", label: "Macuha" },
       ]
     },
     { href: "#benefits", label: "Prednosti" },
-    { href: "#reviews", label: "Mnenja" }
+    { href: "#reviews", label: "Mnenja" },
+    { href: "#faq", label: "FAQ" }
   ];
 
   return <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
