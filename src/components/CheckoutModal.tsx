@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -688,7 +689,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     };
   }, [open]);
 
-  return <Dialog open={open} onOpenChange={onOpenChange}>
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
@@ -700,9 +702,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-          
-          
-          
           <div className="bg-green-50 border border-green-100 rounded-lg p-4 flex items-center gap-3">
             <div className="flex-shrink-0">
               <div className="w-10 h-10 rounded-full bg-tarsal-accent/10 flex items-center justify-center">
@@ -715,7 +714,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           </div>
           
-          
           <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-center gap-3">
             <div className="flex-shrink-0">
               <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
@@ -727,7 +725,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <p className="text-xs text-gray-600">V zadnjih 24 urah je izdelek kupilo <span className="font-bold">28 oseb</span>.</p>
             </div>
           </div>
-          
           
           {checkoutStep !== 'package' && <div className="bg-gray-50 p-4 rounded-lg">
               <h3 className="font-semibold mb-3">Povzetek naročila</h3>
@@ -791,61 +788,61 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
           {checkoutStep === 'package' && <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {(isMobile ? variantsArray : [variants.basic, variants.double, variants.family]).map(variant => {
-              const variantId = variant.id as 'basic' | 'double' | 'family';
-              const isSelected = selectedPackage === variantId;
-              return <div key={variantId} className={cn("price-card", variant.popular ? "popular transform scale-105" : "")}>
-                      {variant.popular && <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
-                          Najbolj priljubljeno
-                        </div>}
-                      <div className="p-8 border-b">
-                        <h3 className="text-2xl font-bold mb-2">{variant.name}</h3>
-                        <p className="text-gray-600 mb-4">{variant.description}</p>
-                        <div className="flex items-end mb-4">
-                          <span className="text-4xl font-bold">{variant.pricePerItem?.toFixed(2)}€</span>
-                          <span className="text-gray-500 ml-2">/kos</span>
-                          {variant.discount > 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
-                              -{variant.discount}%
-                            </span>}
-                        </div>
-                        {variant.discount > 0 && <div className="text-sm text-gray-500 line-through">
-                            {variant.price.toFixed(2)}€/kos
-                          </div>}
-                        
-                        <ul className="space-y-3 mb-6">
-                          {variant.features.map((feature, index) => <li key={index} className="flex items-start">
-                              <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
-                              <span>{feature}</span>
-                            </li>)}
-                        </ul>
-                        
-                        <div className="text-sm font-semibold mb-2">
-                          Končna cena: <span className="text-lg">{variant.total.toFixed(2)}€</span>
-                        </div>
+                  const variantId = variant.id as 'basic' | 'double' | 'family';
+                  const isSelected = selectedPackage === variantId;
+                  return <div key={variantId} className={cn("price-card", variant.popular ? "popular transform scale-105" : "")}>
+                          {variant.popular && <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
+                              Najbolj priljubljeno
+                            </div>}
+                          <div className="p-8 border-b">
+                            <h3 className="text-2xl font-bold mb-2">{variant.name}</h3>
+                            <p className="text-gray-600 mb-4">{variant.description}</p>
+                            <div className="flex items-end mb-4">
+                              <span className="text-4xl font-bold">{variant.pricePerItem?.toFixed(2)}€</span>
+                              <span className="text-gray-500 ml-2">/kos</span>
+                              {variant.discount > 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+                                  -{variant.discount}%
+                                </span>}
+                            </div>
+                            {variant.discount > 0 && <div className="text-sm text-gray-500 line-through">
+                                {variant.price.toFixed(2)}€/kos
+                              </div>}
+                            
+                            <ul className="space-y-3 mb-6">
+                              {variant.features.map((feature, index) => <li key={index} className="flex items-start">
+                                  <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
+                                  <span>{feature}</span>
+                                </li>)}
+                            </ul>
+                            
+                            <div className="text-sm font-semibold mb-2">
+                              Končna cena: <span className="text-lg">{variant.total.toFixed(2)}€</span>
+                            </div>
 
-                        
-                        {variantId === 'basic' && (
-                          <div className="shopify-button-container">
-                            <div id="product-component-modal-basic" ref={basicPackageButtonRef}></div>
+                            {variantId === 'basic' && (
+                              <div className="shopify-button-container">
+                                <div id="product-component-modal-basic" ref={basicPackageButtonRef}></div>
+                              </div>
+                            )}
+                            {variantId === 'double' && (
+                              <div className="shopify-button-container">
+                                <div id="product-component-modal-double" ref={doublePackageButtonRef}></div>
+                              </div>
+                            )}
+                            {variantId === 'family' && (
+                              <div className="shopify-button-container">
+                                <div id="product-component-modal-family" ref={familyPackageButtonRef}></div>
+                              </div>
+                            )}
                           </div>
-                        )}
-                        {variantId === 'double' && (
-                          <div className="shopify-button-container">
-                            <div id="product-component-modal-double" ref={doublePackageButtonRef}></div>
-                          </div>
-                        )}
-                        {variantId === 'family' && (
-                          <div className="shopify-button-container">
-                            <div id="product-component-modal-family" ref={familyPackageButtonRef}></div>
-                          </div>
-                        )}
-                      </div>
-                    </div>;
-            })}
+                        </div>;
+                })}
               </div>
             </div>}
-          
-          
-          {checkoutStep === 'color_payment' && <div className="space-y-6">
-              
-              <div>
-                <
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CheckoutModal;
