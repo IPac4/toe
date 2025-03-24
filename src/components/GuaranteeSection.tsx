@@ -22,9 +22,9 @@ const GuaranteeSection: React.FC = () => {
           </div>
           
           <div className="flex-shrink-0">
-            <button className="cta-button shadow-lg transform transition hover:-translate-y-1">
+            <a href="#pricing" className="cta-button shadow-lg transform transition hover:-translate-y-1">
               Naroči brez tveganja
-            </button>
+            </a>
           </div>
         </div>
       </div>
