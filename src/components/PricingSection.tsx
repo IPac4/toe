@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -117,7 +116,7 @@ const PricingSection: React.FC = () => {
             });
             ShopifyBuy.UI.onReady(client).then(function (ui) {
               ui.createComponent('product', {
-                id: '9827355067651',
+                id: '9827355230547',
                 node: document.getElementById('product-component-basic'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
                 options: {
