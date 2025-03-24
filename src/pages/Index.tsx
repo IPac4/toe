@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -12,6 +13,7 @@ import CheckoutModal from '../components/CheckoutModal';
 import Footer from '../components/Footer';
 import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
+import StickyCTA from '../components/StickyCTA';
 
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -134,6 +136,8 @@ const Index: React.FC = () => {
         productVariant={selectedVariant}
         skipPackageSelection={skipPackageSelection}
       />
+
+      <StickyCTA />
     </div>
   );
 };
