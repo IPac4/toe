@@ -229,7 +229,7 @@ const PricingSection: React.FC = () => {
           });
         }
 
-        // Initialize for double package
+        // Initialize for double package with quantity=2 preset
         const doubleComponent = document.getElementById('product-component-1742847969801');
         if (doubleComponent) {
           window.ShopifyBuy.UI.onReady(client).then(function (ui) {
@@ -267,7 +267,12 @@ const PricingSection: React.FC = () => {
                     "price": false
                   },
                   "text": {
-                    "button": "Naroči zdaj"
+                    "button": "Naroči zdaj",
+                    "outOfStock": "Razprodano",
+                    "unavailable": "Nedosegljivo"
+                  },
+                  "quantity": {
+                    "initial": 2,
                   }
                 },
                 "productSet": {
