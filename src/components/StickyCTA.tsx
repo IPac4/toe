@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 const StickyCTA: React.FC = () => {
   const [showStickyCta, setShowStickyCta] = useState(false);
+  const [isPricingSectionVisible, setIsPricingSectionVisible] = useState(false);
   
   useEffect(() => {
     // Handle showing sticky CTA after 20 seconds
@@ -20,6 +21,16 @@ const StickyCTA: React.FC = () => {
       
       if (scrollPercentage >= 50) {
         setShowStickyCta(true);
+      }
+      
+      // Check if pricing section is visible
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        const rect = pricingSection.getBoundingClientRect();
+        const isPricingVisible = 
+          rect.top < window.innerHeight && 
+          rect.bottom > 0;
+        setIsPricingSectionVisible(isPricingVisible);
       }
     };
     
@@ -43,6 +54,9 @@ const StickyCTA: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     document.addEventListener('checkoutOpen', handleCheckoutOpen);
     document.addEventListener('checkoutClosed', handleCheckoutClosed);
+    
+    // Call once on mount to check initial state
+    handleScroll();
     
     // Cleanup function
     return () => {
@@ -72,7 +86,7 @@ const StickyCTA: React.FC = () => {
 
   return (
     <div className={cn("sticky-cta bg-white shadow-lg py-3 border-t border-gray-200", {
-      "hidden": !showStickyCta
+      "hidden": !showStickyCta || isPricingSectionVisible
     })}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
