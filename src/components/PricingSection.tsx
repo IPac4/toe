@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -350,129 +351,6 @@ const PricingSection: React.FC = () => {
             });
           });
         }
-
-        // Initialize for family package with quantity=3 preset
-        const familyComponent = document.getElementById('product-component-1742848237166');
-        if (familyComponent) {
-          window.ShopifyBuy.UI.onReady(client).then(function (ui) {
-            ui.createComponent('product', {
-              id: '8579490578771',
-              node: familyComponent,
-              moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-              options: {
-                "product": {
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "calc(25% - 20px)",
-                        "margin-left": "20px",
-                        "margin-bottom": "50px"
-                      }
-                    },
-                    "button": {
-                      ":hover": {
-                        "background-color": "#0b95d2"
-                      },
-                      "background-color": "#0ca6e9",
-                      ":focus": {
-                        "background-color": "#0b95d2"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "buttonDestination": "checkout",
-                  "contents": {
-                    "img": false,
-                    "button": false,
-                    "buttonWithQuantity": true,
-                    "title": false,
-                    "price": false
-                  },
-                  "text": {
-                    "button": "Naroči zdaj",
-                    "outOfStock": "Razprodano",
-                    "unavailable": "Nedosegljivo"
-                  },
-                  "quantity": {
-                    "initial": 3,
-                  }
-                },
-                "productSet": {
-                  "styles": {
-                    "products": {
-                      "@media (min-width: 601px)": {
-                        "margin-left": "-20px"
-                      }
-                    }
-                  }
-                },
-                "modalProduct": {
-                  "contents": {
-                    "img": false,
-                    "imgWithCarousel": true,
-                    "button": false,
-                    "buttonWithQuantity": true
-                  },
-                  "styles": {
-                    "product": {
-                      "@media (min-width: 601px)": {
-                        "max-width": "100%",
-                        "margin-left": "0px",
-                        "margin-bottom": "0px"
-                      }
-                    },
-                    "button": {
-                      ":hover": {
-                        "background-color": "#0b95d2"
-                      },
-                      "background-color": "#0ca6e9",
-                      ":focus": {
-                        "background-color": "#0b95d2"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "text": {
-                    "button": "Add to cart"
-                  }
-                },
-                "option": {},
-                "cart": {
-                  "styles": {
-                    "button": {
-                      ":hover": {
-                        "background-color": "#0b95d2"
-                      },
-                      "background-color": "#0ca6e9",
-                      ":focus": {
-                        "background-color": "#0b95d2"
-                      },
-                      "border-radius": "13px"
-                    }
-                  },
-                  "text": {
-                    "total": "Subtotal",
-                    "button": "Checkout"
-                  },
-                  "popup": false
-                },
-                "toggle": {
-                  "styles": {
-                    "toggle": {
-                      "background-color": "#0ca6e9",
-                      ":hover": {
-                        "background-color": "#0b95d2"
-                      },
-                      ":focus": {
-                        "background-color": "#0b95d2"
-                      }
-                    }
-                  }
-                }
-              },
-            });
-          });
-        }
       }
     };
 
@@ -557,7 +435,14 @@ const PricingSection: React.FC = () => {
                 ) : pkg.key === 'double' ? (
                   <div id="product-component-1742847969801" className="mt-4"></div>
                 ) : (
-                  <div id="product-component-1742848237166" className="mt-4"></div>
+                  <Button 
+                    className={cn(
+                      "w-full cta-button bg-tarsal-accent hover:bg-tarsal-accent/90"
+                    )}
+                    size="lg"
+                  >
+                    Naroči zdaj
+                  </Button>
                 )}
               </div>
             </div>
