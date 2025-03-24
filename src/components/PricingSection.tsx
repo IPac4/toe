@@ -1,9 +1,16 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Check } from 'lucide-react';
+
+declare global {
+  interface Window {
+    ShopifyBuy?: any;
+  }
+}
 
 const PricingSection: React.FC = () => {
   const isMobile = useIsMobile();
@@ -69,6 +76,167 @@ const PricingSection: React.FC = () => {
   const orderedPackages = isMobile 
     ? [packages[1], packages[0], packages[2]] 
     : packages;
+
+  // Initialize Shopify Buy Button
+  useEffect(() => {
+    // Create a new script element for the Shopify Buy Button SDK
+    const loadShopifyScript = () => {
+      const scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+      if (window.ShopifyBuy) {
+        if (window.ShopifyBuy.UI) {
+          initShopifyBuyButton();
+        } else {
+          loadScript();
+        }
+      } else {
+        loadScript();
+      }
+
+      function loadScript() {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = scriptURL;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+        script.onload = initShopifyBuyButton;
+      }
+    };
+
+    // Initialize the Shopify Buy Button
+    const initShopifyBuyButton = () => {
+      if (!window.ShopifyBuy) return;
+      
+      const client = window.ShopifyBuy.buildClient({
+        domain: 'c4504b.myshopify.com',
+        storefrontAccessToken: 'e1d80871c8dfa43917436258128ba4ab',
+      });
+
+      if (client && window.ShopifyBuy.UI) {
+        window.ShopifyBuy.UI.onReady(client).then(function (ui) {
+          const productComponent = document.getElementById('product-component-1742847771376');
+          if (productComponent) {
+            ui.createComponent('product', {
+              id: '8579490578771',
+              node: productComponent,
+              moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
+              options: {
+                "product": {
+                  "styles": {
+                    "product": {
+                      "@media (min-width: 601px)": {
+                        "max-width": "calc(25% - 20px)",
+                        "margin-left": "20px",
+                        "margin-bottom": "50px"
+                      }
+                    },
+                    "button": {
+                      ":hover": {
+                        "background-color": "#d23e19"
+                      },
+                      "background-color": "#e9451c",
+                      ":focus": {
+                        "background-color": "#d23e19"
+                      },
+                      "border-radius": "13px"
+                    }
+                  },
+                  "buttonDestination": "checkout",
+                  "contents": {
+                    "img": false,
+                    "button": false,
+                    "buttonWithQuantity": true,
+                    "title": false,
+                    "price": false
+                  },
+                  "text": {
+                    "button": "Naroči zdaj"
+                  }
+                },
+                "productSet": {
+                  "styles": {
+                    "products": {
+                      "@media (min-width: 601px)": {
+                        "margin-left": "-20px"
+                      }
+                    }
+                  }
+                },
+                "modalProduct": {
+                  "contents": {
+                    "img": false,
+                    "imgWithCarousel": true,
+                    "button": false,
+                    "buttonWithQuantity": true
+                  },
+                  "styles": {
+                    "product": {
+                      "@media (min-width: 601px)": {
+                        "max-width": "100%",
+                        "margin-left": "0px",
+                        "margin-bottom": "0px"
+                      }
+                    },
+                    "button": {
+                      ":hover": {
+                        "background-color": "#d23e19"
+                      },
+                      "background-color": "#e9451c",
+                      ":focus": {
+                        "background-color": "#d23e19"
+                      },
+                      "border-radius": "13px"
+                    }
+                  },
+                  "text": {
+                    "button": "Add to cart"
+                  }
+                },
+                "option": {},
+                "cart": {
+                  "styles": {
+                    "button": {
+                      ":hover": {
+                        "background-color": "#d23e19"
+                      },
+                      "background-color": "#e9451c",
+                      ":focus": {
+                        "background-color": "#d23e19"
+                      },
+                      "border-radius": "13px"
+                    }
+                  },
+                  "text": {
+                    "total": "Subtotal",
+                    "button": "Checkout"
+                  },
+                  "popup": false
+                },
+                "toggle": {
+                  "styles": {
+                    "toggle": {
+                      "background-color": "#e9451c",
+                      ":hover": {
+                        "background-color": "#d23e19"
+                      },
+                      ":focus": {
+                        "background-color": "#d23e19"
+                      }
+                    }
+                  }
+                }
+              },
+            });
+          }
+        });
+      }
+    };
+
+    loadShopifyScript();
+
+    // Clean up the script on component unmount
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
 
   return (
     <section id="pricing" className="py-16 md:py-24 bg-white">
@@ -137,14 +305,19 @@ const PricingSection: React.FC = () => {
               </div>
               <div className="p-8">
                 <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">{pkg.totalPrice.toFixed(2)}€</span></p>
-                <Button 
-                  className={cn(
-                    "w-full cta-button bg-tarsal-accent hover:bg-tarsal-accent/90"
-                  )}
-                  size="lg"
-                >
-                  {pkg.key === 'double' ? 'Naroči zdaj' : 'Naroči zdaj'}
-                </Button>
+                
+                {pkg.key === 'basic' ? (
+                  <div id="product-component-1742847771376" className="mt-4"></div>
+                ) : (
+                  <Button 
+                    className={cn(
+                      "w-full cta-button bg-tarsal-accent hover:bg-tarsal-accent/90"
+                    )}
+                    size="lg"
+                  >
+                    {pkg.key === 'double' ? 'Naroči zdaj' : 'Naroči zdaj'}
+                  </Button>
+                )}
               </div>
             </div>
           ))}

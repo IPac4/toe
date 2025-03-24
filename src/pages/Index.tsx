@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -13,11 +14,25 @@ import Footer from '../components/Footer';
 import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
 
+// Add script to load Shopify Buy Button SDK
+const loadShopifyScript = () => {
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.async = true;
+  script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  document.head.appendChild(script);
+};
+
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<'basic' | 'double' | 'family'>('double');
   const [skipPackageSelection, setSkipPackageSelection] = useState(false);
   const isMobile = useIsMobile();
+  
+  // Load Shopify Buy Button SDK when component mounts
+  useEffect(() => {
+    loadShopifyScript();
+  }, []);
   
   useEffect(() => {
     // Handle CTA button clicks
