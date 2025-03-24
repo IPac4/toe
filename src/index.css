@@ -138,6 +138,26 @@
     @apply ring-2 ring-green-500;
   }
   
+  /* Shopify Buy Button styling */
+  .shopify-button-container {
+    width: 100%;
+    margin-top: 8px;
+  }
+  
+  .shopify-buy__btn {
+    width: 100% !important;
+    border-radius: 9999px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 700 !important;
+    transition-property: all !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition-duration: 300ms !important;
+  }
+  
+  .shopify-buy__btn:hover {
+    transform: scale(1.05) !important;
+  }
+  
   /* FAQ section styling */
   .faq-item {
     @apply transition-all duration-300;
