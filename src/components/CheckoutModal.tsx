@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -249,9 +250,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-          {/* Limited time offer countdown */}
-          
-          
           {/* 30-day guarantee - New section added at the top */}
           <div className="bg-green-50 border border-green-100 rounded-lg p-4 flex items-center gap-3">
             <div className="flex-shrink-0">
@@ -358,31 +356,40 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {(isMobile ? variantsArray : [variants.basic, variants.double, variants.family]).map(variant => {
-              const variantId = variant.id as 'basic' | 'double' | 'family';
-              const isSelected = selectedPackage === variantId;
-              return <div key={variantId} className={cn("price-card", variant.popular ? "popular transform scale-105" : "")}>
-                      {variant.popular && <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
+                  const variantId = variant.id as 'basic' | 'double' | 'family';
+                  const isSelected = selectedPackage === variantId;
+                  return (
+                    <div key={variantId} className={cn("price-card", variant.popular ? "popular transform scale-105" : "")}>
+                      {variant.popular && (
+                        <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
                           Najbolj priljubljeno
-                        </div>}
+                        </div>
+                      )}
                       <div className="p-8 border-b">
                         <h3 className="text-2xl font-bold mb-2">{variant.name}</h3>
                         <p className="text-gray-600 mb-4">{variant.description}</p>
                         <div className="flex items-end mb-4">
                           <span className="text-4xl font-bold">{variant.pricePerItem?.toFixed(2)}€</span>
                           <span className="text-gray-500 ml-2">/kos</span>
-                          {variant.discount > 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+                          {variant.discount > 0 && (
+                            <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
                               -{variant.discount}%
-                            </span>}
+                            </span>
+                          )}
                         </div>
-                        {variant.discount > 0 && <div className="text-sm text-gray-500 line-through">
+                        {variant.discount > 0 && (
+                          <div className="text-sm text-gray-500 line-through">
                             {variant.price.toFixed(2)}€/kos
-                          </div>}
+                          </div>
+                        )}
                         
                         <ul className="space-y-3 mb-6">
-                          {variant.features.map((feature, index) => <li key={index} className="flex items-start">
+                          {variant.features.map((feature, index) => (
+                            <li key={index} className="flex items-start">
                               <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
                               <span>{feature}</span>
-                            </li>)}
+                            </li>
+                          ))}
                         </ul>
                         
                         <div className="text-sm font-semibold mb-2">
@@ -390,12 +397,17 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         </div>
 
                         {/* Added individual Buy Now button for each package */}
-                        <Button type="button" onClick={() => handlePackageSelect(variantId)} className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90 text-white mt-4">
+                        <Button 
+                          type="button" 
+                          onClick={() => handlePackageSelect(variantId)} 
+                          className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90 text-white mt-4"
+                        >
                           Kupi zdaj
                         </Button>
                       </div>
-                    </div>;
-            })}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -407,8 +419,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <h3 className="font-semibold mb-3">Izberite barvo za vsak TOE izdelek</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {Array.from({
-                length: variants[selectedPackage].quantity
-              }).map((_, index) => (
+                    length: variants[selectedPackage].quantity
+                  }).map((_, index) => (
                     <div key={index} className="border rounded-lg p-3">
                       <div className="text-sm font-medium mb-2">TOE {index + 1}</div>
                       <div className="flex space-x-2">
@@ -456,8 +468,12 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
               {/* Payment Method Selection */}
               <div className="pt-2">
                 <h3 className="font-semibold mb-3">Način plačila</h3>
-                <RadioGroup defaultValue="card" value={paymentMethod} onValueChange={value => setPaymentMethod(value as PaymentMethod)} className="space-y-3">
-                  
+                <RadioGroup 
+                  defaultValue="card" 
+                  value={paymentMethod} 
+                  onValueChange={value => setPaymentMethod(value as PaymentMethod)} 
+                  className="space-y-3"
+                >
                   {/* Credit Card Option */}
                   <div className={cn(
                     "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all", 
@@ -521,4 +537,109 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <Label htmlFor="applepay" className="flex-1 cursor-pointer">Apple Pay</Label>
                     <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
                       <rect width="40" height="24" rx="4" fill="#000000" />
-                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3ZM13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C15.5 12.7 14.5 12.3 14.5 11.2C
+                      <path d="M13.3 9.3C12.9 9.7 12.4 9.6 11.9 9.5C11.8 9 12 8.5 12.3 8.1C12.7 7.7 13.2 7.8 13.6 8C13.7 8.5 13.6 9 13.3 9.3Z" fill="white" />
+                      <path d="M13.6 9.7C13 9.7 12.5 10.1 12.2 10.1C11.9 10.1 11.4 9.7 11 9.7C10.4 9.7 9.9 10 9.6 10.5C9 11.5 9.5 13 10.1 13.8C10.4 14.2 10.8 14.7 11.3 14.6C11.8 14.6 12 14.3 12.6 14.3C13.2 14.3 13.4 14.6 13.9 14.6C14.4 14.6 14.7 14.2 15 13.8C15.4 13.3 15.5 12.8 15.5 12.7C15.5 12.7 14.5 12.3 14.5 11.2C14.5 10.3 15.3 9.8 15.3 9.8C14.9 9.2 14.2 9.2 13.9 9.2C13.8 9.2 13.7 9.7 13.6 9.7Z" fill="white" />
+                    </svg>
+                  </div>
+                  
+                  {/* PayPal Option */}
+                  <div className={cn(
+                    "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all", 
+                    paymentMethod === 'paypal' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                  )}>
+                    <RadioGroupItem value="paypal" id="paypal" />
+                    <Label htmlFor="paypal" className="flex-1 cursor-pointer">PayPal</Label>
+                    <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
+                      <rect width="40" height="24" rx="4" fill="#F0F0F0" />
+                      <path d="M31.1 8.4H29C28.8 8.4 28.7 8.5 28.6 8.7L27.4 14.8C27.4 14.9 27.4 15 27.6 15H28.6C28.8 15 28.9 14.9 29 14.7L29.3 13.3C29.3 13.1 29.5 13 29.7 13H30.3C32 13 33 12.2 33.3 10.6C33.5 9.9 33.3 9.4 33 9C32.6 8.6 32 8.4 31.1 8.4ZM31.4 10.7C31.2 11.5 30.6 11.5 30 11.5H29.7L30 10.1C30 10 30.1 10 30.2 10H30.3C30.7 10 31.1 10 31.1 10.3C31.4 10.3 31.4 10.5 31.4 10.7Z" fill="#253B80" />
+                      <path d="M15.5 8.4H13.4C13.2 8.4 13.1 8.5 13 8.7L11.8 14.8C11.8 14.9 11.8 15 12 15H13C13.1 15 13.2 14.9 13.2 14.8L13.5 13.3C13.5 13.1 13.7 13 13.9 13H14.5C16.2 13 17.2 12.2 17.5 10.6C17.7 9.9 17.5 9.4 17.2 9C16.8 8.6 16.2 8.4 15.5 8.4ZM15.8 10.7C15.6 11.5 15 11.5 14.4 11.5H14.1L14.4 10.1C14.4 10 14.5 10 14.6 10H14.7C15.1 10 15.5 10 15.5 10.3C15.7 10.3 15.8 10.5 15.8 10.7Z" fill="#253B80" />
+                      <path d="M22.5 10.6H21.4C21.3 10.6 21.2 10.6 21.2 10.7L21.1 10.8L21 10.6C20.7 10.2 20.3 10.1 19.8 10.1C18.6 10.1 17.6 11 17.4 12.1C17.3 12.7 17.4 13.2 17.7 13.5C18 13.8 18.4 14 18.9 14C19.9 14 20.4 13.3 20.4 13.3L20.3 13.4L20.2 14.8C20.2 14.9 20.2 15 20.4 15H21.3C21.4 15 21.6 14.9 21.6 14.7L22.3 10.8C22.4 10.8 22.3 10.6 22.5 10.6ZM20.8 12.2C20.7 12.7 20.3 13.1 19.8 13.1C19.5 13.1 19.3 13 19.2 12.9C19.1 12.7 19 12.5 19.1 12.2C19.2 11.7 19.6 11.3 20.1 11.3C20.4 11.3 20.6 11.4 20.7 11.5C20.7 11.7 20.8 11.9 20.8 12.2Z" fill="#253B80" />
+                      <path d="M28.3 10.6H27.2C27.1 10.6 27 10.6 27 10.7L26.9 10.8L26.8 10.6C26.5 10.2 26.1 10.1 25.6 10.1C24.4 10.1 23.4 11 23.2 12.1C23.1 12.7 23.2 13.2 23.5 13.5C23.8 13.8 24.2 14 24.7 14C25.7 14 26.2 13.3 26.2 13.3L26.1 13.4L26 14.8C26 14.9 26 15 26.2 15H27.1C27.2 15 27.4 14.9 27.4 14.7L28.1 10.8C28.2 10.8 28.1 10.6 28.3 10.6ZM26.6 12.2C26.5 12.7 26.1 13.1 25.6 13.1C25.3 13.1 25.1 13 25 12.9C24.9 12.7 24.8 12.5 24.9 12.2C25 11.7 25.4 11.3 25.9 11.3C26.2 11.3 26.4 11.4 26.5 11.5C26.5 11.7 26.6 11.9 26.6 12.2Z" fill="#253B80" />
+                    </svg>
+                  </div>
+                  
+                  {/* Shopify Option */}
+                  <div className={cn(
+                    "flex items-center space-x-2 border p-3 rounded-md cursor-pointer transition-all", 
+                    paymentMethod === 'shopify' ? "border-tarsal-accent bg-tarsal-accent/5" : "hover:border-tarsal-accent/50"
+                  )}>
+                    <RadioGroupItem value="shopify" id="shopify" />
+                    <Label htmlFor="shopify" className="flex-1 cursor-pointer">Shopify</Label>
+                    <svg className="h-6 w-10" viewBox="0 0 40 24" fill="none">
+                      <rect width="40" height="24" rx="4" fill="#95BF47" />
+                      <path d="M24.3 7.1C24.3 7.1 24.1 7 23.9 7C23.7 7 23.1 7 22.5 7C21.9 7 21.5 7.4 21.1 7.7C20.7 8 20.7 8.3 20.7 8.3L20.5 8.6C19.9 8.6 19.3 8.6 18.9 8.7C18.1 8.8 17.9 9.9 17.9 9.9L17.2 13.7L22.5 15.3L25.5 14.4L24.3 7.1ZM22.5 8.3C22.3 8.3 21.9 8.4 21.5 8.4L21.7 8C21.9 7.9 22.1 7.9 22.3 7.9C22.5 7.9 22.7 7.9 22.7 7.9C22.7 7.8 22.7 7.8 22.7 7.7C22.4 7.7 22.2 7.7 21.9 7.7C21.6 7.7 21.3 7.8 21.1 8C20.9 8.2 20.8 8.3 20.8 8.3L20.6 8.6C20.9 8.6 21.3 8.5 21.7 8.5C21.9 8.5 22.1 8.5 22.2 8.4C22.2 8.4 22.2 8.3 22.5 8.3Z" fill="white" />
+                      <path d="M24.3 7.1C24.3 7.1 24.1 7 23.9 7C23.7 7 23.1 7 22.5 7C21.9 7 21.5 7.4 21.1 7.7C20.7 8 20.7 8.3 20.7 8.3L20.5 8.6C20.5 8.6 21.5 8.4 22.5 8.3C22.3 8.3 22.7 7.8 22.7 7.7C22.6 7.7 22.4 7.7 22.3 7.7C22.1 7.7 22 7.7 21.9 7.7C21.7 7.7 21.4 7.7 21.2 7.9L21.7 8C21.9 7.9 22.1 7.9 22.3 7.9C22.5 7.9 22.7 7.9 22.7 7.9C22.7 7.8 22.7 7.8 22.7 7.7C22.4 7.7 22.2 7.7 21.9 7.7C21.6 7.7 21.3 7.8 21.1 8C20.9 8.2 20.8 8.3 20.8 8.3L20.6 8.6C20.9 8.6 21.3 8.5 21.7 8.5C21.9 8.5 22.1 8.5 22.2 8.4C22.3 8.4 22.4 8.4 22.4 8.4" fill="#FFFFFF" />
+                      <path d="M21.5 12.5L20.7 11.2C20.7 11.2 20.4 11.4 20.1 11.4C19.5 11.4 19.5 11 19.5 10.9C19.5 10.4 19.7 9.7 19.7 9.7H20.5L20.3 8.9H19.5C19.5 8.9 19.9 6.9 17.1 6.9C14.7 6.9 13.7 9 13.5 10.4C13.3 11.3 13.5 12.1 14.1 12.5L15.5 13.5C15.1 13.8 14.9 14.2 14.9 14.6C14.9 15 15.1 15.3 15.3 15.5C14.9 15.5 14.7 15.7 14.5 16C14.3 16.3 14.2 16.7 14.2 17.1C14.2 17.5 14.4 17.9 14.9 18.2C15.5 18.6 16.2 18.7 17.3 18.7C18.4 18.7 19.3 18.5 19.9 18.2C20.5 17.9 20.8 17.3 20.8 16.8C20.8 16.3 20.6 15.9 20.3 15.6C19.9 15.2 19.3 15 18.2 14.8C17.9 14.8 17.7 14.7 17.7 14.6C17.7 14.5 17.7 14.4 17.8 14.3C18.9 14.5 19.7 14.4 20.3 14.1C20.9 13.8 21.2 13.3 21.3 12.7C21.5 12.6 21.5 12.5 21.5 12.5ZM18.6 14.4C18.8 14.4 18.8 14.6 18.8 14.6V14.7C18.2 14.7 17.7 14.7 17.7 14.4C17.7 14.3 17.7 14.3 17.8 14.3C18 14.3 18.2 14.4 18.6 14.4ZM18.4 10.3C18.4 10.3 18.4 10.6 18.4 10.9C18.4 11.2 18.4 11.4 18.2 11.4C18.1 11.4 18.1 11.1 18.1 10.8C18.1 10.5 18.1 10.2 18.1 10C18.1 9.8 18.1 9.5 18.1 9.5C18.1 9.5 18.3 9.8 18.4 10.3ZM14.7 11.1C14.7 10.2 15.1 9.4 15.5 9.4C15.9 9.4 16.1 9.8 16.1 10.2C16.1 11.1 15.7 11.3 15.5 11.3C15.1 11.3 14.7 11.1 14.7 11.1ZM17.3 17.8C16.8 17.8 16.2 17.6 16.2 17.1C16.2 16.8 16.4 16.5 16.8 16.5H17.1C17.3 16.5 17.5 16.5 17.7 16.6C18.1 16.7 18.3 16.8 18.3 17.1C18.3 17.5 17.8 17.8 17.3 17.8Z" fill="white" />
+                    </svg>
+                  </div>
+                </RadioGroup>
+              </div>
+              
+              <Button 
+                type="submit" 
+                className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90 text-white mt-4"
+              >
+                Nadaljuj naročilo
+              </Button>
+            </div>
+          )}
+          
+          {checkoutStep === 'address' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="firstName">Ime</Label>
+                  <Input id="firstName" placeholder="Vaše ime" required />
+                </div>
+                <div>
+                  <Label htmlFor="lastName">Priimek</Label>
+                  <Input id="lastName" placeholder="Vaš priimek" required />
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" placeholder="vas@email.si" required />
+              </div>
+              
+              <div>
+                <Label htmlFor="phone">Telefon</Label>
+                <Input id="phone" placeholder="041 123 456" required />
+              </div>
+              
+              <div>
+                <Label htmlFor="address">Naslov</Label>
+                <Input id="address" placeholder="Ulica in hišna številka" required />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="postalCode">Poštna številka</Label>
+                  <Input id="postalCode" placeholder="1000" required />
+                </div>
+                <div>
+                  <Label htmlFor="city">Mesto</Label>
+                  <Input id="city" placeholder="Ljubljana" required />
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="notes">Opombe k naročilu (neobvezno)</Label>
+                <Input id="notes" placeholder="Morebitne posebne zahteve" />
+              </div>
+              
+              <Button 
+                type="submit" 
+                className="w-full bg-tarsal-accent hover:bg-tarsal-accent/90 text-white mt-4"
+              >
+                Oddaj naročilo
+              </Button>
+            </div>
+          )}
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CheckoutModal;
