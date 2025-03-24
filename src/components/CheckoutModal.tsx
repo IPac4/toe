@@ -127,9 +127,20 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setShowPackageSelection(false);
   };
 
-  // Initialize Shopify Buy buttons after component mounts
+  // Initialize Shopify Buy buttons after component mounts or when modal opens
   useEffect(() => {
     if (!open) return;
+    
+    // We need to clear any existing button containers to prevent duplicates
+    if (basicProductButtonRef.current) {
+      basicProductButtonRef.current.innerHTML = '';
+    }
+    if (doubleProductButtonRef.current) {
+      doubleProductButtonRef.current.innerHTML = '';
+    }
+    if (familyProductButtonRef.current) {
+      familyProductButtonRef.current.innerHTML = '';
+    }
     
     // Add Shopify SDK script only once
     const shopifyScriptId = 'shopify-buy-button-script-modal';
@@ -143,6 +154,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     
     // Initialize basic package button
     if (basicProductButtonRef.current) {
+      basicProductButtonRef.current.id = 'modal-product-component-basic';
+      const basicCheckoutDiv = document.createElement('div');
+      basicCheckoutDiv.id = 'modal-product-component-basic';
+      basicProductButtonRef.current.appendChild(basicCheckoutDiv);
+      
       const basicPackageScript = document.createElement('script');
       basicPackageScript.type = 'text/javascript';
       basicPackageScript.innerHTML = `
@@ -285,6 +301,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         })();
         /*]]>*/
       `;
+      
       setTimeout(() => {
         if (basicProductButtonRef.current) {
           basicProductButtonRef.current.appendChild(basicPackageScript);
@@ -294,6 +311,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
     // Initialize double package button
     if (doubleProductButtonRef.current) {
+      doubleProductButtonRef.current.id = 'modal-product-component-double';
+      const doubleCheckoutDiv = document.createElement('div');
+      doubleCheckoutDiv.id = 'modal-product-component-double';
+      doubleProductButtonRef.current.appendChild(doubleCheckoutDiv);
+      
       const doublePackageScript = document.createElement('script');
       doublePackageScript.type = 'text/javascript';
       doublePackageScript.innerHTML = `
@@ -436,6 +458,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         })();
         /*]]>*/
       `;
+      
       setTimeout(() => {
         if (doubleProductButtonRef.current) {
           doubleProductButtonRef.current.appendChild(doublePackageScript);
@@ -445,6 +468,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
     // Initialize family package button
     if (familyProductButtonRef.current) {
+      familyProductButtonRef.current.id = 'modal-product-component-family';
+      const familyCheckoutDiv = document.createElement('div');
+      familyCheckoutDiv.id = 'modal-product-component-family';
+      familyProductButtonRef.current.appendChild(familyCheckoutDiv);
+      
       const familyPackageScript = document.createElement('script');
       familyPackageScript.type = 'text/javascript';
       familyPackageScript.innerHTML = `
@@ -587,21 +615,14 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         })();
         /*]]>*/
       `;
+      
       setTimeout(() => {
         if (familyProductButtonRef.current) {
           familyProductButtonRef.current.appendChild(familyPackageScript);
         }
       }, 100);
     }
-
-    // Cleanup on unmount
-    return () => {
-      const shopifyScript = document.getElementById(shopifyScriptId);
-      if (shopifyScript) {
-        shopifyScript.remove();
-      }
-    };
-  }, [open]);
+  }, [open, selectedPackage]);
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -696,13 +717,13 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     selectedPackage === pkg.key && (
                       <div className="shopify-button-container">
                         {pkg.key === 'basic' && (
-                          <div id="modal-product-component-basic" ref={basicProductButtonRef}></div>
+                          <div className="w-full" ref={basicProductButtonRef}></div>
                         )}
                         {pkg.key === 'double' && (
-                          <div id="modal-product-component-double" ref={doubleProductButtonRef}></div>
+                          <div className="w-full" ref={doubleProductButtonRef}></div>
                         )}
                         {pkg.key === 'family' && (
-                          <div id="modal-product-component-family" ref={familyProductButtonRef}></div>
+                          <div className="w-full" ref={familyProductButtonRef}></div>
                         )}
                       </div>
                     )
