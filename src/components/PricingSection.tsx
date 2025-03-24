@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -236,11 +235,12 @@ const PricingSection: React.FC = () => {
       }, 100);
     }
 
-    // Initialize family package button
+    // Initialize family package button - UPDATED with new code
     if (familyPackageButtonRef.current) {
       const familyPackageScript = document.createElement('script');
       familyPackageScript.type = 'text/javascript';
       familyPackageScript.innerHTML = `
+        /*<![CDATA[*/
         (function () {
           var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
           if (window.ShopifyBuy) {
@@ -252,25 +252,22 @@ const PricingSection: React.FC = () => {
           } else {
             loadScript();
           }
-
           function loadScript() {
             var script = document.createElement('script');
             script.async = true;
             script.src = scriptURL;
-            (document.head || document.body).appendChild(script);
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
             script.onload = ShopifyBuyInit;
           }
-
           function ShopifyBuyInit() {
             var client = ShopifyBuy.buildClient({
               domain: 'c4504b.myshopify.com',
               storefrontAccessToken: 'e1d80871c8dfa43917436258128ba4ab',
             });
-
             ShopifyBuy.UI.onReady(client).then(function (ui) {
               ui.createComponent('product', {
-                id: '8579490578771',
-                node: document.getElementById('product-component-1742849087442'),
+                id: '9827356246355',
+                node: document.getElementById('product-component-1742851845591'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
                 options: {
                   "product": {
@@ -283,9 +280,13 @@ const PricingSection: React.FC = () => {
                         }
                       },
                       "button": {
-                        ":hover": { "background-color": "#0b95d2" },
+                        ":hover": {
+                          "background-color": "#0b95d2"
+                        },
                         "background-color": "#0ca6e9",
-                        ":focus": { "background-color": "#0b95d2" },
+                        ":focus": {
+                          "background-color": "#0b95d2"
+                        },
                         "border-radius": "13px"
                       }
                     },
@@ -299,27 +300,84 @@ const PricingSection: React.FC = () => {
                       "button": "Naroči zdaj"
                     }
                   },
+                  "productSet": {
+                    "styles": {
+                      "products": {
+                        "@media (min-width: 601px)": {
+                          "margin-left": "-20px"
+                        }
+                      }
+                    }
+                  },
+                  "modalProduct": {
+                    "contents": {
+                      "img": false,
+                      "imgWithCarousel": true,
+                      "button": false,
+                      "buttonWithQuantity": true
+                    },
+                    "styles": {
+                      "product": {
+                        "@media (min-width: 601px)": {
+                          "max-width": "100%",
+                          "margin-left": "0px",
+                          "margin-bottom": "0px"
+                        }
+                      },
+                      "button": {
+                        ":hover": {
+                          "background-color": "#0b95d2"
+                        },
+                        "background-color": "#0ca6e9",
+                        ":focus": {
+                          "background-color": "#0b95d2"
+                        },
+                        "border-radius": "13px"
+                      }
+                    },
+                    "text": {
+                      "button": "Add to cart"
+                    }
+                  },
+                  "option": {},
                   "cart": {
+                    "styles": {
+                      "button": {
+                        ":hover": {
+                          "background-color": "#0b95d2"
+                        },
+                        "background-color": "#0ca6e9",
+                        ":focus": {
+                          "background-color": "#0b95d2"
+                        },
+                        "border-radius": "13px"
+                      }
+                    },
+                    "text": {
+                      "total": "Subtotal",
+                      "button": "Checkout"
+                    },
                     "popup": false
+                  },
+                  "toggle": {
+                    "styles": {
+                      "toggle": {
+                        "background-color": "#0ca6e9",
+                        ":hover": {
+                          "background-color": "#0b95d2"
+                        },
+                        ":focus": {
+                          "background-color": "#0b95d2"
+                        }
+                      }
+                    }
                   }
-                }
+                },
               });
-
-              // Počakamo, da se gumb naloži, nato spremenimo funkcionalnost
-              setTimeout(function () {
-                const buttons = document.querySelectorAll('button.shopify-buy__btn');
-                buttons.forEach(button => {
-                  button.onclick = function (e) {
-                    e.preventDefault();
-                    const variantId = '47247133802835'; // ✅ pravi variant ID
-                    const checkoutUrl = \`https://c4504b.myshopify.com/cart/\${variantId}:3\`;
-                    window.location.href = checkoutUrl;
-                  };
-                });
-              }, 1500); // počakamo, da se vse naloži
             });
           }
         })();
+        /*]]>*/
       `;
       setTimeout(() => {
         if (familyPackageButtonRef.current) {
@@ -424,7 +482,7 @@ const PricingSection: React.FC = () => {
 
                 {pkg.key === 'family' && (
                   <div className="shopify-button-container">
-                    <div id="product-component-1742849087442" ref={familyPackageButtonRef}></div>
+                    <div id="product-component-1742851845591" ref={familyPackageButtonRef}></div>
                   </div>
                 )}
               </div>
