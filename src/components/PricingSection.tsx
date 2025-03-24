@@ -587,7 +587,7 @@ const PricingSection: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {orderedPackages.map(pkg => <div key={pkg.key} className={cn("price-card", pkg.popular ? "popular transform scale-105" : "")}>
-              {pkg.popular && <div className="bg-tarsal-accent text-white py-2 text-center font-semibold">
+              {pkg.popular && <div className="text-white py-2 text-center font-semibold bg-red-400">
                   Najbolj priljubljeno
                 </div>}
               <div className="p-8 border-b">
@@ -596,7 +596,7 @@ const PricingSection: React.FC = () => {
                 <div className="flex items-end mb-4">
                   <span className="text-4xl font-bold">{pkg.pricePerItem.toFixed(2)}€</span>
                   <span className="text-gray-500 ml-2">/kos</span>
-                  {pkg.discount > 0 && <span className="ml-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+                  {pkg.discount > 0 && <span className="ml-3 bg-green-100 text-xs font-semibold px-2 py-1 rounded text-red-400">
                       -{pkg.discount}%
                     </span>}
                 </div>
@@ -609,7 +609,7 @@ const PricingSection: React.FC = () => {
                       <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
                       <div className="flex items-center">
                         <span>{feature.text}</span>
-                        {feature.free && <Badge className="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold">
+                        {feature.free && <Badge className="ml-2 text-white font-bold bg-red-400">
                             GRATIS
                           </Badge>}
                         {feature.new && <Badge className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold">
