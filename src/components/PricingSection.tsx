@@ -1,20 +1,12 @@
-
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Check } from 'lucide-react';
 
-declare global {
-  interface Window {
-    ShopifyBuy?: any;
-  }
-}
-
 const PricingSection: React.FC = () => {
   const isMobile = useIsMobile();
-  const familyButtonRef = useRef<HTMLDivElement>(null);
   
   // Define packages in a way that can be reordered for mobile
   const packages = [
@@ -78,112 +70,11 @@ const PricingSection: React.FC = () => {
     ? [packages[1], packages[0], packages[2]] 
     : packages;
 
-  // Initialize Shopify Buy Button only for family package
-  useEffect(() => {
-    if (!familyButtonRef.current) return;
-
-    // Create the script element
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.innerHTML = `
-    (function () {
-      var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-      if (window.ShopifyBuy) {
-        if (window.ShopifyBuy.UI) {
-          ShopifyBuyInit();
-        } else {
-          loadScript();
-        }
-      } else {
-        loadScript();
-      }
-
-      function loadScript() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = scriptURL;
-        (document.head || document.body).appendChild(script);
-        script.onload = ShopifyBuyInit;
-      }
-
-      function ShopifyBuyInit() {
-        var client = ShopifyBuy.buildClient({
-          domain: 'c4504b.myshopify.com',
-          storefrontAccessToken: 'e1d80871c8dfa43917436258128ba4ab',
-        });
-
-        ShopifyBuy.UI.onReady(client).then(function (ui) {
-          ui.createComponent('product', {
-            id: '8579490578771',
-            node: document.getElementById('product-component-1742849087442'),
-            moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px"
-                    }
-                  },
-                  "button": {
-                    ":hover": { "background-color": "#0b95d2" },
-                    "background-color": "#0ca6e9",
-                    ":focus": { "background-color": "#0b95d2" },
-                    "border-radius": "13px"
-                  }
-                },
-                "buttonDestination": "checkout",
-                "contents": {
-                  "img": false,
-                  "title": false,
-                  "price": false
-                },
-                "text": {
-                  "button": "Naroči zdaj"
-                }
-              },
-              "cart": {
-                "popup": false
-              }
-            }
-          });
-
-          // Počakamo, da se gumb naloži, nato spremenimo funkcionalnost
-          setTimeout(function () {
-            const buttons = document.querySelectorAll('button.shopify-buy__btn');
-            buttons.forEach(button => {
-              if (button instanceof HTMLButtonElement) {
-                button.addEventListener('click', function (e) {
-                  e.preventDefault();
-                  const variantId = '47247133802835'; // ✅ pravi variant ID
-                  const checkoutUrl = \`https://c4504b.myshopify.com/cart/\${variantId}:3\`;
-                  window.location.href = checkoutUrl;
-                });
-              }
-            });
-          }, 1500); // počakamo, da se vse naloži
-        });
-      }
-    })();
-    `;
-    
-    // Append the script to the reference element
-    familyButtonRef.current.appendChild(script);
-    
-    // Clean up the script when component unmounts
-    return () => {
-      if (familyButtonRef.current && familyButtonRef.current.contains(script)) {
-        familyButtonRef.current.removeChild(script);
-      }
-    };
-  }, [familyButtonRef.current]);
-
   return (
     <section id="pricing" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
+          {/* Removed the "Paketi & Cene" heading, keeping only the subtitle */}
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Izberite paket, ki najbolj ustreza vašim potrebam
           </p>
@@ -246,14 +137,14 @@ const PricingSection: React.FC = () => {
               </div>
               <div className="p-8">
                 <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">{pkg.totalPrice.toFixed(2)}€</span></p>
-                
-                {pkg.key === 'basic' || pkg.key === 'double' ? (
-                  <a href="#" className="cta-button w-full text-center">Naroči zdaj</a>
-                ) : (
-                  <div>
-                    <div id="product-component-1742849087442" ref={familyButtonRef}></div>
-                  </div>
-                )}
+                <Button 
+                  className={cn(
+                    "w-full cta-button bg-tarsal-accent hover:bg-tarsal-accent/90"
+                  )}
+                  size="lg"
+                >
+                  {pkg.key === 'double' ? 'Naroči zdaj' : 'Naroči zdaj'}
+                </Button>
               </div>
             </div>
           ))}
