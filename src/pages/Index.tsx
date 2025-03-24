@@ -13,7 +13,6 @@ import CheckoutModal from '../components/CheckoutModal';
 import Footer from '../components/Footer';
 import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
-import StickyCTA from '../components/StickyCTA';
 
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,45 +25,15 @@ const Index: React.FC = () => {
     const handleCtaClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.closest('.cta-button')) {
-        // Check if this is a pricing section CTA
-        const closestPricingCard = target.closest('.price-card');
-        if (closestPricingCard) {
-          const isPopular = closestPricingCard.classList.contains('popular');
-          const isFamily = closestPricingCard.querySelector('h3')?.textContent?.includes('Družinski');
-          const isBasic = closestPricingCard.querySelector('h3')?.textContent?.includes('Osnovn');
-          
-          if (isFamily) {
-            setSelectedVariant('family');
-          } else if (isBasic) {
-            setSelectedVariant('basic');
-          } else {
-            setSelectedVariant('double');
-          }
-          
-          // Skip package selection when clicking from pricing section
-          setSkipPackageSelection(true);
-        } else {
-          // Reset to show package selection for other CTA buttons
-          setSkipPackageSelection(false);
-          setSelectedVariant('double'); // Default to double package
-        }
-        
         // Prevent default if it's an anchor tag
         if (target.tagName === 'A' || target.closest('a')) {
           e.preventDefault();
         }
         
-        // Instead of opening the modal, scroll to the pricing section with offset
+        // Instead of opening the modal, scroll to the pricing section
         const pricingSection = document.getElementById('pricing');
         if (pricingSection) {
-          const headerHeight = 80; // Approximate header height
-          const elementPosition = pricingSection.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+          pricingSection.scrollIntoView({ behavior: 'smooth' });
         }
       }
     };
@@ -132,6 +101,22 @@ const Index: React.FC = () => {
           id="expert-jure"
         />
         
+        {/* Marko Macuh testimonial */}
+        <ExpertTestimonial 
+          name="Marko Macuh"
+          title="Strokovnjak za športno medicino"
+          quote="Izdelek TOE predstavlja inovativno rešitev za številne težave s stopali, ki jih srečujem pri svojih pacientih. Njegova ergonomska zasnova in učinkovitost pri preprečevanju bolečin sta impresivna. Priporočam ga vsakomur, ki želi preventivno poskrbeti za zdravje svojih stopal."
+          imageSrc="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png"
+          credentials={[
+            "Specialist za športne poškodbe", 
+            "10+ let klinične prakse", 
+            "Svetovalec za ergonomijo stopala"
+          ]}
+          featured={true}
+          instagramHandle="markomacuh"
+          id="expert-macuh"
+        />
+        
         <GuaranteeSection />
         
         <PricingSection />
@@ -145,8 +130,6 @@ const Index: React.FC = () => {
         productVariant={selectedVariant}
         skipPackageSelection={skipPackageSelection}
       />
-      
-      <StickyCTA />
     </div>
   );
 };

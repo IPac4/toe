@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -22,50 +22,13 @@ const Header: React.FC = () => {
       dropdownItems: [
         { href: "#expert-luka", label: "Luka Mirnik" },
         { href: "#expert-jure", label: "Jure Pantar" },
-        { href: "#expert-macuh", label: "Marko Macuh" },
+        { href: "#expert-macuha", label: "Marko Macuh" },
       ]
     },
     { href: "#benefits", label: "Prednosti" },
     { href: "#reviews", label: "Mnenja" },
-    { href: "#pricing", label: "Paketi" },
     { href: "#faq", label: "FAQ" }
   ];
-  
-  // Add smooth scrolling behavior with header offset adjustment
-  useEffect(() => {
-    const handleNavLinkClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const link = target.closest('a[href^="#"]');
-      
-      if (link) {
-        e.preventDefault();
-        const href = link.getAttribute('href');
-        
-        if (href) {
-          const element = document.querySelector(href);
-          if (element) {
-            const headerHeight = 80; // Approximate header height
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-            
-            // Close mobile menu if it's open
-            setIsOpen(false);
-          }
-        }
-      }
-    };
-    
-    document.addEventListener('click', handleNavLinkClick);
-    
-    return () => {
-      document.removeEventListener('click', handleNavLinkClick);
-    };
-  }, []);
 
   return <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
