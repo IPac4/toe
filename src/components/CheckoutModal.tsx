@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   AlertDialog,
@@ -152,11 +151,10 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       document.head.appendChild(script);
     }
     
-    // Initialize basic package button
-    if (basicProductButtonRef.current) {
-      basicProductButtonRef.current.id = 'modal-product-component-basic';
+    // Initialize basic package button with the exact provided code
+    if (basicProductButtonRef.current && selectedPackage === 'basic') {
       const basicCheckoutDiv = document.createElement('div');
-      basicCheckoutDiv.id = 'modal-product-component-basic';
+      basicCheckoutDiv.id = 'product-component-1742853667355';
       basicProductButtonRef.current.appendChild(basicCheckoutDiv);
       
       const basicPackageScript = document.createElement('script');
@@ -189,7 +187,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             ShopifyBuy.UI.onReady(client).then(function (ui) {
               ui.createComponent('product', {
                 id: '8579490578771',
-                node: document.getElementById('modal-product-component-basic'),
+                node: document.getElementById('product-component-1742853667355'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
                 options: {
                   "product": {
@@ -310,7 +308,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
 
     // Initialize double package button
-    if (doubleProductButtonRef.current) {
+    if (doubleProductButtonRef.current && selectedPackage === 'double') {
       doubleProductButtonRef.current.id = 'modal-product-component-double';
       const doubleCheckoutDiv = document.createElement('div');
       doubleCheckoutDiv.id = 'modal-product-component-double';
@@ -467,7 +465,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
 
     // Initialize family package button
-    if (familyProductButtonRef.current) {
+    if (familyProductButtonRef.current && selectedPackage === 'family') {
       familyProductButtonRef.current.id = 'modal-product-component-family';
       const familyCheckoutDiv = document.createElement('div');
       familyCheckoutDiv.id = 'modal-product-component-family';
