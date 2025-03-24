@@ -124,9 +124,9 @@ const Index: React.FC = () => {
           id="expert-jure"
         />
         
-        {/* Macuha testimonial */}
+        {/* Marko Macuh testimonial */}
         <ExpertTestimonial 
-          name="Macuha"
+          name="Marko Macuh"
           title="Strokovnjak za športno medicino"
           quote="Izdelek TOE predstavlja inovativno rešitev za številne težave s stopali, ki jih srečujem pri svojih pacientih. Njegova ergonomska zasnova in učinkovitost pri preprečevanju bolečin sta impresivna. Priporočam ga vsakomur, ki želi preventivno poskrbeti za zdravje svojih stopal."
           imageSrc="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png"
@@ -136,6 +136,7 @@ const Index: React.FC = () => {
             "Svetovalec za ergonomijo stopala"
           ]}
           featured={true}
+          instagramHandle="markomacuh"
           id="expert-macuha"
         />
         
