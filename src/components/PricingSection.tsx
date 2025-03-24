@@ -403,12 +403,15 @@ const PricingSection: React.FC = () => {
             setTimeout(function () {
               const buttons = document.querySelectorAll('button.shopify-buy__btn');
               buttons.forEach(button => {
-                button.onclick = function (e) {
-                  e.preventDefault();
-                  const variantId = '47247133802835'; // ✅ correct variant ID
-                  const checkoutUrl = `https://c4504b.myshopify.com/cart/${variantId}:3`;
-                  window.location.href = checkoutUrl;
-                };
+                // Fix: use proper TypeScript handling for event listeners
+                if (button instanceof HTMLButtonElement) {
+                  button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const variantId = '47247133802835'; // ✅ correct variant ID
+                    const checkoutUrl = `https://c4504b.myshopify.com/cart/${variantId}:3`;
+                    window.location.href = checkoutUrl;
+                  });
+                }
               });
             }, 1500); // wait for everything to load
           });
