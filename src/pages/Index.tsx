@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -100,6 +101,7 @@ const Index: React.FC = () => {
           ]}
           featured={true}
           instagramHandle="lukamirnik"
+          id="expert-luka"
         />
         
         <ConsequencesSection />
@@ -119,6 +121,7 @@ const Index: React.FC = () => {
           ]}
           featured={true}
           instagramHandle="jurepantar"
+          id="expert-jure"
         />
         
         <GuaranteeSection />

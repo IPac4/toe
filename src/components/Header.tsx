@@ -1,15 +1,29 @@
 
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
     { href: "#product", label: "Produkt" },
-    { href: "#experts", label: "Strokovnjaki" },
+    { 
+      href: "#experts", 
+      label: "Strokovnjaki",
+      isDropdown: true,
+      dropdownItems: [
+        { href: "#expert-luka", label: "Luka Mirnik" },
+        { href: "#expert-jure", label: "Jure Pantar" },
+      ]
+    },
     { href: "#benefits", label: "Prednosti" },
     { href: "#reviews", label: "Mnenja" }
   ];
@@ -24,13 +38,33 @@ const Header: React.FC = () => {
           {/* Desktop navigation */}
           <nav className="hidden md:flex space-x-8">
             {navLinks.map((link) => (
-              <a 
-                key={link.href}
-                href={link.href} 
-                className="text-sm font-medium text-gray-700 hover:text-tarsal-accent transition-colors"
-              >
-                {link.label}
-              </a>
+              link.isDropdown ? (
+                <DropdownMenu key={link.href}>
+                  <DropdownMenuTrigger className="text-sm font-medium text-gray-700 hover:text-tarsal-accent transition-colors outline-none flex items-center">
+                    {link.label} <ChevronDown className="ml-1 h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-white">
+                    {link.dropdownItems?.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <a 
+                          href={item.href} 
+                          className="text-sm font-medium text-gray-700 hover:text-tarsal-accent cursor-pointer w-full"
+                        >
+                          {item.label}
+                        </a>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <a 
+                  key={link.href}
+                  href={link.href} 
+                  className="text-sm font-medium text-gray-700 hover:text-tarsal-accent transition-colors"
+                >
+                  {link.label}
+                </a>
+              )
             ))}
           </nav>
           
@@ -56,14 +90,34 @@ const Header: React.FC = () => {
                   </div>
                   <nav className="flex flex-col space-y-4 py-8">
                     {navLinks.map((link) => (
-                      <a 
-                        key={link.href}
-                        href={link.href} 
-                        onClick={() => setIsOpen(false)}
-                        className="text-base font-medium text-gray-700 hover:text-tarsal-accent transition-colors py-2"
-                      >
-                        {link.label}
-                      </a>
+                      link.isDropdown ? (
+                        <div key={link.href} className="space-y-2">
+                          <div className="text-base font-medium text-gray-700">
+                            {link.label}
+                          </div>
+                          <div className="pl-4 space-y-2">
+                            {link.dropdownItems?.map((item) => (
+                              <a 
+                                key={item.href}
+                                href={item.href} 
+                                onClick={() => setIsOpen(false)}
+                                className="block text-sm font-medium text-gray-600 hover:text-tarsal-accent transition-colors py-1"
+                              >
+                                {item.label}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <a 
+                          key={link.href}
+                          href={link.href} 
+                          onClick={() => setIsOpen(false)}
+                          className="text-base font-medium text-gray-700 hover:text-tarsal-accent transition-colors py-2"
+                        >
+                          {link.label}
+                        </a>
+                      )
                     ))}
                     <a 
                       href="#pricing" 

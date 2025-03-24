@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -25,7 +26,10 @@ const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
   imageClassName = "",
   instagramHandle
 }) => {
-  return <section id={id} className="py-16 md:py-24 bg-white">
+  // Generate an ID from name if not provided
+  const expertId = id || `expert-${name.toLowerCase().split(' ')[0]}`;
+  
+  return <section id={expertId} className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={cn("flex flex-col items-center gap-12", reverse ? "lg:flex-row-reverse" : "lg:flex-row")}>
           <div className="flex-1">
