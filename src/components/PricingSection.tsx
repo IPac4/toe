@@ -472,8 +472,11 @@ const PricingSection: React.FC = () => {
             setTimeout(function () {
               const quantityInputs = document.querySelectorAll('input[name="quantity"]');
               quantityInputs.forEach(function(input) {
-                input.value = 3;
-                input.dispatchEvent(new Event('change', { bubbles: true })); // required for update
+                // Fix: Type assertion to HTMLInputElement to access the value property
+                if (input instanceof HTMLInputElement) {
+                  input.value = '3';
+                  input.dispatchEvent(new Event('change', { bubbles: true })); // required for update
+                }
               });
             }, 1000); // wait for component to load
           });
