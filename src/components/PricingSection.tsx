@@ -3,11 +3,14 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Check } from 'lucide-react';
+import { useAnalytics } from '@/hooks/use-analytics';
+
 const PricingSection: React.FC = () => {
   const isMobile = useIsMobile();
   const doublePackageButtonRef = useRef<HTMLDivElement>(null);
   const familyPackageButtonRef = useRef<HTMLDivElement>(null);
   const basicPackageButtonRef = useRef<HTMLDivElement>(null);
+  const { trackEvent } = useAnalytics();
 
   // Define packages in a way that can be reordered for mobile
   const packages = [{
@@ -105,6 +108,88 @@ const PricingSection: React.FC = () => {
 
   // Reorder packages for mobile view - double package first
   const orderedPackages = isMobile ? [packages[1], packages[0], packages[2]] : packages;
+
+  // Function to track button clicks with Facebook Pixel
+  const trackPurchaseEvent = (packageKey: string) => {
+    const selectedPackage = packages.find(pkg => pkg.key === packageKey);
+    if (selectedPackage) {
+      trackEvent('InitiateCheckout', {
+        content_name: selectedPackage.name,
+        content_category: 'Tarsal TOE',
+        content_ids: [packageKey],
+        content_type: 'product',
+        value: selectedPackage.totalPrice,
+        currency: 'EUR',
+        num_items: selectedPackage.quantity
+      });
+      
+      console.log(`Purchase tracked for ${packageKey} package`);
+    }
+  };
+
+  // Setup observer for Shopify buy buttons to add click tracking
+  useEffect(() => {
+    const setupButtonObserver = () => {
+      // Create a mutation observer to watch for button creation
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            // Look for any newly added buttons inside the containers
+            const buttons = document.querySelectorAll('.shopify-buy__btn');
+            buttons.forEach(button => {
+              // Check if we haven't already added a listener
+              if (!button.hasAttribute('data-tracking-added')) {
+                button.setAttribute('data-tracking-added', 'true');
+                
+                // Add click event listener to track purchases
+                button.addEventListener('click', (e) => {
+                  // Determine which package was clicked
+                  let packageKey = 'basic';
+                  if (button.closest('#product-component-1742851650294')) {
+                    packageKey = 'double';
+                  } else if (button.closest('#product-component-1742851845591')) {
+                    packageKey = 'family';
+                  }
+                  
+                  trackPurchaseEvent(packageKey);
+                });
+                
+                console.log('Added tracking to buy button for Facebook Pixel');
+              }
+            });
+          }
+        });
+      });
+      
+      // Start observing the containers where buttons will appear
+      const containers = [
+        document.getElementById('product-component-1742853667355'),
+        document.getElementById('product-component-1742851650294'),
+        document.getElementById('product-component-1742851845591')
+      ];
+      
+      containers.forEach(container => {
+        if (container) {
+          observer.observe(container, { childList: true, subtree: true });
+        }
+      });
+      
+      return observer;
+    };
+    
+    // Wait for the DOM to be fully loaded before setting up observers
+    let observer: MutationObserver | null = null;
+    const timer = setTimeout(() => {
+      observer = setupButtonObserver();
+    }, 2000); // Give time for Shopify buttons to initialize
+    
+    return () => {
+      clearTimeout(timer);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [trackEvent]);
 
   // Initialize Shopify Buy buttons after component mounts
   useEffect(() => {

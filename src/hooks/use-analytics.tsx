@@ -38,6 +38,11 @@ export const useAnalytics = () => {
     // Track event in Facebook Pixel
     if (typeof window.fbq !== 'undefined') {
       window.fbq('track', eventName, params);
+      
+      // For Purchase and InitiateCheckout events, also log to console for debugging
+      if (eventName === 'Purchase' || eventName === 'InitiateCheckout') {
+        console.log(`Facebook Pixel: ${eventName}`, params);
+      }
     }
   };
   

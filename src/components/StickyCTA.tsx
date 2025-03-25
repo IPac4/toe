@@ -1,10 +1,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 const StickyCTA: React.FC = () => {
   const [showStickyCta, setShowStickyCta] = useState(false);
   const [isPricingSectionVisible, setIsPricingSectionVisible] = useState(false);
+  const { trackEvent } = useAnalytics();
   
   useEffect(() => {
     // Handle showing sticky CTA after 20 seconds
@@ -70,6 +72,13 @@ const StickyCTA: React.FC = () => {
   // Function to handle button click for scrolling to pricing
   const handleCtaClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    
+    // Track CTA button click for Facebook Pixel
+    trackEvent('InitiateCheckout', { 
+      content_name: 'Sticky CTA',
+      content_category: 'Tarsal TOE'
+    });
+    
     const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       const headerHeight = document.querySelector('header')?.offsetHeight || 0;
