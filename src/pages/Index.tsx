@@ -13,12 +13,14 @@ import CheckoutModal from '../components/CheckoutModal';
 import Footer from '../components/Footer';
 import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
+import { useAnalytics } from '../hooks/use-analytics';
 
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<'basic' | 'double' | 'family'>('double');
   const [skipPackageSelection, setSkipPackageSelection] = useState(false);
   const isMobile = useIsMobile();
+  const { trackEvent } = useAnalytics();
   
   useEffect(() => {
     // Handle CTA button clicks
@@ -29,6 +31,9 @@ const Index: React.FC = () => {
         if (target.tagName === 'A' || target.closest('a')) {
           e.preventDefault();
         }
+        
+        // Track CTA button click
+        trackEvent('cta_button_click', { location: 'main_page' });
         
         // Scroll to pricing section instead of opening modal
         const pricingSection = document.getElementById('pricing');
@@ -51,14 +56,17 @@ const Index: React.FC = () => {
     return () => {
       document.removeEventListener('click', handleCtaClick);
     };
-  }, []);
+  }, [trackEvent]);
 
   // Effect to dispatch event when modal closes
   useEffect(() => {
     if (!isModalOpen) {
       document.dispatchEvent(new CustomEvent('checkoutClosed'));
+    } else {
+      // Track checkout modal opening
+      trackEvent('checkout_modal_open', { variant: selectedVariant });
     }
-  }, [isModalOpen]);
+  }, [isModalOpen, selectedVariant, trackEvent]);
 
   return (
     <div className="min-h-screen bg-white">
