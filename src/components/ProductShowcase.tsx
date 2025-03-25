@@ -160,8 +160,8 @@ const ProductShowcase: React.FC = () => {
           
           {/* For all generations section with text above and child's foot image below */}
           <div className="bg-gradient-to-br from-white to-tarsal-muted/30 rounded-2xl shadow-xl overflow-hidden">
-            <div className="flex flex-col">
-              <div className="p-8 md:p-12">
+            <div className="flex flex-col md:flex-row">
+              <div className="p-8 md:p-12 md:w-1/2">
                 <h3 className="text-3xl font-bold mb-6 text-tarsal-accent">Za vse generacije</h3>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                   Če pogledate nogo moje hčerke na fotografiji, lahko vidite kako stopalo lahko izgleda z uporabo Tarsal TOE. 
@@ -172,19 +172,38 @@ const ProductShowcase: React.FC = () => {
                   Začnite z nego stopal čim prej, saj je preventiva najboljša rešitev. Če pa že imate težave, 
                   vam Tarsal TOE pomaga postopoma izboljšati stanje in zmanjšati bolečine.
                 </p>
+                
+                {/* Added Prednosti TOE section here */}
+                <div className="bg-white p-6 rounded-xl shadow-md mt-6">
+                  <h4 className="text-xl font-bold text-tarsal-accent mb-4">Prednosti TOE</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <span className="text-tarsal-accent mr-3 text-xl">✅</span>
+                      <p className="text-gray-700"><strong>Anatomsko oblikovan</strong> - Prilagaja se obliki prstov</p>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-tarsal-accent mr-3 text-xl">✅</span>
+                      <p className="text-gray-700"><strong>Visokokakovosten silikon</strong> - Mehak in trpežen material</p>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-tarsal-accent mr-3 text-xl">✅</span>
+                      <p className="text-gray-700"><strong>Univerzalna velikost</strong> - Za različne tipe stopal</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
+              <div className="md:w-1/2 flex items-center justify-center p-6">
                 <img 
                   src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" 
                   alt="Zdravo stopalo otroka z uporabo TOE" 
-                  className="w-1/2 mx-auto h-auto object-cover" 
+                  className="w-3/4 mx-auto h-auto object-cover" 
                 />
               </div>
             </div>
           </div>
           
-          {/* Product advantages section */}
-          <div className="bg-gradient-to-r from-tarsal-accent/10 to-blue-100 p-8 rounded-2xl shadow-lg border border-tarsal-accent/20">
+          {/* Keep the original Product advantages section */}
+          <div className="bg-gradient-to-r from-tarsal-accent/10 to-blue-100 p-8 rounded-2xl shadow-lg border border-tarsal-accent/20 mt-20">
             <h3 className="text-3xl font-bold mb-8 text-center text-tarsal-accent">Prednosti TOE</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
