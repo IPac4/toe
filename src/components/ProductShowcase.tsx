@@ -140,27 +140,27 @@ const ProductShowcase: React.FC = () => {
             </div>
           </div>
           
-          {/* For all generations section with child's foot image */}
+          {/* For all generations section with text above and child's foot image below */}
           <div className="bg-gradient-to-br from-white to-tarsal-muted/30 rounded-2xl shadow-xl overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <div className="h-full">
-                <img 
-                  src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" 
-                  alt="Zdravo stopalo otroka z uporabo TOE" 
-                  className="w-full h-full object-cover" 
-                />
-              </div>
-              <div className="p-8 md:p-12 flex flex-col justify-center">
+            <div className="flex flex-col">
+              <div className="p-8 md:p-12">
                 <h3 className="text-3xl font-bold mb-6 text-tarsal-accent">Za vse generacije</h3>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                   Če pogledate nogo moje hčerke na fotografiji, lahko vidite kako stopalo lahko izgleda z uporabo Tarsal TOE. 
                   To pomeni, da je izdelek primeren za vse starosti - tako za preventivo, ko je ta mogoča, kot tudi za 
                   korekcijo in izboljšanje stanja vašega stopala.
                 </p>
-                <p className="text-lg text-gray-700 leading-relaxed">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
                   Začnite z nego stopal čim prej, saj je preventiva najboljša rešitev. Če pa že imate težave, 
                   vam Tarsal TOE pomaga postopoma izboljšati stanje in zmanjšati bolečine.
                 </p>
+              </div>
+              <div>
+                <img 
+                  src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" 
+                  alt="Zdravo stopalo otroka z uporabo TOE" 
+                  className="w-full h-auto object-cover" 
+                />
               </div>
             </div>
           </div>
