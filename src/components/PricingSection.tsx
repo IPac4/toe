@@ -587,7 +587,7 @@ const PricingSection: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {orderedPackages.map(pkg => <div key={pkg.key} className={cn("price-card", pkg.popular ? "popular transform scale-105" : "")}>
-              {pkg.popular && <div className="text-white py-2 text-center font-semibold bg-red-400">
+              {pkg.popular && <div className="text-white py-2 text-center font-semibold bg-amber-600">
                   Najbolj priljubljeno
                 </div>}
               <div className="p-8 border-b">
