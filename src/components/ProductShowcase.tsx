@@ -186,71 +186,7 @@ const ProductShowcase: React.FC = () => {
           </div>
           
           {/* Keep the original Product advantages section */}
-          <div className="bg-gradient-to-r from-tarsal-accent/10 to-blue-100 p-8 rounded-2xl shadow-lg border border-tarsal-accent/20 mt-20">
-            <h3 className="text-3xl font-bold mb-8 text-center text-tarsal-accent">Prednosti TOE</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start">
-                  <span className="text-tarsal-accent mr-3 text-xl">✅</span>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">Anatomsko oblikovan</h4>
-                    <p className="text-gray-700">Prilagaja se obliki prstov za optimalno udobje in podporo.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start">
-                  <span className="text-tarsal-accent mr-3 text-xl">✅</span>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">Visokokakovosten silikon</h4>
-                    <p className="text-gray-700">Mehak, trpežen in koži prijazen material za dolgotrajno uporabo.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start">
-                  <span className="text-tarsal-accent mr-3 text-xl">✅</span>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">Ergonomski mostički</h4>
-                    <p className="text-gray-700">Nežno razmaknejo prste in preprečujejo otiščance.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start">
-                  <span className="text-tarsal-accent mr-3 text-xl">✅</span>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">Univerzalna velikost</h4>
-                    <p className="text-gray-700">Prilagaja se različnim tipom in velikostim stopal.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start">
-                  <span className="text-tarsal-accent mr-3 text-xl">✅</span>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">Primerno za vsakdan</h4>
-                    <p className="text-gray-700">Uporabljajte doma, v službi ali med športom.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start">
-                  <span className="text-tarsal-accent mr-3 text-xl">✅</span>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">Enostavno čiščenje</h4>
-                    <p className="text-gray-700">Preprosto operete pod tekočo vodo z blagim milom.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-            
+          
           {/* Call-to-action buttons */}
           <div className="flex flex-col md:flex-row gap-6 justify-center pt-8">
             <Button 
