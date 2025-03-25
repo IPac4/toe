@@ -98,7 +98,7 @@ const StickyCTA: React.FC = () => {
             className="cta-button w-full md:w-auto text-center"
             onClick={handleCtaClick}
           >
-            Naroči Tarsal Toe 20% popusta in <span className="text-red-500 font-semibold">gratis</span> vajami za vadbo doma
+            Naroči Tarsal Toe z 20% popustom in <span className="text-red-500 font-semibold">GRATIS</span> vajami za vadbo doma
           </a>
         </div>
       </div>
