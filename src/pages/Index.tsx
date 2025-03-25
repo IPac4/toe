@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -15,6 +14,7 @@ import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
 import { useAnalytics } from '../hooks/use-analytics';
 import CertificatesSection from '../components/CertificatesSection';
+import SecretIngredientsSection from '../components/SecretIngredientsSection';
 
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,9 +118,11 @@ const Index: React.FC = () => {
           id="expert-jure"
         />
         
+        {/* New Secret Ingredients Section */}
+        <SecretIngredientsSection />
+        
         <GuaranteeSection />
         
-        {/* New Certificates Section */}
         <CertificatesSection />
         
         <PricingSection />
