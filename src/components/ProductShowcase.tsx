@@ -177,7 +177,7 @@ const ProductShowcase: React.FC = () => {
                 <img 
                   src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" 
                   alt="Zdravo stopalo otroka z uporabo TOE" 
-                  className="w-full h-auto object-cover" 
+                  className="w-1/2 mx-auto h-auto object-cover" 
                 />
               </div>
             </div>
