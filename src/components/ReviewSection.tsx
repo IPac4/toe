@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { 
   Carousel, 
@@ -8,6 +8,16 @@ import {
   CarouselNext, 
   CarouselPrevious 
 } from '@/components/ui/carousel';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Star } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
 
 interface Review {
   name: string;
@@ -55,7 +65,85 @@ const reviews: Review[] = [
   }
 ];
 
+// Form schema for review submission
+const reviewFormSchema = z.object({
+  email: z.string().email({ message: "Prosimo vnesite veljaven e-poštni naslov" }),
+  rating: z.number().min(1, { message: "Prosimo izberite oceno" }).max(5),
+  comment: z.string().min(5, { message: "Komentar mora vsebovati vsaj 5 znakov" })
+});
+
+type ReviewFormValues = z.infer<typeof reviewFormSchema>;
+
 const ReviewSection: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showThanks, setShowThanks] = useState(false);
+  const { toast } = useToast();
+
+  const form = useForm<ReviewFormValues>({
+    resolver: zodResolver(reviewFormSchema),
+    defaultValues: {
+      email: "",
+      rating: 0,
+      comment: ""
+    }
+  });
+
+  const handleSubmit = async (values: ReviewFormValues) => {
+    setIsSubmitting(true);
+    
+    try {
+      // In a real implementation, this would send an email to info@tarsal.eu
+      // For now, we'll simulate the API call with a timeout
+      console.log("Sending review to info@tarsal.eu:", values);
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Show success message
+      setShowThanks(true);
+      setIsSubmitting(false);
+      
+      // Reset form after successful submission
+      form.reset();
+      
+      // Close dialog after a delay to show the thank you message
+      setTimeout(() => {
+        setOpen(false);
+        setShowThanks(false);
+      }, 3000);
+    } catch (error) {
+      setIsSubmitting(false);
+      toast({
+        title: "Napaka pri pošiljanju",
+        description: "Prišlo je do napake. Prosimo, poskusite znova.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const StarRating = ({ rating, setRating }: { rating: number, setRating: (rating: number) => void }) => {
+    return (
+      <div className="flex gap-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            type="button"
+            onClick={() => setRating(star)}
+            className="focus:outline-none"
+          >
+            <Star 
+              className={cn(
+                "w-8 h-8", 
+                star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+              )} 
+            />
+          </button>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <section id="reviews" className="py-16 md:py-24 bg-tarsal-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,7 +161,96 @@ const ReviewSection: React.FC = () => {
             <span className="text-lg font-semibold">4.8/5</span>
             <span className="text-gray-500">Povprečna ocena od 214 uporabnikov</span>
           </div>
+          
+          {/* Add review button */}
+          <Button 
+            onClick={() => setOpen(true)}
+            className="bg-tarsal-accent hover:bg-tarsal-accent/90 text-white mt-4"
+          >
+            Pošlji oceno
+          </Button>
         </div>
+
+        {/* Review dialog */}
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            {!showThanks ? (
+              <>
+                <DialogHeader>
+                  <DialogTitle>Ocenite naš izdelek</DialogTitle>
+                  <DialogDescription>
+                    Delite vaše mnenje o Tarsal TOE. Vaša ocena nam pomaga, da se izboljšamo.
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-pošta</FormLabel>
+                          <FormControl>
+                            <Input placeholder="vase.ime@email.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="rating"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Ocena</FormLabel>
+                          <FormControl>
+                            <StarRating 
+                              rating={field.value} 
+                              setRating={(value) => form.setValue("rating", value)} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="comment"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Vaš komentar</FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Delite vaše izkušnje z našim izdelkom..." 
+                              className="min-h-[100px]"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <DialogFooter>
+                      <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Pošiljanje..." : "Pošlji"}
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </Form>
+              </>
+            ) : (
+              <div className="py-10 text-center space-y-4">
+                <h3 className="text-2xl font-bold text-tarsal-accent">Hvala za poslano oceno!</h3>
+                <p className="text-gray-600">Cenimo vaše mnenje.</p>
+                <p className="text-gray-600">Ekipa Tarsal</p>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
 
         <div className="relative px-10">
           <Carousel
