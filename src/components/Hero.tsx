@@ -56,7 +56,7 @@ const Hero: React.FC = () => {
                 <img src="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png" alt="Marko Macuh" className="w-full h-auto rounded-lg shadow-md object-cover max-w-[400px] mx-auto" // Increased from 300px to 400px
               />
                 <div className="absolute top-4 right-4">
-                  <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno od stroke</Badge>
+                  <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno s strani stroke</Badge>
                 </div>
                 <div className="absolute -bottom-3 -right-3 bg-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
                   <svg className="w-8 h-8 text-tarsal-accent" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
