@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -22,7 +21,6 @@ const Header: React.FC = () => {
       dropdownItems: [
         { href: "#expert-luka", label: "Luka Mirnik" },
         { href: "#expert-jure", label: "Jure Pantar" },
-        { href: "#expert-macuh", label: "Marko Macuh" },
       ]
     },
     { href: "#benefits", label: "Prednosti" },
