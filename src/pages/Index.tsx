@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -95,7 +96,7 @@ const Index: React.FC = () => {
           featured={true}
           instagramHandle="lukamirnik"
           id="expert-luka"
-          className="mb-8" // Reduced margin bottom
+          className="mb-8"
         />
         
         <ConsequencesSection />
