@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { ShieldCheck, Award, Star } from 'lucide-react';
-
 const CertificatesSection: React.FC = () => {
-  return (
-    <section className="py-12 bg-gradient-to-b from-black to-zinc-900 text-white">
+  return <section className="py-12 bg-gradient-to-b from-black to-zinc-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Heading */}
         <h2 className="text-center text-3xl md:text-4xl font-bold mb-12 max-w-4xl mx-auto leading-tight bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
@@ -18,9 +15,7 @@ const CertificatesSection: React.FC = () => {
         
         {/* Guarantee Statement */}
         <div className="mb-10 text-center max-w-4xl mx-auto">
-          <p className="text-xl md:text-2xl font-semibold mb-6 text-gray-100">
-            Želim, da se odločite brez kakršnih koli dvomov ali skrbi, da nespametno ali tvegano zapravljate denar.
-          </p>
+          <p className="text-xl md:text-2xl font-semibold mb-6 text-gray-100">Želimo, da se odločite brez kakršnih koli dvomov ali skrbi, da nespametno ali tvegano zapravljate denar.</p>
           
           <p className="text-xl md:text-2xl font-semibold mb-8 text-gray-100">
             Zato vam ponujam 30-dnevno jamstvo vračila denarja.
@@ -57,16 +52,10 @@ const CertificatesSection: React.FC = () => {
         {/* Certificate Image with enhanced styling */}
         <div className="flex justify-center">
           <div className="bg-gradient-to-r from-amber-600 to-amber-400 p-1 rounded-full shadow-lg">
-            <img 
-              alt="100% jamstvo zadovoljstva" 
-              className="w-32 h-32 rounded-full" 
-              src="/lovable-uploads/43ed392e-6a27-4823-ad82-20c4e92c9276.png" 
-            />
+            <img alt="100% jamstvo zadovoljstva" className="w-32 h-32 rounded-full" src="/lovable-uploads/43ed392e-6a27-4823-ad82-20c4e92c9276.png" />
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CertificatesSection;
