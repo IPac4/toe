@@ -14,6 +14,7 @@ import Footer from '../components/Footer';
 import { useIsMobile } from '../hooks/use-mobile';
 import ExpertTestimonial from '../components/ExpertTestimonial';
 import { useAnalytics } from '../hooks/use-analytics';
+import CertificatesSection from '../components/CertificatesSection';
 
 const Index: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,6 +119,9 @@ const Index: React.FC = () => {
         />
         
         <GuaranteeSection />
+        
+        {/* New Certificates Section */}
+        <CertificatesSection />
         
         <PricingSection />
       </main>
