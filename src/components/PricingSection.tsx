@@ -116,7 +116,8 @@ const PricingSection: React.FC = () => {
       trackEvent('InitiateCheckout', {
         content_name: selectedPackage.name,
         content_category: 'Tarsal TOE',
-        content_ids: [packageKey],
+        // Fix: Convert array to string by joining with commas
+        content_ids: packageKey,
         content_type: 'product',
         value: selectedPackage.totalPrice,
         currency: 'EUR',
