@@ -140,23 +140,6 @@ const ProductShowcase: React.FC = () => {
             </div>
           </div>
           
-          {/* Centered CTA button above "Za vse generacije" section */}
-          <div className="flex justify-center items-center py-8">
-            <Button 
-              onClick={() => {
-                const element = document.getElementById('pricing');
-                if (element) {
-                  element.scrollIntoView({
-                    behavior: 'smooth'
-                  });
-                }
-              }} 
-              className="cta-button bg-green-600 hover:bg-green-500 group text-lg px-10 py-6"
-            >
-              Kupi zdaj
-              <ShoppingCart className="ml-2 group-hover:translate-x-1 transition-transform" size={24} />
-            </Button>
-          </div>
           
           {/* For all generations section with text above and child's foot image below */}
           <div className="bg-gradient-to-br from-white to-tarsal-muted/30 rounded-2xl shadow-xl overflow-hidden">
