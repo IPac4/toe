@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
+import { ArrowRight, ShoppingCart } from 'lucide-react';
 
 const ProductShowcase: React.FC = () => {
   return (
@@ -52,6 +52,23 @@ const ProductShowcase: React.FC = () => {
                     </div>
                     <p className="text-gray-700 leading-relaxed">Omogoča boljšo porazdelitev pritiska na stopalo, kar zmanjša bolečine in preprečuje otiščance.</p>
                   </div>
+                </div>
+                {/* New CTA Button */}
+                <div className="mt-8 flex space-x-4">
+                  <Button 
+                    onClick={() => {
+                      const element = document.getElementById('pricing');
+                      if (element) {
+                        element.scrollIntoView({
+                          behavior: 'smooth'
+                        });
+                      }
+                    }} 
+                    className="cta-button bg-green-600 hover:bg-green-500 group"
+                  >
+                    Kupi zdaj
+                    <ShoppingCart className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </div>
               </div>
             </div>
