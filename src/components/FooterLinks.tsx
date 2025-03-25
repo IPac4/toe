@@ -26,20 +26,23 @@ const FooterLinks: React.FC = () => {
       <div>
         <h3 className="text-lg font-semibold mb-4">Povezava</h3>
         <ul className="space-y-2">
-          <li><a href="#" className="text-gray-300 hover:text-white">O nas</a></li>
-          <li><a href="#" className="text-gray-300 hover:text-white">Kontakt</a></li>
-          <li><a href="#faq" className="text-gray-300 hover:text-white">Pogosta vprašanja</a></li>
-          <li><a href="#" className="text-gray-300 hover:text-white">Blog</a></li>
+          <li>
+            <a 
+              href="https://shop.tarsal.eu/pages/about-us" 
+              className="text-gray-300 hover:text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Domov
+            </a>
+          </li>
         </ul>
       </div>
       
       <div>
         <h3 className="text-lg font-semibold mb-4">Pomembno</h3>
         <ul className="space-y-2">
-          <li><a href="#" className="text-gray-300 hover:text-white">Pogoji poslovanja</a></li>
-          <li><a href="#" className="text-gray-300 hover:text-white">Politika zasebnosti</a></li>
-          <li><a href="#" className="text-gray-300 hover:text-white">Dostava</a></li>
-          <li><a href="#" className="text-gray-300 hover:text-white">Reklamacije</a></li>
+          {/* All links removed as requested */}
         </ul>
       </div>
     </div>
