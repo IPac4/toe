@@ -53,23 +53,6 @@ const ProductShowcase: React.FC = () => {
                     <p className="text-gray-700 leading-relaxed">Omogoča boljšo porazdelitev pritiska na stopalo, kar zmanjša bolečine in preprečuje otiščance.</p>
                   </div>
                 </div>
-                {/* New CTA Button */}
-                <div className="mt-8 flex space-x-4">
-                  <Button 
-                    onClick={() => {
-                      const element = document.getElementById('pricing');
-                      if (element) {
-                        element.scrollIntoView({
-                          behavior: 'smooth'
-                        });
-                      }
-                    }} 
-                    className="cta-button bg-green-600 hover:bg-green-500 group"
-                  >
-                    Kupi zdaj
-                    <ShoppingCart className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
               </div>
             </div>
             
@@ -155,6 +138,24 @@ const ProductShowcase: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Centered CTA button above "Za vse generacije" section */}
+          <div className="flex justify-center items-center py-8">
+            <Button 
+              onClick={() => {
+                const element = document.getElementById('pricing');
+                if (element) {
+                  element.scrollIntoView({
+                    behavior: 'smooth'
+                  });
+                }
+              }} 
+              className="cta-button bg-green-600 hover:bg-green-500 group text-lg px-10 py-6"
+            >
+              Kupi zdaj
+              <ShoppingCart className="ml-2 group-hover:translate-x-1 transition-transform" size={24} />
+            </Button>
           </div>
           
           {/* For all generations section with text above and child's foot image below */}
