@@ -1,8 +1,24 @@
 
 import React from 'react';
-import { ShieldCheck, Award, Star } from 'lucide-react';
+import { ShieldCheck, Award, Star, ShoppingCart } from 'lucide-react';
+import { Button } from './ui/button';
 
 const CertificatesSection: React.FC = () => {
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const offset = headerHeight + 20;
+      
+      const pricingSectionPosition = pricingSection.getBoundingClientRect().top + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: pricingSectionPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <section className="py-12 bg-gradient-to-b from-tarsal-DEFAULT to-tarsal-light/95 text-tarsal-DEFAULT">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,8 +28,19 @@ const CertificatesSection: React.FC = () => {
         </h2>
         
         {/* Gold Banner */}
-        <div className="bg-gradient-to-r from-amber-500 to-amber-400 text-tarsal-DEFAULT py-5 px-6 text-center font-bold text-lg md:text-xl mb-12 rounded-lg shadow-lg">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-400 text-tarsal-DEFAULT py-5 px-6 text-center font-bold text-lg md:text-xl mb-4 rounded-lg shadow-lg">
           VAŠE NAROČILO JE ZAŠČITENO S 30-DNEVNIM JAMSTVOM VRAČILA DENARJA.
+        </div>
+        
+        {/* CTA Button */}
+        <div className="flex justify-center mb-12">
+          <Button 
+            onClick={scrollToPricing}
+            className="cta-button bg-amber-600 hover:bg-amber-700 text-white px-8 py-6 text-xl rounded-lg shadow-lg flex items-center gap-2 transform hover:scale-105 transition-all duration-300"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            Naroči zdaj
+          </Button>
         </div>
         
         {/* Guarantee Statement */}
