@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -49,7 +50,7 @@ const Hero: React.FC = () => {
         </div>
         
         {/* Expert testimonial section - using the same layout as before */}
-        <div className="pt-4 pb-2 py-0"> {/* Reduced padding from pt-8 pb-4 to pt-4 pb-2 */}
+        <div id="expert-macuh" className="pt-4 pb-2 py-0"> {/* Added id="expert-macuh" here */}
           <div className="flex flex-col lg:flex-row items-center gap-8 bg-white rounded-xl shadow-lg p-6">
             <div className="flex-shrink-0 lg:w-1/3">
               <div className="relative">

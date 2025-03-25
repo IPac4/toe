@@ -22,7 +22,7 @@ const Header: React.FC = () => {
       dropdownItems: [
         { href: "#expert-luka", label: "Luka Mirnik" },
         { href: "#expert-jure", label: "Jure Pantar" },
-        { href: "#expert-macuha", label: "Marko Macuh" },
+        { href: "#expert-macuh", label: "Marko Macuh" },
       ]
     },
     { href: "#benefits", label: "Prednosti" },
