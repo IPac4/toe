@@ -109,14 +109,14 @@ const PricingSection: React.FC = () => {
   // Reorder packages for mobile view - double package first
   const orderedPackages = isMobile ? [packages[1], packages[0], packages[2]] : packages;
 
-  // Function to track button clicks with Facebook Pixel
+  // Function to track purchase events with Facebook Pixel
   const trackPurchaseEvent = (packageKey: string) => {
     const selectedPackage = packages.find(pkg => pkg.key === packageKey);
     if (selectedPackage) {
+      // Track the event using 'InitiateCheckout' standard event
       trackEvent('InitiateCheckout', {
         content_name: selectedPackage.name,
         content_category: 'Tarsal TOE',
-        // Fix: Convert array to string by joining with commas
         content_ids: packageKey,
         content_type: 'product',
         value: selectedPackage.totalPrice,
@@ -124,7 +124,18 @@ const PricingSection: React.FC = () => {
         num_items: selectedPackage.quantity
       });
       
-      console.log(`Purchase tracked for ${packageKey} package`);
+      // Also track as AddToCart for conversion tracking
+      trackEvent('AddToCart', {
+        content_name: selectedPackage.name,
+        content_category: 'Tarsal TOE',
+        content_ids: packageKey,
+        content_type: 'product',
+        value: selectedPackage.totalPrice,
+        currency: 'EUR',
+        num_items: selectedPackage.quantity
+      });
+      
+      console.log(`Purchase tracked for ${packageKey} package - InitiateCheckout and AddToCart events fired`);
     }
   };
 
@@ -152,7 +163,24 @@ const PricingSection: React.FC = () => {
                     packageKey = 'family';
                   }
                   
+                  console.log(`Buy button clicked for ${packageKey} package - tracking event`);
                   trackPurchaseEvent(packageKey);
+                  
+                  // Additional direct call to Facebook Pixel as a fallback
+                  if (typeof window.fbq !== 'undefined') {
+                    const selectedPackage = packages.find(pkg => pkg.key === packageKey);
+                    if (selectedPackage) {
+                      window.fbq('track', 'InitiateCheckout', {
+                        content_name: selectedPackage.name,
+                        content_category: 'Tarsal TOE',
+                        content_ids: packageKey,
+                        content_type: 'product',
+                        value: selectedPackage.totalPrice,
+                        currency: 'EUR'
+                      });
+                      console.log(`Direct fbq call made for ${packageKey} package`);
+                    }
+                  }
                 });
                 
                 console.log('Added tracking to buy button for Facebook Pixel');
@@ -182,7 +210,7 @@ const PricingSection: React.FC = () => {
     let observer: MutationObserver | null = null;
     const timer = setTimeout(() => {
       observer = setupButtonObserver();
-    }, 2000); // Give time for Shopify buttons to initialize
+    }, 1000); // Reduced time to 1000ms to ensure it runs earlier
     
     return () => {
       clearTimeout(timer);
@@ -665,44 +693,64 @@ const PricingSection: React.FC = () => {
       }
     };
   }, []);
-  return <section id="pricing" className="py-16 bg-white md:py-0">
+  return (
+    <section id="pricing" className="py-16 bg-white md:py-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {orderedPackages.map(pkg => <div key={pkg.key} className={cn("price-card", pkg.popular ? "popular transform scale-105" : "")}>
-              {pkg.popular && <div className="text-white py-2 text-center font-semibold bg-amber-600">
+          {orderedPackages.map(pkg => (
+            <div
+              key={pkg.key}
+              className={cn("price-card", pkg.popular ? "popular transform scale-105" : "")}
+            >
+              {pkg.popular && (
+                <div className="text-white py-2 text-center font-semibold bg-amber-600">
                   Najbolj priljubljeno
-                </div>}
+                </div>
+              )}
               <div className="p-8 border-b">
                 <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
                 <p className="text-gray-600 mb-4">{pkg.description}</p>
                 <div className="flex items-end mb-4">
                   <span className="text-4xl font-bold">{pkg.pricePerItem.toFixed(2)}€</span>
                   <span className="text-gray-500 ml-2">/kos</span>
-                  {pkg.discount > 0 && <span className="ml-3 bg-green-100 text-xs font-semibold px-2 py-1 rounded text-red-400">
+                  {pkg.discount > 0 && (
+                    <span className="ml-3 bg-green-100 text-xs font-semibold px-2 py-1 rounded text-red-400">
                       -{pkg.discount}%
-                    </span>}
+                    </span>
+                  )}
                 </div>
-                {pkg.discount > 0 && <div className="text-sm text-gray-500 line-through">
+                {pkg.discount > 0 && (
+                  <div className="text-sm text-gray-500 line-through">
                     {pkg.price.toFixed(2)}€/kos
-                  </div>}
+                  </div>
+                )}
                 
                 <ul className="space-y-3 mb-6">
-                  {pkg.features.map((feature, index) => <li key={index} className={cn("flex items-start", feature.important ? "font-medium" : "")}>
+                  {pkg.features.map((feature, index) => (
+                    <li
+                      key={index}
+                      className={cn("flex items-start", feature.important ? "font-medium" : "")}
+                    >
                       <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
                       <div className="flex items-center">
                         <span>{feature.text}</span>
-                        {feature.free && <Badge className="ml-2 text-white font-bold bg-red-400">
+                        {feature.free && (
+                          <Badge className="ml-2 text-white font-bold bg-red-400">
                             GRATIS
-                          </Badge>}
-                        {feature.new && <Badge className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold">
+                          </Badge>
+                        )}
+                        {feature.new && (
+                          <Badge className="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold">
                             NOVO
-                          </Badge>}
+                          </Badge>
+                        )}
                       </div>
-                    </li>)}
+                    </li>
+                  ))}
                 </ul>
                 
                 <div className="text-sm font-semibold mb-2">
@@ -712,21 +760,29 @@ const PricingSection: React.FC = () => {
               <div className="p-8">
                 <p className="font-semibold mb-3">Končna cena: <span className="text-xl font-bold">{pkg.totalPrice.toFixed(2)}€</span></p>
                 
-                {pkg.key === 'basic' && <div className="shopify-button-container">
+                {pkg.key === 'basic' && (
+                  <div className="shopify-button-container">
                     <div id="product-component-1742853667355" ref={basicPackageButtonRef}></div>
-                  </div>}
+                  </div>
+                )}
 
-                {pkg.key === 'double' && <div className="shopify-button-container">
+                {pkg.key === 'double' && (
+                  <div className="shopify-button-container">
                     <div id="product-component-1742851650294" ref={doublePackageButtonRef}></div>
-                  </div>}
+                  </div>
+                )}
 
-                {pkg.key === 'family' && <div className="shopify-button-container">
+                {pkg.key === 'family' && (
+                  <div className="shopify-button-container">
                     <div id="product-component-1742851845591" ref={familyPackageButtonRef}></div>
-                  </div>}
+                  </div>
+                )}
               </div>
-            </div>)}
+            </div>
+          ))}
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 export default PricingSection;

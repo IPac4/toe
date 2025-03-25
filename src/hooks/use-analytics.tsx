@@ -25,24 +25,41 @@ export const useAnalytics = () => {
     // Check if fbq is available for Facebook Pixel
     if (typeof window.fbq !== 'undefined') {
       window.fbq('track', 'PageView');
+      console.log('Facebook Pixel: PageView tracked');
     }
   }, [location]);
   
   // Function to track events for both Google Analytics and Facebook Pixel
   const trackEvent = (eventName: string, params?: EventParams) => {
+    console.log(`Attempting to track event: ${eventName}`, params);
+    
     // Track event in Google Analytics
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', eventName, params);
+      console.log(`Google Analytics: ${eventName} tracked`, params);
     }
     
     // Track event in Facebook Pixel
     if (typeof window.fbq !== 'undefined') {
-      window.fbq('track', eventName, params);
-      
-      // For Purchase and InitiateCheckout events, also log to console for debugging
-      if (eventName === 'Purchase' || eventName === 'InitiateCheckout') {
-        console.log(`Facebook Pixel: ${eventName}`, params);
+      try {
+        // For standard events, use 'track'
+        if (eventName === 'Purchase' || 
+            eventName === 'InitiateCheckout' || 
+            eventName === 'AddToCart' || 
+            eventName === 'ViewContent') {
+          window.fbq('track', eventName, params);
+        } 
+        // For custom events, use 'trackCustom'
+        else {
+          window.fbq('trackCustom', eventName, params);
+        }
+        
+        console.log(`Facebook Pixel: ${eventName} tracked`, params);
+      } catch (error) {
+        console.error('Facebook Pixel tracking error:', error);
       }
+    } else {
+      console.warn('Facebook Pixel (fbq) not available');
     }
   };
   

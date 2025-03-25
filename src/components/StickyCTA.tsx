@@ -73,11 +73,16 @@ const StickyCTA: React.FC = () => {
   const handleCtaClick = (e: React.MouseEvent) => {
     e.preventDefault();
     
-    // Track CTA button click for Facebook Pixel
+    // Track CTA button click for Facebook Pixel with more specific event type
     trackEvent('InitiateCheckout', { 
       content_name: 'Sticky CTA',
-      content_category: 'Tarsal TOE'
+      content_category: 'Tarsal TOE',
+      content_type: 'product',
+      value: 28.64, // Default value for the popular package
+      currency: 'EUR'
     });
+    
+    console.log('Sticky CTA clicked - InitiateCheckout event fired');
     
     const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
