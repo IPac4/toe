@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +14,7 @@ interface ExpertTestimonialProps {
   featured?: boolean;
   imageClassName?: string;
   instagramHandle?: string;
-  className?: string; // Added className prop to the interface
+  className?: string;
 }
 
 const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
@@ -38,10 +39,9 @@ const ExpertTestimonial: React.FC<ExpertTestimonialProps> = ({
           <div className="flex-1">
             <div className="relative max-w-md mx-auto lg:max-w-none">
               <img src={imageSrc} alt={name} className={cn("w-full h-auto rounded-lg shadow-xl object-cover max-w-[400px] mx-auto",
-            // Increased from 300px to 400px
             featured ? "aspect-auto" : "aspect-[3/4]", imageClassName)} />
               {featured && <div className="absolute top-4 left-4">
-                  <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno od stroke</Badge>
+                  <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno s strani stroke</Badge>
                 </div>}
               <div className="absolute -bottom-4 -right-4 bg-white rounded-full w-20 h-20 flex items-center justify-center shadow-lg">
                 <svg className="w-12 h-12 text-tarsal-accent" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
