@@ -1,12 +1,10 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from './ui/badge';
 import { Alert, AlertTitle, AlertDescription } from './ui/alert';
-
 const ProblemSection: React.FC = () => {
-  return <section id="problem" className="py-16 bg-tarsal-muted md:py-[56px]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  return <section id="problem" className="py-16 bg-tarsal-muted md:py-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-[7px]">
         <div className="text-center mb-12">
           <span className="inline-block mb-2 px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
             Najpogostejša težava stopal
@@ -112,5 +110,4 @@ const ProblemSection: React.FC = () => {
       </div>
     </section>;
 };
-
 export default ProblemSection;
