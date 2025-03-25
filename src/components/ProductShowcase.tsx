@@ -125,6 +125,31 @@ const ProductShowcase: React.FC = () => {
             </div>
           </div>
           
+          {/* New section with child's foot image */}
+          <div className="flex flex-col lg:flex-row gap-8 items-center mb-12 bg-tarsal-muted/20 rounded-xl p-6 border border-tarsal-accent/10">
+            <div className="w-full lg:w-1/2">
+              <div className="rounded-2xl overflow-hidden shadow-xl">
+                <img 
+                  src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" 
+                  alt="Zdravo stopalo otroka z uporabo TOE" 
+                  className="w-full h-auto" 
+                />
+              </div>
+            </div>
+            <div className="w-full lg:w-1/2">
+              <h3 className="text-2xl font-bold mb-4 text-tarsal-accent">Za vse generacije</h3>
+              <p className="text-gray-700 mb-4 text-lg">
+                Če pogledate nogo moje hčerke na fotografiji, lahko vidite kako stopalo lahko izgleda z uporabo Tarsal TOE. 
+                To pomeni, da je izdelek primeren za vse starosti - tako za preventivo, ko je ta mogoča, kot tudi za 
+                korekcijo in izboljšanje stanja vašega stopala.
+              </p>
+              <p className="text-gray-700 text-lg">
+                Začnite z nego stopal čim prej, saj je preventiva najboljša rešitev. Če pa že imate težave, 
+                vam Tarsal TOE pomaga postopoma izboljšati stanje in zmanjšati bolečine.
+              </p>
+            </div>
+          </div>
+          
           <div className="bg-gradient-to-r from-tarsal-accent/10 to-blue-100 p-6 rounded-lg border border-tarsal-accent/20 mb-8">
             <h3 className="text-xl font-bold mb-4 text-tarsal-accent">Prednosti TOE</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
