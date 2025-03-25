@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { ShieldCheck, Award, Star } from 'lucide-react';
-
 const CertificatesSection: React.FC = () => {
-  return (
-    <section className="py-12 bg-black text-white">
+  return <section className="py-12 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Heading */}
         <h2 className="text-center text-3xl md:text-4xl font-bold mb-12 max-w-4xl mx-auto leading-tight">
@@ -56,15 +53,9 @@ const CertificatesSection: React.FC = () => {
         
         {/* Certificate Image */}
         <div className="flex justify-center">
-          <img 
-            src="/lovable-uploads/2a8331b4-df2b-47f5-a935-92731c60f577.png"
-            alt="100% jamstvo zadovoljstva" 
-            className="w-32 h-32"
-          />
+          <img alt="100% jamstvo zadovoljstva" className="w-32 h-32" src="/lovable-uploads/43ed392e-6a27-4823-ad82-20c4e92c9276.png" />
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CertificatesSection;
