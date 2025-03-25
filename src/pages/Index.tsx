@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -117,6 +116,23 @@ const Index: React.FC = () => {
           featured={true}
           instagramHandle="jurepantar"
           id="expert-jure"
+        />
+        
+        {/* Marko Macuh testimonial - added explicit ID */}
+        <ExpertTestimonial 
+          name="Marko Macuh"
+          title="Priznani fizioterapevt in specialist za ortopedske težave"
+          quote="V svoji praksi sem opazil, da večina težav s stopali izvira iz nepravilne obremenitve. TOE razbremeni kritične točke in pomaga preprečiti deformacije. Svojim pacientom ga priporočam kot preventivno rešitev, ki je enostavna za uporabo in učinkovita."
+          imageSrc="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png"
+          credentials={[
+            "Specialist za ortopedske težave", 
+            "Certificiran klinični fizioterapevt", 
+            "10+ let kliničnih izkušenj"
+          ]}
+          featured={true}
+          instagramHandle="macuhmarko"
+          id="expert-macuh"  // Explicitly added ID to match navigation
+          className="mb-8"
         />
         
         <GuaranteeSection />
