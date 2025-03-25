@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -50,14 +49,14 @@ const Hero: React.FC = () => {
         </div>
         
         {/* Expert testimonial section - using the same layout as before */}
-        <div id="expert-macuh" className="pt-4 pb-2 py-0"> {/* Added id="expert-macuh" here */}
+        <div className="pt-4 pb-2 py-0"> {/* Reduced padding from pt-8 pb-4 to pt-4 pb-2 */}
           <div className="flex flex-col lg:flex-row items-center gap-8 bg-white rounded-xl shadow-lg p-6">
             <div className="flex-shrink-0 lg:w-1/3">
               <div className="relative">
                 <img src="/lovable-uploads/bf002e75-f7c8-47de-8d94-73f12b1efdd4.png" alt="Marko Macuh" className="w-full h-auto rounded-lg shadow-md object-cover max-w-[400px] mx-auto" // Increased from 300px to 400px
               />
                 <div className="absolute top-4 right-4">
-                  <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno s strani stroke</Badge>
+                  <Badge className="bg-blue-600 hover:bg-blue-700 text-white">Priporočeno od stroke</Badge>
                 </div>
                 <div className="absolute -bottom-3 -right-3 bg-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
                   <svg className="w-8 h-8 text-tarsal-accent" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
