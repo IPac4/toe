@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   AlertDialog,
@@ -15,7 +14,6 @@ import { Check, ShieldCheck, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useAnalytics } from '@/hooks/use-analytics';
 
 interface CheckoutModalProps {
   open: boolean;
@@ -51,7 +49,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [showPackageSelection, setShowPackageSelection] = useState(!skipPackageSelection);
   const [selectedPackage, setSelectedPackage] = useState<'basic' | 'double' | 'family'>(productVariant);
   const isMobile = useIsMobile();
-  const { setupShopifyPixelTracking } = useAnalytics();
   
   // Refs for Shopify buy buttons
   const basicProductButtonRef = useRef<HTMLDivElement>(null);
@@ -128,14 +125,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setSelectedPackage(variant);
     setShowPackageSelection(false);
   };
-
-  // Set up pixel tracking when modal is open
-  useEffect(() => {
-    if (open) {
-      const cleanup = setupShopifyPixelTracking();
-      return cleanup;
-    }
-  }, [open, setupShopifyPixelTracking]);
 
   // Initialize Shopify Buy buttons after component mounts or when modal opens
   useEffect(() => {
