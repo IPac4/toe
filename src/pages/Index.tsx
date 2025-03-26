@@ -117,6 +117,21 @@ const Index: React.FC = () => {
           instagramHandle="jurepantar"
           id="expert-jure"
         />
+              
+      {/* Marko Macuh testimonial */}
+      <ExpertTestimonial 
+        name="Marko Macuh"
+        title="Strokovnjak za športno medicino"
+        quote="V svoji praksi pogosto opažam, da številne težave v stopalu izhajajo iz nepravilne obremenitve, ki je največkrat posledica neustrezne obutve in slabih navad – tako pri športno aktivnih kot tudi pri manj aktivnih posameznikih. TOE učinkovito preprečuje deformacije v predelu prstov in deluje kot protiutež stisnjenemu položaju, ki ga povzročajo ozki čevlji. Svojim strankam ga priporočam kot preprosto, dostopno in zelo učinkovito preventivno rešitev, ki pomembno prispeva k boljši funkcionalnosti in udobju stopal."
+        imageSrc="/lovable-uploads/03231ada-ca94-4b89-b1d9-fbc711450811.png"
+        credentials={[
+          "Specialist za biomehanniko stopal",
+          "Strokovnjak za preventivno medicino",
+          "15+ let izkušenj v zdravstveni praksi"
+        ]}
+        featured={true}
+        id="expert-marko"
+      />
         
         <GuaranteeSection />
         
