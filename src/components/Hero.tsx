@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -84,7 +83,7 @@ const Hero: React.FC = () => {
                   </Badge>)}
               </div>
               <blockquote className="text-sm md:text-base italic leading-relaxed">
-                "V svoji praksi sem opazil, da večina težav s stopali izvira iz nepravilne obremenitve. TOE razbremeni kritične točke in pomaga preprečiti deformacije. Svojim pacientom ga priporočam kot preventivno rešitev, ki je enostavna za uporabo in učinkovita."
+                "V svoji praksi pogosto opažam, da številne težave v stopalu izhajajo iz nepravilne obremenitve, ki je največkrat posledica neustrezne obutve in slabih navad – tako pri športno aktivnih kot tudi pri manj aktivnih posameznikih. TOE učinkovito preprečuje deformacije v predelu prstov in deluje kot protiutež stisnjenemu položaju, ki ga povzročajo ozki čevlji. Svojim strankam ga priporočam kot preprosto, dostopno in zelo učinkovito preventivno rešitev, ki pomembno prispeva k boljši funkcionalnosti in udobju stopal."
               </blockquote>
             </div>
           </div>
@@ -92,4 +91,5 @@ const Hero: React.FC = () => {
       </div>
     </section>;
 };
+
 export default Hero;
