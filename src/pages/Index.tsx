@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -85,7 +84,7 @@ const Index: React.FC = () => {
         {/* Luka Mirnik testimonial */}
         <ExpertTestimonial 
           name="Luka Mirnik"
-          title="Fizioterapevt Luke Dončića in slovenske košarkarske reprezentance"
+          title="Fizioterapevt slovenske košarkarske reprezentance"
           quote="Kot fizioterapevt slovenske košarkarske reprezentance in profesionalnih športnikov vsakodnevno rešujem težave z bolečinami v stopalih. TOE je revolucionarna rešitev, ki jo priporočam tako športnikom kot vsakomur, ki želi preventivno zaščititi svoje noge pred bolečinami in deformacijami."
           imageSrc="/lovable-uploads/fea16b3e-3afb-4acd-b956-418db3d5205d.png"
           credentials={[
