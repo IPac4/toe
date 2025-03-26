@@ -63,7 +63,93 @@ export const useAnalytics = () => {
     }
   };
   
-  return { trackEvent };
+  // New function: Setup checkout event listeners for Shopify buy buttons
+  const setupShopifyPixelTracking = () => {
+    // Look for Shopify buy buttons and add tracking
+    const trackShopifyButtons = () => {
+      const shopifyButtons = document.querySelectorAll('.shopify-buy__btn');
+      
+      shopifyButtons.forEach(button => {
+        if (!button.hasAttribute('data-fb-pixel-tracked')) {
+          button.setAttribute('data-fb-pixel-tracked', 'true');
+          
+          button.addEventListener('click', () => {
+            let packageKey = 'basic';
+            
+            // Determine which package based on container ID
+            if (button.closest('#product-component-1742851650294') || 
+                button.closest('#modal-product-component-double')) {
+              packageKey = 'double';
+            } else if (button.closest('#product-component-1742851845591') || 
+                       button.closest('#modal-product-component-family')) {
+              packageKey = 'family';
+            }
+            
+            console.log(`Shopify buy button clicked for ${packageKey} package - tracking events`);
+            
+            // Direct fbq call for InitiateCheckout (most reliable method)
+            if (typeof window.fbq !== 'undefined') {
+              window.fbq('track', 'InitiateCheckout', {
+                content_name: packageKey === 'basic' ? 'Osnovno pakiranje' : 
+                             packageKey === 'double' ? 'Dvojno pakiranje' : 'Družinsko pakiranje',
+                content_category: 'Tarsal TOE',
+                content_ids: packageKey,
+                content_type: 'product',
+                value: packageKey === 'basic' ? 17.90 : 
+                      packageKey === 'double' ? 28.64 : 40.26,
+                currency: 'EUR',
+                num_items: packageKey === 'basic' ? 1 : 
+                          packageKey === 'double' ? 2 : 3
+              });
+              
+              window.fbq('track', 'AddToCart', {
+                content_name: packageKey === 'basic' ? 'Osnovno pakiranje' : 
+                             packageKey === 'double' ? 'Dvojno pakiranje' : 'Družinsko pakiranje',
+                content_category: 'Tarsal TOE',
+                content_ids: packageKey,
+                content_type: 'product',
+                value: packageKey === 'basic' ? 17.90 : 
+                      packageKey === 'double' ? 28.64 : 40.26,
+                currency: 'EUR',
+                num_items: packageKey === 'basic' ? 1 : 
+                          packageKey === 'double' ? 2 : 3
+              });
+              
+              console.log(`Direct Facebook Pixel event fired for ${packageKey} package`);
+              
+              // Store package info in localStorage for potential use in checkout completion
+              localStorage.setItem('tarsal_package', packageKey);
+              localStorage.setItem('tarsal_checkout_started', Date.now().toString());
+            }
+          });
+          
+          console.log('Added Facebook Pixel tracking to Shopify buy button');
+        }
+      });
+    };
+    
+    // Run immediately and also set up a mutation observer
+    trackShopifyButtons();
+    
+    // Create observer to watch for dynamically added buttons
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          setTimeout(trackShopifyButtons, 500); // Delay to ensure buttons are fully rendered
+        }
+      });
+    });
+    
+    // Observe the entire document body for changes
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true 
+    });
+    
+    return () => observer.disconnect();
+  };
+  
+  return { trackEvent, setupShopifyPixelTracking };
 };
 
 // Add gtag and fbq to Window interface

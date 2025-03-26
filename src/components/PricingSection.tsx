@@ -10,7 +10,7 @@ const PricingSection: React.FC = () => {
   const doublePackageButtonRef = useRef<HTMLDivElement>(null);
   const familyPackageButtonRef = useRef<HTMLDivElement>(null);
   const basicPackageButtonRef = useRef<HTMLDivElement>(null);
-  const { trackEvent } = useAnalytics();
+  const { trackEvent, setupShopifyPixelTracking } = useAnalytics();
 
   // Define packages in a way that can be reordered for mobile
   const packages = [{
@@ -135,90 +135,19 @@ const PricingSection: React.FC = () => {
         num_items: selectedPackage.quantity
       });
       
+      // Store package info in localStorage
+      localStorage.setItem('tarsal_package', packageKey);
+      localStorage.setItem('tarsal_checkout_started', Date.now().toString());
+      
       console.log(`Purchase tracked for ${packageKey} package - InitiateCheckout and AddToCart events fired`);
     }
   };
 
-  // Setup observer for Shopify buy buttons to add click tracking
+  // Use our improved button tracking setup
   useEffect(() => {
-    const setupButtonObserver = () => {
-      // Create a mutation observer to watch for button creation
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            // Look for any newly added buttons inside the containers
-            const buttons = document.querySelectorAll('.shopify-buy__btn');
-            buttons.forEach(button => {
-              // Check if we haven't already added a listener
-              if (!button.hasAttribute('data-tracking-added')) {
-                button.setAttribute('data-tracking-added', 'true');
-                
-                // Add click event listener to track purchases
-                button.addEventListener('click', (e) => {
-                  // Determine which package was clicked
-                  let packageKey = 'basic';
-                  if (button.closest('#product-component-1742851650294')) {
-                    packageKey = 'double';
-                  } else if (button.closest('#product-component-1742851845591')) {
-                    packageKey = 'family';
-                  }
-                  
-                  console.log(`Buy button clicked for ${packageKey} package - tracking event`);
-                  trackPurchaseEvent(packageKey);
-                  
-                  // Additional direct call to Facebook Pixel as a fallback
-                  if (typeof window.fbq !== 'undefined') {
-                    const selectedPackage = packages.find(pkg => pkg.key === packageKey);
-                    if (selectedPackage) {
-                      window.fbq('track', 'InitiateCheckout', {
-                        content_name: selectedPackage.name,
-                        content_category: 'Tarsal TOE',
-                        content_ids: packageKey,
-                        content_type: 'product',
-                        value: selectedPackage.totalPrice,
-                        currency: 'EUR'
-                      });
-                      console.log(`Direct fbq call made for ${packageKey} package`);
-                    }
-                  }
-                });
-                
-                console.log('Added tracking to buy button for Facebook Pixel');
-              }
-            });
-          }
-        });
-      });
-      
-      // Start observing the containers where buttons will appear
-      const containers = [
-        document.getElementById('product-component-1742853667355'),
-        document.getElementById('product-component-1742851650294'),
-        document.getElementById('product-component-1742851845591')
-      ];
-      
-      containers.forEach(container => {
-        if (container) {
-          observer.observe(container, { childList: true, subtree: true });
-        }
-      });
-      
-      return observer;
-    };
-    
-    // Wait for the DOM to be fully loaded before setting up observers
-    let observer: MutationObserver | null = null;
-    const timer = setTimeout(() => {
-      observer = setupButtonObserver();
-    }, 1000); // Reduced time to 1000ms to ensure it runs earlier
-    
-    return () => {
-      clearTimeout(timer);
-      if (observer) {
-        observer.disconnect();
-      }
-    };
-  }, [trackEvent]);
+    const cleanup = setupShopifyPixelTracking();
+    return cleanup;
+  }, [setupShopifyPixelTracking]);
 
   // Initialize Shopify Buy buttons after component mounts
   useEffect(() => {
