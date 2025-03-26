@@ -85,7 +85,7 @@ const Index: React.FC = () => {
         <ExpertTestimonial 
           name="Luka Mirnik"
           title="Fizioterapevt slovenske košarkarske reprezentance"
-          quote="Kot fizioterapevt slovenske košarkarske reprezentance in profesionalnih športnikov vsakodnevno rešujem težave z bolečinami v stopalih. TOE je revolucionarna rešitev, ki jo priporočam tako športnikom kot vsakomur, ki želi preventivno zaščititi svoje noge pred bolečinami in deformacijami."
+          quote="Pri športnikih vse pogosteje opažam pojav težav s stopali, ki so posledica ponavljajočih se obremenitev, hitrih sprememb smeri, visokih hitrosti ter dolgotrajnih cikličnih aktivnosti. TOE se je izkazal kot odlična podpora po teh naporih – učinkovito razbremeni stopalo, lajša bolečine ter prispeva k boljšemu počutju prstov, stopala in tudi spodnjega dela noge."
           imageSrc="/lovable-uploads/fea16b3e-3afb-4acd-b956-418db3d5205d.png"
           credentials={[
             "7+ let izkušenj s profesionalnimi športniki", 
