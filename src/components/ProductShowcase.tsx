@@ -2,17 +2,13 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
-
 const ProductShowcase: React.FC = () => {
-  return (
-    <section id="product" className="py-16 md:py-24 bg-white">
+  return <section id="product" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">Predstavljamo</h2>
           <div className="w-24 h-1 bg-tarsal-accent mx-auto mb-8"></div>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Revolucionarna rešitev za zmanjšanje bolečin v stopalih in preprečevanje deformacij
-          </p>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">Rešitev za zmanjšanje bolečin v stopalih in preprečevanje deformacij</p>
         </div>
 
         {/* Main content with alternating layout */}
@@ -60,11 +56,7 @@ const ProductShowcase: React.FC = () => {
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-200 to-tarsal-accent/30 opacity-30 blur-xl rounded-3xl"></div>
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl transform transition-all duration-300 hover:scale-[1.02]">
-                  <img 
-                    src="/lovable-uploads/9f461ca7-e88a-4994-9b26-539222061815.png" 
-                    alt="Pravilna razporeditev in učinek TOE" 
-                    className="w-full h-auto object-cover" 
-                  />
+                  <img src="/lovable-uploads/9f461ca7-e88a-4994-9b26-539222061815.png" alt="Pravilna razporeditev in učinek TOE" className="w-full h-auto object-cover" />
                 </div>
               </div>
             </div>
@@ -76,11 +68,7 @@ const ProductShowcase: React.FC = () => {
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-tarsal-accent/30 to-blue-200 opacity-30 blur-xl rounded-3xl"></div>
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl transform transition-all duration-300 hover:scale-[1.02]">
-                  <img 
-                    src="/lovable-uploads/6294ca7b-3cf1-424c-9208-5525064c9c43.png" 
-                    alt="Uporaba TOE separatorja" 
-                    className="w-full h-auto object-cover" 
-                  />
+                  <img src="/lovable-uploads/6294ca7b-3cf1-424c-9208-5525064c9c43.png" alt="Uporaba TOE separatorja" className="w-full h-auto object-cover" />
                 </div>
               </div>
             </div>
@@ -176,11 +164,7 @@ const ProductShowcase: React.FC = () => {
                 </div>
               </div>
               <div className="md:w-1/2 flex items-center justify-center p-6">
-                <img 
-                  src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" 
-                  alt="Zdravo stopalo otroka z uporabo TOE" 
-                  className="w-3/4 mx-auto h-auto object-cover" 
-                />
+                <img src="/lovable-uploads/edf1b72b-8c34-43de-9caa-e8cc5e25e7b9.png" alt="Zdravo stopalo otroka z uporabo TOE" className="w-3/4 mx-auto h-auto object-cover" />
               </div>
             </div>
           </div>
@@ -189,42 +173,33 @@ const ProductShowcase: React.FC = () => {
           
           {/* Call-to-action buttons */}
           <div className="flex flex-col md:flex-row gap-6 justify-center pt-8">
-            <Button 
-              onClick={() => {
-                const element = document.getElementById('pricing');
-                if (element) {
-                  element.scrollIntoView({
-                    behavior: 'smooth'
-                  });
-                }
-              }} 
-              className="cta-button text-lg py-7 px-12 shadow-lg group bg-green-600 hover:bg-green-500"
-            >
+            <Button onClick={() => {
+            const element = document.getElementById('pricing');
+            if (element) {
+              element.scrollIntoView({
+                behavior: 'smooth'
+              });
+            }
+          }} className="cta-button text-lg py-7 px-12 shadow-lg group bg-green-600 hover:bg-green-500">
               Naroči zdaj
               <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Button>
             
-            <Button 
-              onClick={() => {
-                const element = document.getElementById('faq');
-                if (element) {
-                  element.scrollIntoView({
-                    behavior: 'smooth'
-                  });
-                }
-              }} 
-              variant="outline" 
-              className="border-green-600 text-green-600 hover:bg-green-50 text-lg py-7 px-12"
-            >
+            <Button onClick={() => {
+            const element = document.getElementById('faq');
+            if (element) {
+              element.scrollIntoView({
+                behavior: 'smooth'
+              });
+            }
+          }} variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 text-lg py-7 px-12">
               Pogosta vprašanja
             </Button>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ProductShowcase;
