@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -84,7 +83,7 @@ const Hero: React.FC = () => {
                   </Badge>)}
               </div>
               <blockquote className="text-sm md:text-base italic leading-relaxed">
-                "V svoji praksi pogosto opažam, da številne težave v stopalu izhajajo iz nepravilne obremenitve, ki je največkrat posledica neustrezne obutve in slabih navad – tako pri športno aktivnih kot tudi pri manj aktivnih posameznikih. Deformacije v predelu prstov in deluje kot protiutež stisnjenemu položaju, ki ga povzročajo ozki čevlji so žal prepogost pojav. Reševanje tega pa je nujno, saj to ne vpliva le na izgled in bolečino stopal, vendar se zelo hitro težave pojavijo še višje po telesu, predvsem v kolenih in kolkih"
+                "V svoji praksi pogosto opažam, da številne težave v stopalu izhajajo iz nepravilne obremenitve, ki je največkrat posledica neustrezne obutve in slabih navad – tako pri športno aktivnih kot tudi pri manj aktivnih posameznikih. Deformacije v predelu prstov, ki jih povzročajo ozki čevlji so žal prepogost pojav. Reševanje tega pa je nujno, saj to ne vpliva le na izgled in bolečino stopal, vendar se zelo hitro težave pojavijo še višje po telesu, predvsem v kolenih in kolkih"
               </blockquote>
             </div>
           </div>
@@ -94,4 +93,3 @@ const Hero: React.FC = () => {
 };
 
 export default Hero;
-
